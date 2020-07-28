@@ -1,0 +1,61 @@
+#!/usr/bin/make -f
+# Makefile for DPF #
+# ---------------- #
+# Created by falkTX
+#
+
+include Makefile.base.mk
+
+all: dgl examples gen
+
+# --------------------------------------------------------------
+
+dgl:
+	$(MAKE) -C dgl
+	$(MAKE) all -C plugins/thunderox
+
+
+
+ifneq ($(CROSS_COMPILING),true)
+gen: examples utils/lv2_ttl_generator
+	@$(CURDIR)/utils/generate-ttl.sh
+ifeq ($(MACOS),true)
+	@$(CURDIR)/utils/generate-vst-bundles.sh
+endif
+
+utils/lv2_ttl_generator:
+	$(MAKE) -C utils/lv2-ttl-generator
+else
+gen:
+endif
+
+# --------------------------------------------------------------
+install:
+	cp $(CURDIR)/bin/thunderox_thunderox.lv2 /usr/lib/lv2 -r
+	cp $(CURDIR)/bin/thunderox_thunderox-dssi /usr/lib/dssi -r
+	cp $(CURDIR)/bin/thunderox_thunderox-dssi.so /usr/lib/dssi
+	cp $(CURDIR)/bin/thunderox_thunderox-vst.so /usr/lib/vst
+	chmod +x $(CURDIR)/bin/thunderox_thunderox
+	cp $(CURDIR)/bin/thunderox_thunderox /usr/bin
+
+
+# --------------------------------------------------------------
+uninstall:
+	rm /usr/lib/lv2/thunderox_thunderox.lv2 -rf
+	rm /usr/lib/dssi/thunderox_thunderox.dssi -rf
+	rm /usr/lib/dssi/thunderox_thunderox-dssi.so -f
+	rm /usr/lib/vst/thunderox_thunderox0.so -f
+	rm /usr/bin/thunderox_thunderox
+
+# --------------------------------------------------------------
+
+clean:
+	$(MAKE) clean -C dgl
+	$(MAKE) clean -C plugins/thunderox
+	$(MAKE) clean -C utils/lv2-ttl-generator
+
+	rm -rf bin build
+
+# --------------------------------------------------------------
+
+.PHONY: dgl examples
