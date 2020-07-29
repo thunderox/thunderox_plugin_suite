@@ -103,6 +103,7 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 		new_widget->max = 1;
 		new_widget->default_value = 0;
 		new_widget->current_value = 0;
+		new_widget->increment = 0.01;
 		new_widget->integer = false;
 		new_widget->hover = false;
 		if (type == deliriumUI_Switch) new_widget->toggle_mode = true; else new_widget->toggle_mode = false;
@@ -121,6 +122,15 @@ void Delirium_UI_Widget_Set_Value(Delirium_UI_Surface* GUI, int widget_number, f
 
 	GUI->Widgets[widget_number]->scaled_value = scaled_value;
 	Delirium_UI_Convert_Range_To_Value(GUI, widget_number);
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// SET WIDGET INCREMENT
+
+void Delirium_UI_Widget_Set_Increment(Delirium_UI_Surface* GUI, int widget_number, float increment)
+{
+
+	GUI->Widgets[widget_number]->increment = increment;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -234,7 +244,7 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, int xm, int ym)
 	{
 		GUI->Widgets[current_widget]->pressed = 1 - GUI->Widgets[current_widget]->pressed;
 		GUI->Widgets[current_widget]->Left_Button_Press(xm,ym);
-		Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
+		// Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
 	}
 }
 
@@ -269,7 +279,6 @@ void Delirium_UI_Mouse_Over(Delirium_UI_Surface* GUI, int xm, int ym)
 	if (current_widget > -1)
 	{
 		GUI->Widgets[current_widget]->Mouse_Over(xm,ym);
-		Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
 	}
 }
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -296,7 +305,10 @@ void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface* GUI, int widget_num
 // CONVERT MIN MAX RANGE TO VALUE 0..1
 void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface* GUI, int widget_number)
 {
+
+	int current_value = GUI->Widgets[widget_number]->current_value;
 	float scaled_value = GUI->Widgets[widget_number]->scaled_value;
+
 	if (GUI->Widgets[widget_number]->min > 0) scaled_value  -= GUI->Widgets[widget_number]->min;
 	
 	float value = scaled_value / ((GUI->Widgets[widget_number]->max - GUI->Widgets[widget_number]->min));
@@ -306,7 +318,7 @@ void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface* GUI, int widget_num
 	if (GUI->Widgets[widget_number]->type == deliriumUI_Knob) { value = 1-value; }
 
 
-	GUI->Widgets[widget_number]->values[0] = value;
+	GUI->Widgets[widget_number]->values[current_value] = value;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------

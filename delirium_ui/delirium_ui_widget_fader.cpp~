@@ -138,12 +138,5 @@ void Delirium_UI_Widget_Fader::Middle_Button_Press()
 	scaled_value = default_value;
 }
 
-//----------------------------------------------------------------------------------------------------------------------------------------
-// MOUSE SCROLL WHEEL
-
-void Delirium_UI_Widget_Fader::Mouse_Scroll(float delta)
-{
-	cout << "MOOOOOOOOOOO!" << endl;
-}
 
 

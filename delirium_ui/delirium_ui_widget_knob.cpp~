@@ -25,15 +25,9 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 	float w = widget_width;
 	float h = widget_height;
 
-	cairo_set_line_width(cr, 1);
+	cairo_set_line_width(cr, 2);
 
 	float value = 1-values[0];
-
-	if (integer)
-	{
-		float make_range_stepped = int(value * (max-min));
-		value = make_range_stepped / (max-min) + 0.0001;
-	}
 
 	float cos_x,sin_y,cos_x2,sin_y2;
 
@@ -101,6 +95,8 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 	cairo_set_font_size(cr, font_size);
 
 	stringstream number;
+	Convert_Value_To_Scaled();
+
 	if (integer) scaled_value = int(scaled_value);
 	number << fixed << setprecision(4) << scaled_value;
 

@@ -70,6 +70,7 @@ class triceratopsUI : public UI
 			int widget_osc1_octave = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, 12, 1.5, 2, 2, "OCTAVE", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_osc1_octave, 0,5);
 			Delirium_UI_Widget_Set_Value(GUI, widget_osc1_octave, 0);
+			Delirium_UI_Widget_Set_Increment(GUI, widget_osc1_octave, 1);
 			Delirium_UI_Widget_Set_Integer(GUI, widget_osc1_octave, true);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount; 
 
@@ -266,6 +267,8 @@ class triceratopsUI : public UI
 			if (current_widget > 0)
 			{	
 				GUI->Widgets[current_widget]->Mouse_Scroll(delta);
+				Delirium_UI_Convert_Range_To_Value(GUI, current_widget);
+				repaint();
 			}
 
 			return true;

@@ -38,6 +38,8 @@ class Delirium_UI_Widget_Base
 	virtual void Middle_Button_Press();
 	virtual void Mouse_Over(int,int);
 	virtual void Mouse_Scroll(float);
+	virtual void Convert_Value_To_Scaled();
+	virtual void Convert_Scaled_To_Value();
 
 
 	float	x_position;
@@ -64,6 +66,7 @@ class Delirium_UI_Widget_Base
 	float scaled_value;
 	float default_value;
 	int current_value;
+	float increment;
 
 	private:
  
@@ -82,7 +85,6 @@ class Delirium_UI_Widget_Fader : public Delirium_UI_Widget_Base
 	void Draw(cairo_t*);
 	void Left_Button_Press(int,int);
 	void Middle_Button_Press();
-	void Mouse_Scroll(float);
 };
 
 class Delirium_UI_Widget_Knob : public Delirium_UI_Widget_Base
@@ -150,6 +152,7 @@ Delirium_UI_Surface* Delirium_UI_Init(int,int,int,int);
 
 int  Delirium_UI_Create_Widget(Delirium_UI_Surface*, int, int, float, float, float, float, string, int);
 void Delirium_UI_Widget_Set_Value(Delirium_UI_Surface*, int, float);
+void Delirium_UI_Widget_Set_Increment(Delirium_UI_Surface*, int, float);
 void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface*, int, float, float);
 float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface*);
 void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface*, int, float);

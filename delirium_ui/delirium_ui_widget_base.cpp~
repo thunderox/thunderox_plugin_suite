@@ -61,7 +61,50 @@ void Delirium_UI_Widget_Base::Mouse_Over(int xm, int ym){
 
 void Delirium_UI_Widget_Base::Mouse_Scroll(float delta)
 {
-	cout << delta << endl;
+	scaled_value += delta * increment;
+	
+	if (scaled_value < min) scaled_value = min;
+	if (scaled_value > max) scaled_value = max;
+
+	
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// CONVERT 0..1 TO MIN MAX RANGE
+
+void Delirium_UI_Widget_Base::Convert_Value_To_Scaled()
+{
+
+	float value = values[current_value];
+
+	scaled_value = (value * (max - min));
+	scaled_value = (max-min)-(value * (max - min));
+
+	if (min < 0) scaled_value -= max;
+	if (min > 0) scaled_value += min;
+
+
+}
+
+//----------------------------------------------------------------------------------------------------------------------------------------
+// CONVERT MIN MAX RANGE TO VALUE 0..1
+
+void Delirium_UI_Widget_Base::Convert_Scaled_To_Value()
+{
+
+	int current_value = current_value;
+	float scaled_value = scaled_value;
+
+	if (min > 0) scaled_value  -= min;
+	
+	float value = scaled_value / ((max - min));
+
+	if ( min < 0) value += 0.5;
+
+	if (type == deliriumUI_Knob) { value = 1-value; }
+
+
+	values[current_value] = value;
 }
 
 
