@@ -99,6 +99,7 @@ class Delirium_UI_Widget_Switch : public Delirium_UI_Widget_Base
 {
 	public: void Draw(cairo_t*);
 	void Left_Button_Press(int,int);
+	void Mouse_Scroll(float);
 };
 
 class Delirium_UI_Widget_Label : public Delirium_UI_Widget_Base

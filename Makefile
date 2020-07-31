@@ -59,8 +59,8 @@ clean:
 	$(MAKE) clean -C utils/lv2-ttl-generator
 
 	rm -rf bin build
-	rm delirium_ui/*.d
-	rm delirium_ui/*.o
+	rm -f delirium_ui/*.d
+	rm -f delirium_ui/*.o
 
 # --------------------------------------------------------------
 

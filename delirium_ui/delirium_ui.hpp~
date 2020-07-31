@@ -39,7 +39,7 @@ class Delirium_UI_Widget_Base
 	virtual void Mouse_Over(int,int);
 	virtual void Mouse_Scroll(float);
 	virtual void Convert_Value_To_Scaled();
-	virtual void Convert_Scaled_To_Value()
+	virtual void Convert_Scaled_To_Value();
 
 
 	float	x_position;

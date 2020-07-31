@@ -228,6 +228,7 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
 	{
 		Delirium_UI_Left_Button_Press(GUI,-1,my);
+		
 	}
 	
 }
@@ -244,7 +245,7 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, int xm, int ym)
 	{
 		GUI->Widgets[current_widget]->pressed = 1 - GUI->Widgets[current_widget]->pressed;
 		GUI->Widgets[current_widget]->Left_Button_Press(xm,ym);
-		// Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
+		Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
 	}
 }
 

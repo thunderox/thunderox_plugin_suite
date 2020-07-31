@@ -144,5 +144,13 @@ void Delirium_UI_Widget_Switch::Left_Button_Press(int xm, int ym)
 }
 
 
+//----------------------------------------------------------------------------------------------------------------------------------------
+// MOUSE SCROLL WHEEL
 
+void Delirium_UI_Widget_Switch::Mouse_Scroll(float delta)
+{
+	if (delta == -1) values[0] = false;
+	if (delta == 1) values[0] = true;
+
+}
 

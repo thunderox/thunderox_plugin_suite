@@ -53,7 +53,8 @@ void Delirium_UI_Widget_Base::Middle_Button_Press()
 //----------------------------------------------------------------------------------------------------------------------------------------
 // MOUSE OVER
 
-void Delirium_UI_Widget_Base::Mouse_Over(int xm, int ym){
+void Delirium_UI_Widget_Base::Mouse_Over(int xm, int ym)
+{
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -61,11 +62,14 @@ void Delirium_UI_Widget_Base::Mouse_Over(int xm, int ym){
 
 void Delirium_UI_Widget_Base::Mouse_Scroll(float delta)
 {
+	Convert_Value_To_Scaled();
+
 	scaled_value += delta * increment;
 	
 	if (scaled_value < min) scaled_value = min;
 	if (scaled_value > max) scaled_value = max;
 
+	Convert_Scaled_To_Value();
 	
 }
 

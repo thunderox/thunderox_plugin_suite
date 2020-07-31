@@ -94,6 +94,8 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_speed, 0,600);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_speed, 120);
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_lfo1_speed, 120);
+			Delirium_UI_Widget_Set_Increment(GUI, widget_lfo1_speed, 1);
+			Delirium_UI_Widget_Set_Integer(GUI, widget_lfo1_speed, true);
 			// fParameters_widget_number[kParametertriceratopsTime] = widget_osc1_volume; 
 
 			int widget_lfo1_osc1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, 28, 1.5, 1, 5, "OSC-1", kParametertriceratopsAmount);
@@ -267,7 +269,7 @@ class triceratopsUI : public UI
 			if (current_widget > 0)
 			{	
 				GUI->Widgets[current_widget]->Mouse_Scroll(delta);
-				Delirium_UI_Convert_Range_To_Value(GUI, current_widget);
+				Delirium_UI_Convert_Value_To_Range(GUI, current_widget);
 				repaint();
 			}
 

@@ -27,6 +27,8 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 	float value = values[0];
 
+	cout << values[0] << endl;
+
 	cairo_text_extents_t extents;
 	cairo_set_font_size(cr, font_size);
 	cairo_text_extents(cr, label.c_str(), &extents);
@@ -91,7 +93,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 	
 		cairo_pattern_t* grad1;
 
-		grad1 = cairo_pattern_create_linear(sx, switch_yp, sx+(sw/3), sy+(sh/3) );
+		grad1 = cairo_pattern_create_linear(sx+(sw/1.9), switch_yp, sx+(sw/3), sy+(sh/3) );
 
 		cairo_pattern_add_color_stop_rgba(grad1, 0,0.2,0.2,0.2,1);
 		cairo_pattern_add_color_stop_rgba(grad1, 0.5,0.4,0.4,0.4,1);
@@ -109,7 +111,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 		cairo_pattern_t* grad_led;
 
-		grad_led = cairo_pattern_create_radial(sx, switch_yp, 0, sx+(sw/2), sy+(sh/2), (sw/2.5) );
+		grad_led = cairo_pattern_create_radial(sx+(sw/2), switch_yp, 0, sx+(sw/2), sy+(sh/2), (sw/2.5) );
 
 		cairo_pattern_add_color_stop_rgba(grad_led, 0,0.0,0.2,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 0.3,0.0,0.01,0.0,1);
@@ -144,5 +146,13 @@ void Delirium_UI_Widget_Switch::Left_Button_Press(int xm, int ym)
 }
 
 
+//----------------------------------------------------------------------------------------------------------------------------------------
+// MOUSE SCROLL WHEEL
 
+void Delirium_UI_Widget_Switch::Mouse_Scroll(float delta)
+{
+	if (delta == -1) values[0] = false;
+	if (delta == 1) values[0] = true;
+
+}
 

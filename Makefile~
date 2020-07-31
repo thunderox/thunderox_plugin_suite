@@ -12,7 +12,7 @@ all: dgl examples gen
 
 dgl:
 	$(MAKE) -C dgl
-	$(MAKE) all -C plugins/thunderox
+	$(MAKE) all -C plugins/triceratops
 
 
 
@@ -31,30 +31,36 @@ endif
 
 # --------------------------------------------------------------
 install:
-	cp $(CURDIR)/bin/thunderox_thunderox.lv2 /usr/lib/lv2 -r
-	cp $(CURDIR)/bin/thunderox_thunderox-dssi /usr/lib/dssi -r
-	cp $(CURDIR)/bin/thunderox_thunderox-dssi.so /usr/lib/dssi
-	cp $(CURDIR)/bin/thunderox_thunderox-vst.so /usr/lib/vst
-	chmod +x $(CURDIR)/bin/thunderox_thunderox
-	cp $(CURDIR)/bin/thunderox_thunderox /usr/bin
+	mkdir ~/.config/triceratops -p
+	cp $(CURDIR)/delirium_ui/logo.png ~/.config/triceratops 
+	chmod  777 ~/.config/triceratops -R
+	cp $(CURDIR)/bin/thunderox_triceratops.lv2 /usr/lib/lv2 -r
+	cp $(CURDIR)/bin/thunderox_triceratops-dssi /usr/lib/dssi -r
+	cp $(CURDIR)/bin/thunderox_triceratops-dssi.so /usr/lib/dssi
+	cp $(CURDIR)/bin/thunderox_triceratops-vst.so /usr/lib/vst
+	chmod +x $(CURDIR)/bin/thunderox_triceratops
+	cp $(CURDIR)/bin/thunderox_triceratops /usr/bin
 
 
 # --------------------------------------------------------------
 uninstall:
-	rm /usr/lib/lv2/thunderox_thunderox.lv2 -rf
-	rm /usr/lib/dssi/thunderox_thunderox.dssi -rf
-	rm /usr/lib/dssi/thunderox_thunderox-dssi.so -f
-	rm /usr/lib/vst/thunderox_thunderox0.so -f
-	rm /usr/bin/thunderox_thunderox
+	rm ~/.config/triceratops -R
+	rm /usr/lib/lv2/thunderox_triceratops.lv2 -rf
+	rm /usr/lib/dssi/thunderox_triceratops.dssi -rf
+	rm /usr/lib/dssi/thunderox_triceratops-dssi.so -f
+	rm /usr/lib/vst/thunderox_triceratops0.so -f
+	rm /usr/bin/thunderox_triceratops
 
 # --------------------------------------------------------------
 
 clean:
 	$(MAKE) clean -C dgl
-	$(MAKE) clean -C plugins/thunderox
+	$(MAKE) clean -C plugins/triceratops
 	$(MAKE) clean -C utils/lv2-ttl-generator
 
 	rm -rf bin build
+	rm delirium_ui/*.d
+	rm delirium_ui/*.o
 
 # --------------------------------------------------------------
 
