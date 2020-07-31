@@ -138,5 +138,21 @@ void Delirium_UI_Widget_Fader::Middle_Button_Press()
 	scaled_value = default_value;
 }
 
+//----------------------------------------------------------------------------------------------------------------------------------------
+// MOUSE SCROLL WHEEL
 
+void Delirium_UI_Widget_Fader::Mouse_Scroll(float delta)
+{
+	Convert_Value_To_Scaled();
+
+	cout << scaled_value << endl;
+	scaled_value += delta * increment;
+	
+	if (scaled_value < min) scaled_value = min;
+	if (scaled_value > max) scaled_value = max;
+
+
+	// Convert_Value_To_Scaled();
+	
+}
 
