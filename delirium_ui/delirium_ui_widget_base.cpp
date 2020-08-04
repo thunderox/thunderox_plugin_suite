@@ -120,18 +120,20 @@ void Delirium_UI_Widget_Base::Convert_Value_To_Scaled()
 // CONVERT MIN MAX RANGE TO VALUE 0..1
 
 void Delirium_UI_Widget_Base::Convert_Scaled_To_Value()
+
 {
+	float sv = scaled_value;
 
-	if (min > 0) scaled_value  -= min;
+	if (min > max) sv  -= min;
 	
-	float value = scaled_value / ((max - min));
+	float value = sv / ((max - min));
 
-	if ( min < 0) value += 0.5;
+	if ( min < max) value += (min/max);
 
 	if (type == deliriumUI_Knob) { value = 1-value; }
-
-
 	values[current_value] = value;
+
+	cout << value << endl;
 }
 
 

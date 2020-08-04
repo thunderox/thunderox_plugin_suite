@@ -10,6 +10,9 @@ const float font_size = 10;
 
 void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 {
+	if (integer) scaled_value = int(scaled_value);
+	Convert_Scaled_To_Value();
+
 	float widget_x_position = x_position * x_grid_size;
 	float widget_y_position = y_position * y_grid_size;
 	float widget_width = width * x_grid_size;
@@ -95,7 +98,6 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 	cairo_set_font_size(cr, font_size);
 
 	stringstream number;
-	Convert_Value_To_Scaled();
 
 	if (integer) scaled_value = int(scaled_value);
 	number << fixed << setprecision(4) << scaled_value;

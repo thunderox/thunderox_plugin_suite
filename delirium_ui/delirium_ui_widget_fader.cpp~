@@ -10,6 +10,10 @@ const float font_size = 10;
 
 void Delirium_UI_Widget_Fader::Draw(cairo_t* cr)
 {
+	if (integer) scaled_value = int(scaled_value);
+	Convert_Scaled_To_Value();
+	cout << scaled_value << endl;
+
 	float widget_x_position = x_position * x_grid_size;
 	float widget_y_position = y_position * y_grid_size;
 	float widget_width = width * x_grid_size;
@@ -138,21 +142,5 @@ void Delirium_UI_Widget_Fader::Middle_Button_Press()
 	scaled_value = default_value;
 }
 
-//----------------------------------------------------------------------------------------------------------------------------------------
-// MOUSE SCROLL WHEEL
 
-void Delirium_UI_Widget_Fader::Mouse_Scroll(float delta)
-{
-	Convert_Value_To_Scaled();
-
-	cout << scaled_value << endl;
-	scaled_value += delta * increment;
-	
-	if (scaled_value < min) scaled_value = min;
-	if (scaled_value > max) scaled_value = max;
-
-
-	// Convert_Value_To_Scaled();
-	
-}
 

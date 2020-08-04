@@ -119,7 +119,6 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 
 void Delirium_UI_Widget_Set_Value(Delirium_UI_Surface* GUI, int widget_number, float scaled_value)
 {
-
 	GUI->Widgets[widget_number]->scaled_value = scaled_value;
 	Delirium_UI_Convert_Range_To_Value(GUI, widget_number);
 }
@@ -196,10 +195,6 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 
 void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 {
-
-	// GUI->current_widget = -1;
-
-
 	Delirium_UI_Mouse_Over(GUI,mx,my);
 
 	if (GUI->drag == 0)
@@ -226,7 +221,7 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 	}
 
 	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
-	{
+	{	
 		Delirium_UI_Left_Button_Press(GUI,-1,my);
 		
 	}
@@ -245,8 +240,7 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, int xm, int ym)
 	{
 		GUI->Widgets[current_widget]->pressed = 1 - GUI->Widgets[current_widget]->pressed;
 		GUI->Widgets[current_widget]->Left_Button_Press(xm,ym);
-		Delirium_UI_Convert_Range_To_Value(GUI, current_widget);
-		// Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
+		Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
 	}
 }
 
@@ -257,7 +251,6 @@ void Delirium_UI_Middle_Button_Press(Delirium_UI_Surface* GUI)
 {
 	int current_widget = GUI->current_widget;
 
-	
 	if (current_widget > -1)
 	{
 		GUI->Widgets[current_widget]->pressed = 1 - GUI->Widgets[current_widget]->pressed;
@@ -309,7 +302,19 @@ void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface* GUI, int widget_num
 {
 
 	int current_value = GUI->Widgets[widget_number]->current_value;
-	float scaled_value = GUI->Widgets[widget_number]->scaled_value;
+
+	float scaled_value;
+
+	if (GUI->Widgets[widget_number]->integer)
+	{
+		scaled_value = int(GUI->Widgets[widget_number]->scaled_value);
+	}
+	else
+	{
+		scaled_value = GUI->Widgets[widget_number]->scaled_value;
+	}
+
+	cout << scaled_value << endl;
 
 	if (GUI->Widgets[widget_number]->min > 0) scaled_value  -= GUI->Widgets[widget_number]->min;
 	
