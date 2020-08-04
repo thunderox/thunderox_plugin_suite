@@ -41,7 +41,7 @@ void Delirium_UI_Widget_Label::Draw(cairo_t* cr)
 //----------------------------------------------------------------------------------------------------------------------------------------
 // LEFT MOUSE BUTTON PRESSED
 
-void Delirium_UI_Widget_Label::Left_Button_Press()
+void Delirium_UI_Widget_Label::Left_Button_Press(int xm, int ym)
 {
 }
 

@@ -51,8 +51,8 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	{
 		float xcol = xc * (w / 5);
 		
-		if (xc > 1) yp = (values[xc-1] * (h/2));
-			else yp = (h/2) - (values[xc-1] * (h/2));
+		if (xc > 1) yp = (normalised_values[xc-1] * (h/2));
+			else yp = (h/2) - (normalised_values[xc-1] * (h/2));
 
 		if (xc > 1)
 		{

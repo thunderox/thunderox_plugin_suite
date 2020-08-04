@@ -25,7 +25,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 	float w = widget_width;
 	float h = widget_height;
 
-	float value = values[0];
+	float value = normalised_values[0];
 
 	cairo_text_extents_t extents;
 	cairo_set_font_size(cr, font_size);
@@ -140,7 +140,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 void Delirium_UI_Widget_Switch::Left_Button_Press(int xm, int ym)
 {
-	if (pressed) values[0] = 1 - values[0];
+	if (pressed) normalised_values[0] = 1 - normalised_values[0];
 }
 
 
@@ -149,8 +149,8 @@ void Delirium_UI_Widget_Switch::Left_Button_Press(int xm, int ym)
 
 void Delirium_UI_Widget_Switch::Mouse_Scroll(float delta)
 {
-	if (delta == -1) values[0] = false;
-	if (delta == 1) values[0] = true;
+	if (delta == -1) normalised_values[0] = false;
+	if (delta == 1) normalised_values[0] = true;
 
 }
 

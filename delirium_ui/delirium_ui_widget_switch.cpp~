@@ -27,8 +27,6 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 	float value = values[0];
 
-	cout << values[0] << endl;
-
 	cairo_text_extents_t extents;
 	cairo_set_font_size(cr, font_size);
 	cairo_text_extents(cr, label.c_str(), &extents);

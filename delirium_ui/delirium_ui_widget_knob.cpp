@@ -10,7 +10,7 @@ const float font_size = 10;
 
 void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 {
-	if (integer) scaled_value = int(scaled_value);
+	if (integer) values[current_value] = int(values[current_value]);
 	Convert_Scaled_To_Value();
 
 	float widget_x_position = x_position * x_grid_size;
@@ -30,7 +30,7 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 
 	cairo_set_line_width(cr, 2);
 
-	float value = 1-values[0];
+	float value = 1-normalised_values[0];
 
 	float cos_x,sin_y,cos_x2,sin_y2;
 
@@ -99,8 +99,8 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 
 	stringstream number;
 
-	if (integer) scaled_value = int(scaled_value);
-	number << fixed << setprecision(4) << scaled_value;
+	if (integer) values[current_value] = int(values[current_value]);
+	number << fixed << setprecision(4) << values[current_value];
 
 	cairo_text_extents(cr, number.str().c_str(), &extents);
 	float x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
@@ -134,7 +134,7 @@ void Delirium_UI_Widget_Knob::Left_Button_Press(int xm, int ym)
 	float value = (float)ypixel/ (Knob_height);
 	if (value < 0) value = 0;
 	if (value > 1) value = 1;
-	values[0] = value;
+	normalised_values[0] = value;
 }
 
 //-------------------------------------------------------------------------------------------
@@ -142,7 +142,7 @@ void Delirium_UI_Widget_Knob::Left_Button_Press(int xm, int ym)
 
 void Delirium_UI_Widget_Knob::Middle_Button_Press()
 {
-	scaled_value = default_value;
+	values[current_value] = default_values[current_value];
 }
 
 

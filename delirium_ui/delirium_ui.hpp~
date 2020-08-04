@@ -60,11 +60,11 @@ class Delirium_UI_Widget_Base
 	int type;
 	bool inverted;
 
-	float values[4];
+	float normalised_values[4];
 	float min;
 	float max;
-	float scaled_value;
-	float default_value;
+	float values[4];
+	float default_values[4];
 	int current_value;
 	float increment;
 

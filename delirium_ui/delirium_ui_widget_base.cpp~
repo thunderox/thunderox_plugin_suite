@@ -67,30 +67,30 @@ void Delirium_UI_Widget_Base::Mouse_Scroll(float delta)
 	{
 		if (min < max)
 		{
-			scaled_value -= delta * increment;
-			if (scaled_value < min) scaled_value = min;
-			if (scaled_value > max) scaled_value = max;
+			values[current_value] -= delta * increment;
+			if (values[current_value] < min) values[current_value] = min;
+			if (values[current_value] > max) values[current_value] = max;
 		}
 		else
 		{
-			scaled_value += delta * increment;		
-			if (scaled_value > min) scaled_value = min;
-			if (scaled_value < max) scaled_value = max;
+			values[current_value] += delta * increment;		
+			if (values[current_value] > min) values[current_value] = min;
+			if (values[current_value] < max) values[current_value] = max;
 		}
 	}
 	else
 	{
 		if (min < max)
 		{
-			scaled_value += delta * increment;
-			if (scaled_value < min) scaled_value = min;
-			if (scaled_value > max) scaled_value = max;
+			values[current_value] += delta * increment;
+			if (values[current_value] < min) values[current_value] = min;
+			if (values[current_value] > max) values[current_value] = max;
 		}
 		else
 		{
-			scaled_value -= delta * increment;		
-			if (scaled_value > min) scaled_value = min;
-			if (scaled_value < max) scaled_value = max;
+			values[current_value] -= delta * increment;		
+			if (values[current_value] > min) values[current_value] = min;
+			if (values[current_value] < max) values[current_value] = max;
 		}
 	}
 
@@ -100,41 +100,31 @@ void Delirium_UI_Widget_Base::Mouse_Scroll(float delta)
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-// CONVERT 0..1 TO MIN MAX RANGE
+// CONVERT NORMALISED 0~1 TO PARAMETERS MIN~MAX RANGE
 
 void Delirium_UI_Widget_Base::Convert_Value_To_Scaled()
 {
+	float value = normalised_values[current_value];
 
-	float value = values[current_value];
+	values[current_value] = (max-min)-(value * (max - min));
 
-	scaled_value = (value * (max - min));
-	scaled_value = (max-min)-(value * (max - min));
-
-	if (min < 0) scaled_value -= max;
-	if (min > 0) scaled_value += min;
-
-
+	if (min < 0) values[current_value] -= max;
+	if (min > 0) values[current_value] += min;
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
-// CONVERT MIN MAX RANGE TO VALUE 0..1
+// CONVERT PARAMETERS MIN~MAX RANGE TO NORMALISED 0~1
 
 void Delirium_UI_Widget_Base::Convert_Scaled_To_Value()
 
 {
-	float sv = scaled_value;
-
-	if (min > max) sv  -= min;
-	
-	float value = sv / ((max - min));
-
-	if ( min < max) value += (min/max);
-
-	if (type == deliriumUI_Knob) { value = 1-value; }
-	values[current_value] = value;
-
-	cout << value << endl;
+	normalised_values[current_value] = (values[current_value] - min) / (max - min);
+	if (type == deliriumUI_Knob) { normalised_values[current_value] = 1-normalised_values[current_value]; }
+	return;
 }
+
+
+
 
 
 
