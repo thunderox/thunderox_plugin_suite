@@ -128,8 +128,8 @@ endif
 # ---------------------------------------------------------------------------------------------------------------------
 # Set build and link flags
 
-BASE_FLAGS = -Wall -Wextra -pipe -MD -MP
-BASE_OPTS  = -O3 -ffast-math -mtune=generic -fdata-sections -ffunction-sections
+BASE_FLAGS = -Wall -Wextra -pipe -MD -MP -g
+BASE_OPTS  = -O3 -ffast-math -mtune=generic -fdata-sections -ffunction-sections -g
 
 ifeq ($(CPU_I386_OR_X86_64),true)
 BASE_OPTS += -msse -msse2
@@ -144,7 +144,7 @@ ifeq ($(MACOS),true)
 LINK_OPTS  = -fdata-sections -ffunction-sections -Wl,-dead_strip -Wl,-dead_strip_dylibs
 else
 # Common linker flags
-LINK_OPTS  = -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-O1 -Wl,--as-needed
+LINK_OPTS  = -fdata-sections -ffunction-sections -Wl,--gc-sections -Wl,-O1 -Wl,--as-needed -g
 ifneq ($(SKIP_STRIPPING),true)
 LINK_OPTS += -Wl,--strip-all
 endif
@@ -152,7 +152,7 @@ endif
 
 ifeq ($(NOOPT),true)
 # No CPU-specific optimization flags
-BASE_OPTS  = -O2 -ffast-math -fdata-sections -ffunction-sections
+BASE_OPTS  = -O2 -ffast-math -fdata-sections -ffunction-sections -g
 endif
 
 ifeq ($(WINDOWS),true)

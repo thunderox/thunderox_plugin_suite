@@ -101,7 +101,7 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 		new_widget->type = type;
 		new_widget->min = 0;
 		new_widget->max = 1;
-		new_widget->default_value[current_value] = 0;
+		new_widget->default_values[0] = 0;
 		new_widget->current_value = 0;
 		new_widget->increment = 0.01;
 		new_widget->integer = false;
@@ -226,7 +226,7 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 
 	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
 	{	
-		Delirium_UI_Left_Button_Press(GUI,-1,my);
+		// Delirium_UI_Left_Button_Press(GUI,-1,my);
 		
 	}
 	

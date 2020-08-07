@@ -128,7 +128,7 @@ endif
 # ---------------------------------------------------------------------------------------------------------------------
 # Set build and link flags
 
-BASE_FLAGS = -Wall -Wextra -pipe -MD -MP
+BASE_FLAGS = -Wall -Wextra -pipe -MD -MP -g
 BASE_OPTS  = -O3 -ffast-math -mtune=generic -fdata-sections -ffunction-sections
 
 ifeq ($(CPU_I386_OR_X86_64),true)
@@ -202,7 +202,7 @@ ifeq ($(TESTBUILD),true)
 BASE_FLAGS += -Werror -Wcast-qual -Wconversion -Wformat -Wformat-security -Wredundant-decls -Wshadow -Wstrict-overflow -fstrict-overflow -Wundef -Wwrite-strings
 BASE_FLAGS += -Wpointer-arith -Wabi -Winit-self -Wuninitialized -Wstrict-overflow=5
 # BASE_FLAGS += -Wfloat-equal
-ifeq ($(GXX),clang)
+ifeq ($(CC),clang)
 BASE_FLAGS += -Wdocumentation -Wdocumentation-unknown-command
 BASE_FLAGS += -Weverything -Wno-c++98-compat -Wno-c++98-compat-pedantic -Wno-padded -Wno-exit-time-destructors -Wno-float-equal
 else
@@ -210,7 +210,7 @@ BASE_FLAGS += -Wcast-align -Wunsafe-loop-optimizations
 endif
 ifneq ($(MACOS),true)
 BASE_FLAGS += -Wmissing-declarations -Wsign-conversion
-ifneq ($(GXX),clang)
+ifneq ($(CC),clang)
 BASE_FLAGS += -Wlogical-op
 endif
 endif
