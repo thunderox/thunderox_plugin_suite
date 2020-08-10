@@ -75,6 +75,9 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 		cairo_text_extents(cr, pig.c_str(), &extents);
 		x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
 
+		cairo_pattern_destroy(grad1);
+		cairo_pattern_destroy(grad_led);
+
 		if (hover) {
 			cairo_set_source_rgba(cr, 1, 1, 1, 1);
 		} else {
@@ -123,6 +126,9 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 		pig = "OFF";
 		cairo_text_extents(cr, pig.c_str(), &extents);
 		x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
+
+		cairo_pattern_destroy(grad1);
+		cairo_pattern_destroy(grad_led);
 
 		if (hover) {
 			cairo_set_source_rgba(cr, 1, 1, 1, 1);

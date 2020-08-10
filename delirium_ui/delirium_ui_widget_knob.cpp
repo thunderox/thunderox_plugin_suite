@@ -28,6 +28,7 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 	float w = widget_width;
 	float h = widget_height;
 
+
 	cairo_set_line_width(cr, 2);
 
 	float value = 1-normalised_values[0];

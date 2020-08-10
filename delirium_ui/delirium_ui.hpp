@@ -68,6 +68,8 @@ class Delirium_UI_Widget_Base
 	int current_value;
 	float increment;
 
+	cairo_surface_t *surface_image;
+
 	private:
  
 };

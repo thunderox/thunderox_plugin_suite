@@ -1,5 +1,9 @@
 
 #include "delirium_ui.hpp"
+#include<bits/stdc++.h> 
+#include <unistd.h>
+#include <sys/types.h>
+#include <pwd.h>
 
 //-------------------------------------------------------------------------------------------
 
@@ -7,8 +11,19 @@
 
 Delirium_UI_Widget_Base::Delirium_UI_Widget_Base()
 {
-	cairo_surface_t *surface;
-	surface = cairo_image_surface_create_from_png ("/home/cypher_thor/programming/audio/synths/triceratops-v1/delirium_ui/logo.png");
+
+		const char *homedir;
+
+		if ((homedir = getenv("HOME")) == NULL)
+		{
+		    homedir = getpwuid(getuid())->pw_dir;
+		}
+
+		string triceratops_config_path = homedir;
+ 		string logo_file = triceratops_config_path + "/.config/triceratops/logo.png";
+	
+		surface_image = cairo_image_surface_create_from_png (logo_file.c_str());
+
 }
 
 

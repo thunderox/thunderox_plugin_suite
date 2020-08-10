@@ -1,7 +1,7 @@
 
 #include "delirium_ui.hpp"
 
-
+bool draw_flag = true;
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 
@@ -176,22 +176,38 @@ void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface* GUI, int widget_number,
 
 void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 {
+	if (draw_flag)
+	{
+		// float r = GUI->background_rgb[0];
+		// float g = GUI->background_rgb[1];
+		// float b = GUI->background_rgb[2];
 
-	float r = GUI->background_rgb[0];
-	float g = GUI->background_rgb[1];
-	float b = GUI->background_rgb[2];
+		cairo_pattern_t *linpat;
+		linpat = cairo_pattern_create_linear (0,0,0,500);
+		cairo_pattern_add_color_stop_rgb(linpat, 0, 0.2,0.2,0.2);
+		cairo_pattern_add_color_stop_rgb(linpat, 1, 0.1,0.1,0.1);
 
-	cairo_pattern_t *linpat;
-	linpat = cairo_pattern_create_linear (0,0,0,500);
-	cairo_pattern_add_color_stop_rgb(linpat, 0, 0.2,0.2,0.2);
-	cairo_pattern_add_color_stop_rgb(linpat, 1, 0.1,0.1,0.1);
+		cairo_set_source(cr, linpat);
+		cairo_paint(cr);
+	
+		cairo_pattern_destroy(linpat);
 
-	cairo_set_source(cr, linpat);
-	cairo_paint(cr);
-
+		for (uint x=0; x<GUI->Widgets.size(); x++)
+		{
+			GUI->Widgets[x]->Draw(cr);
+		}
+	}
+	
+	draw_flag = false;
+	
 	for (uint x=0; x<GUI->Widgets.size(); x++)
 	{
-		GUI->Widgets[x]->Draw(cr);
+		int current_widget = GUI->current_widget;
+		if (current_widget == x)
+		{
+			if (GUI->Widgets[x]->type != deliriumUI_Panel)
+				GUI->Widgets[x]->Draw(cr);
+		}
 	}
 }
 
@@ -199,7 +215,8 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 
 void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 {
-	Delirium_UI_Mouse_Over(GUI,mx,my);
+
+	// Delirium_UI_Mouse_Over(GUI,mx,my);
 
 	if (GUI->drag == 0)
 	{
@@ -219,14 +236,14 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 			{
 				GUI->current_widget = x;
 				GUI->Widgets[x]->hover = true;
-				GUI->Widgets[x]->Draw(cr);
+				// GUI->Widgets[x]->Draw(cr);
 			}
 		}
 	}
 
 	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
 	{	
-		// Delirium_UI_Left_Button_Press(GUI,-1,my);
+		Delirium_UI_Left_Button_Press(GUI,-1,my);
 		
 	}
 	

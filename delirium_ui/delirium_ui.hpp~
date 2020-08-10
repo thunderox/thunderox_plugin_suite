@@ -31,7 +31,7 @@ class Delirium_UI_Widget_Base
 
 	public:
 
-	Delirium_UI_Widget_Base();
+	Delirium_UI_Widget_Base(int);
 	virtual ~Delirium_UI_Widget_Base();	
 	virtual void Draw(cairo_t*);
 	virtual void Left_Button_Press(int,int);
@@ -68,11 +68,13 @@ class Delirium_UI_Widget_Base
 	int current_value;
 	float increment;
 
+	cairo_surface_t *surface_image;
+
 	private:
  
 };
 
-class Delirium_UI_Widget_Button : public Delirium_UI_Widget_Base
+class Delirium_UI_Widget_Button : public Delirium_UI_Widget_Base(int)
 {
 	public:
 	void Draw(cairo_t*);

@@ -106,6 +106,8 @@ void Delirium_UI_Widget_Fader::Draw(cairo_t* cr)
 	x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
 	cairo_move_to(cr,x_text_centred, sy);
 	cairo_show_text(cr, label.c_str());
+
+	cairo_pattern_destroy(pat);
 }
 
 //-------------------------------------------------------------------------------------------

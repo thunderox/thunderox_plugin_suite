@@ -33,27 +33,7 @@ void Delirium_UI_Widget_Panel::Draw(cairo_t* cr)
 	cairo_rectangle(cr, widget_x_position,widget_y_position,widget_width,widget_height);
 	cairo_fill(cr);
 
-	/*
-
-	cairo_rectangle(cr, x_text_centred-(font_size/2)+2, widget_y_position-font_size, extents.width + font_size, font_size);
-	cairo_fill(cr);
-
-	cairo_set_source_rgba(cr, 0, 0, 0, 0.75);
-
-	cairo_move_to(cr,widget_x_position, widget_y_position);
-	cairo_line_to(cr, widget_x_position + x_text_centred-(font_size/4), widget_y_position);
-	cairo_move_to(cr, widget_x_position + x_text_centred + extents.width - font_size , widget_y_position);
-	cairo_line_to(cr, widget_x_position + widget_width,widget_y_position);
-	cairo_line_to(cr, widget_x_position + widget_width, widget_y_position + widget_height);
-	cairo_line_to(cr, widget_x_position, widget_y_position + widget_height);
-	cairo_line_to(cr, widget_x_position, widget_y_position);
-	cairo_move_to(cr, (widget_x_position + x_text_centred + extents.width) - font_size, widget_y_position);
-	cairo_line_to(cr, (widget_x_position + x_text_centred + extents.width) - font_size, widget_y_position - font_size);
-	cairo_line_to(cr, widget_x_position + x_text_centred - (font_size/2) + 3, widget_y_position - font_size);
-	cairo_line_to(cr, widget_x_position + x_text_centred - (font_size/2) + 3, widget_y_position);
-	cairo_stroke(cr);
-
-	*/
+	cairo_pattern_destroy(linpat);
 
 	// -- text
 

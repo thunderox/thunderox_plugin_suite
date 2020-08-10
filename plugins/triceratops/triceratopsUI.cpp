@@ -239,7 +239,6 @@ class triceratopsUI : public UI
 
 		bool onMotion(const MotionEvent& ev)
 		{
-
 			cairo_t* cr = getParentWindow().getGraphicsContext().cairo;
 
 			Delirium_UI_MouseOver(GUI, cr, ev.pos.getX(), ev.pos.getY());
