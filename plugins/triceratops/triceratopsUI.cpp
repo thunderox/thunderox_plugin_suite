@@ -262,6 +262,7 @@ class triceratopsUI : public UI
 		bool onScroll(const ScrollEvent& ev)
 		{
 			float delta = ev.delta.getY();
+			cairo_t* cr = getParentWindow().getGraphicsContext().cairo;
 
 			int current_widget = GUI->current_widget;
 
@@ -269,6 +270,7 @@ class triceratopsUI : public UI
 			{	
 				GUI->Widgets[current_widget]->Mouse_Scroll(delta);
 				Delirium_UI_Convert_Value_To_Range(GUI, current_widget);
+				GUI->Widgets[current_widget]->Draw(cr);
 				repaint();
 			}
 

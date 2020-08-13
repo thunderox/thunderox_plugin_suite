@@ -3,8 +3,6 @@
 #include <sstream>
 #include<bits/stdc++.h> 
 
-const float font_size = 10;
-
 //-------------------------------------------------------------------------------------------
 
 
@@ -28,21 +26,12 @@ void Delirium_UI_Widget_Knob::Draw(cairo_t* cr)
 	float w = widget_width;
 	float h = widget_height;
 
-	float r = 0.1;
-	float g = 0;
-	float b = 0;
-
-	cairo_pattern_t *linpat;
-	linpat = cairo_pattern_create_linear (0,widget_y_position,0,widget_y_position+widget_height);
-	cairo_pattern_add_color_stop_rgb(linpat, 0, r+0.2,g,b);
-	cairo_pattern_add_color_stop_rgb(linpat, 1, r,g,b);
-	cairo_set_source(cr, linpat);
-	cairo_rectangle(cr, widget_x_position-1, widget_y_position-font_size, widget_width+2, widget_height+font_size);
+	cairo_set_source_rgb(cr, 0.2,0,0);
+	cairo_rectangle(cr, widget_x_position-font_size,widget_y_position-font_size,widget_width+(font_size*1.5),widget_height+font_size);
 	cairo_fill(cr);
-	cairo_pattern_destroy(linpat);
 
 	cairo_set_line_width(cr, 2);
-
+	
 	float value = 1-normalised_values[0];
 
 	float cos_x,sin_y,cos_x2,sin_y2;

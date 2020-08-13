@@ -18,8 +18,14 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
 	cairo_rectangle(cr, x, y, w, h);
 	cairo_stroke(cr);
-	cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 0.25);
-	cairo_paint(cr);
+
+
+	cairo_set_source_rgb(cr, 0,0,0);
+	cairo_rectangle(cr, x,y,w,h-font_size);
+	cairo_fill(cr);
+	cairo_set_source_rgb(cr, 0.15,0,0);
+	cairo_rectangle(cr, x,y,w,h);
+	cairo_fill(cr);
 
 	// DRAW LABEL
 

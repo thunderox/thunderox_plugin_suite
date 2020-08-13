@@ -3,7 +3,6 @@
 #include <sstream>
 #include<bits/stdc++.h> 
 
-const float font_size = 10;
 
 //-------------------------------------------------------------------------------------------
 
@@ -26,6 +25,10 @@ void Delirium_UI_Widget_Fader::Draw(cairo_t* cr)
 	float fader_top = sy + (font_size * 1.5);
 	float fader_height = sh - (font_size*4);
 	float value_to_ypixel = (normalised_values[0] * fader_height);
+
+	cairo_set_source_rgb(cr, 0.2,0,0);
+	cairo_rectangle(cr, widget_x_position-(font_size),widget_y_position-font_size,widget_width+(font_size*3),widget_height+font_size);
+	cairo_fill(cr);
 
 	// ------------------------------------------------------------------
 

@@ -7,6 +7,8 @@
 #ifndef DELIRIUM_UI
 #define DELIRIUM_UI
 
+const float font_size = 10;
+
 using namespace std;
 
 typedef enum 

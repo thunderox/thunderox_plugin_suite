@@ -176,11 +176,14 @@ void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface* GUI, int widget_number,
 
 void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 {
+
 	if (draw_flag)
 	{
 		// float r = GUI->background_rgb[0];
 		// float g = GUI->background_rgb[1];
 		// float b = GUI->background_rgb[2];
+
+		draw_flag = false;
 
 		cairo_pattern_t *linpat;
 		linpat = cairo_pattern_create_linear (0,0,0,500);
@@ -196,19 +199,17 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 		{
 			GUI->Widgets[x]->Draw(cr);
 		}
-	}
 	
-	draw_flag = false;
-	
-	for (uint x=0; x<GUI->Widgets.size(); x++)
+	}	
+	else
 	{
-		int current_widget = GUI->current_widget;
-		if (current_widget == x)
+		for (uint x=0; x<GUI->Widgets.size(); x++)
 		{
-			if (GUI->Widgets[x]->type != deliriumUI_Panel)
+			if (GUI->drag && GUI->current_widget==x)
 				GUI->Widgets[x]->Draw(cr);
 		}
 	}
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -230,13 +231,20 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 			r_widget.setWidth(GUI->Widgets[x]->width * GUI->x_grid_size);
 			r_widget.setHeight(GUI->Widgets[x]->height * GUI->y_grid_size);
 			
-			GUI->Widgets[x]->hover = false;
-
-			if (r_widget.contains(mx,my))
+			if (r_widget.contains(mx,my) && GUI->Widgets[x]->type != deliriumUI_Panel)
 			{
+ 
+				int old_current_widget = GUI->current_widget;
+				if (old_current_widget > -1)
+				{
+					GUI->Widgets[old_current_widget]->hover = false; // New current widget switch hover off previous
+					GUI->Widgets[old_current_widget]->Draw(cr); // one and redraw it.
+				}
+
 				GUI->current_widget = x;
+
 				GUI->Widgets[x]->hover = true;
-				// GUI->Widgets[x]->Draw(cr);
+				GUI->Widgets[x]->Draw(cr);
 			}
 		}
 	}

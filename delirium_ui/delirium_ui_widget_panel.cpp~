@@ -24,16 +24,11 @@ void Delirium_UI_Widget_Panel::Draw(cairo_t* cr)
 	cairo_rectangle(cr, widget_x_position-1, widget_y_position-font_size, widget_width+2, widget_height+font_size);
 	cairo_fill(cr);
 
-	cairo_pattern_t *linpat;
-	linpat = cairo_pattern_create_linear (0,widget_y_position,0,widget_y_position+widget_height);
-	cairo_pattern_add_color_stop_rgb(linpat, 0, r+0.2,g,b);
-	cairo_pattern_add_color_stop_rgb(linpat, 1, r,g,b);
-	cairo_set_source(cr, linpat);
-
+	cairo_set_source_rgb(cr, 0.2,0,0);
 	cairo_rectangle(cr, widget_x_position,widget_y_position,widget_width,widget_height);
 	cairo_fill(cr);
 
-	cairo_pattern_destroy(linpat);
+	
 
 	// -- text
 

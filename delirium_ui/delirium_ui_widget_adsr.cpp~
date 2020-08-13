@@ -18,8 +18,11 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
 	cairo_rectangle(cr, x, y, w, h);
 	cairo_stroke(cr);
-	cairo_set_source_rgba(cr, 0.0, 0.0, 0.0, 0.25);
-	cairo_paint(cr);
+
+
+	cairo_set_source_rgb(cr, 0.1,0,0);
+	cairo_rectangle(cr, x,y,w,h);
+	cairo_fill(cr);
 
 	// DRAW LABEL
 
@@ -51,8 +54,8 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	{
 		float xcol = xc * (w / 5);
 		
-		if (xc > 1) yp = (values[xc-1] * (h/2));
-			else yp = (h/2) - (values[xc-1] * (h/2));
+		if (xc > 1) yp = (normalised_values[xc-1] * (h/2));
+			else yp = (h/2) - (normalised_values[xc-1] * (h/2));
 
 		if (xc > 1)
 		{
