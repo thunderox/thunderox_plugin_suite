@@ -217,7 +217,7 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 {
 
-	// Delirium_UI_Mouse_Over(GUI,mx,my);
+	Delirium_UI_Mouse_Over(GUI,mx,my);
 
 	if (GUI->drag == 0)
 	{

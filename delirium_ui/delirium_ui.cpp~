@@ -252,7 +252,6 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
 	{	
 		Delirium_UI_Left_Button_Press(GUI,-1,my);
-		GUI->Widgets[GUI->current_widget]->Draw(cr);
 		
 	}
 	

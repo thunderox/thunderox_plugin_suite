@@ -1,5 +1,7 @@
 
 #include "delirium_ui.hpp"
+#include <sstream>
+#include<bits/stdc++.h> 
 
 //-------------------------------------------------------------------------------------------
 
@@ -15,13 +17,8 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	float sw = w;
 	float sh = h * 0.8;
 
-	cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
-	cairo_rectangle(cr, x, y, w, h);
-	cairo_stroke(cr);
-
-
 	cairo_set_source_rgb(cr, 0,0,0);
-	cairo_rectangle(cr, x,y,w,h-font_size);
+	cairo_rectangle(cr, x,y-font_size,w,h);
 	cairo_fill(cr);
 	cairo_set_source_rgb(cr, 0.15,0,0);
 	cairo_rectangle(cr, x,y,w,h);
@@ -30,6 +27,7 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	// DRAW LABEL
 
 	cairo_text_extents_t extents;
+	cairo_set_font_size(cr, font_size);
 	float x_text_centred; 
 	cairo_set_source_rgb(cr, 0.8,0.8,0.8);
 	cairo_text_extents(cr, label.c_str(), &extents);
@@ -37,11 +35,38 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	cairo_move_to(cr,x_text_centred, y);
 	cairo_show_text(cr, label.c_str());
 
-	// ----------
+	// DRAW VALUE
 
 	if (hover)
 	{
-		// cout << x << endl;
+	
+		stringstream number;
+
+		switch (current_value)
+		{
+			case 0:
+				number << "Attack: ";		
+				break;
+	
+			case 1:
+				number << "Decay: ";
+				break;
+	
+			case 2:
+				number << "Sustain: ";
+				break;
+	
+			case 3:
+				number << "Release: ";
+				break;
+		}
+
+		number << fixed << setprecision(4) << values[current_value];
+	
+		cairo_text_extents(cr, number.str().c_str(), &extents);
+		x_text_centred = (x + w / 2) - extents.width / 2;
+		cairo_move_to(cr,x_text_centred, (h+y)-font_size);
+		cairo_show_text(cr, number.str().c_str());
 	}
 
 	// ----------
@@ -90,7 +115,25 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 
 void Delirium_UI_Widget_ADSR::Left_Button_Press(int xm, int ym)
 {
+	float widget_x_position = x_position * x_grid_size;
+	float widget_y_position = y_position * y_grid_size;
+	float widget_width = width * x_grid_size;
+	float widget_height = height * y_grid_size;
 
+	float sx = widget_x_position;
+	float sy = widget_y_position;
+	float sw = widget_width;
+	float sh = widget_height;
+	
+	float fader_top = sy + font_size;
+	float fader_height = sh * 0.5;
+
+	float ypixel = (ym - widget_y_position) - font_size;
+	float value = (float)ypixel/ (fader_height);
+	if (value < 0) value = 0;
+	if (value > 1) value = 1;
+	if (current_value == 0) value = 1-value;
+	normalised_values[current_value] = value;
 }
 
 
@@ -107,8 +150,6 @@ void Delirium_UI_Widget_ADSR::Mouse_Over(int xm, int ym)
 	int new_current_value = int((xm-x)/(w/5))-1;
 
 	if (new_current_value >= 0 && new_current_value <= 3) current_value = new_current_value;
-
-	cout << new_current_value << endl;
 	
 }
 

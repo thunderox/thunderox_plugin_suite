@@ -23,6 +23,10 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 	float w = widget_width;
 	float h = widget_height;
 
+	cairo_set_source_rgb(cr, 0.2,0,0);
+	cairo_rectangle(cr, widget_x_position-font_size,widget_y_position-font_size,widget_width+(font_size*1.5),widget_height+font_size);
+	cairo_fill(cr);
+
 	float value = normalised_values[0];
 
 	cairo_text_extents_t extents;
