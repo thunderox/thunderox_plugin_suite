@@ -7,6 +7,8 @@
 #ifndef DELIRIUM_UI
 #define DELIRIUM_UI
 
+const float font_size = 10;
+
 using namespace std;
 
 typedef enum 
@@ -125,6 +127,14 @@ class Delirium_UI_Widget_Panel : public Delirium_UI_Widget_Base
 };
 
 class Delirium_UI_Widget_ADSR : public Delirium_UI_Widget_Base
+{
+	public:
+	void Draw(cairo_t*);
+	void Left_Button_Press(int,int);
+	void Mouse_Over(int,int);
+};
+
+class Delirium_UI_Widget_Selector : public Delirium_UI_Widget_Base
 {
 	public:
 	void Draw(cairo_t*);

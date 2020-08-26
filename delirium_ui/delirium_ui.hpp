@@ -134,6 +134,14 @@ class Delirium_UI_Widget_ADSR : public Delirium_UI_Widget_Base
 	void Mouse_Over(int,int);
 };
 
+class Delirium_UI_Widget_Selector : public Delirium_UI_Widget_Base
+{
+	public:
+	void Draw(cairo_t*);
+	void Left_Button_Press(int,int);
+	void Mouse_Over(int,int);
+};
+
 struct Delirium_UI_Surface
 {
 
@@ -163,8 +171,8 @@ float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface*);
 void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface*, int, float);
 int Delirium_UI_Widget_Get_Parameter_Number(Delirium_UI_Surface*);
 void Delirium_UI_Display_All(Delirium_UI_Surface*, cairo_t*);
-void Delirium_UI_MouseOver(Delirium_UI_Surface*, cairo_t* cr, int,int);
-void Delirium_UI_Left_Button_Press(Delirium_UI_Surface*, int,int);
+void Delirium_UI_MouseOver(Delirium_UI_Surface*, cairo_t*, int,int);
+void Delirium_UI_Left_Button_Press(Delirium_UI_Surface*, cairo_t*, int,int);
 void Delirium_UI_Middle_Button_Press(Delirium_UI_Surface*);
 void Delirium_UI_Mouse_Over(Delirium_UI_Surface*, int,int);
 void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface*, int);

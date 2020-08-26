@@ -22,6 +22,7 @@ Delirium_UI_Surface* Delirium_UI_Init(int width, int height, int gridX, int grid
 	GUI->background_rgb[2] = 0;
 
 	GUI->current_widget = -1;
+	draw_flag = true;
 
 	return GUI;
 }
@@ -86,6 +87,12 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 		widget_created = true;
 	}
 
+	if (type == deliriumUI_Selector)
+	{
+		new_widget = new Delirium_UI_Widget_Selector();
+		widget_created = true;
+	}
+
 
 	if (widget_created)
 	{
@@ -138,6 +145,7 @@ void Delirium_UI_Widget_Set_Increment(Delirium_UI_Surface* GUI, int widget_numbe
 float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface* GUI)
 {
 	int current_widget = GUI->current_widget;
+	if (current_widget < 0) return -1;
 	int current_value = GUI->Widgets[GUI->current_widget]->current_value;
 
 	return GUI->Widgets[GUI->current_widget]->values[current_value];
@@ -148,6 +156,7 @@ float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface* GUI)
 void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface* GUI, int widget_number, float default_value)
 {	
 	int current_value = GUI->Widgets[widget_number]->current_value;
+	if (current_value < 0) return;
 	GUI->Widgets[widget_number]->default_values[current_value] = default_value;
 }
 
@@ -203,10 +212,10 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 	}	
 	else
 	{
-		for (uint x=0; x<GUI->Widgets.size(); x++)
+		int current_widget = GUI->current_widget;
+		if (current_widget > -1)
 		{
-			if (GUI->drag && GUI->current_widget==x)
-				GUI->Widgets[x]->Draw(cr);
+			if (GUI->Widgets[current_widget]->type != deliriumUI_Panel) GUI->Widgets[current_widget]->Draw(cr);
 		}
 	}
 
@@ -217,11 +226,13 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 {
 
-	Delirium_UI_Mouse_Over(GUI,mx,my);
-
 	if (GUI->drag == 0)
 	{
+		Delirium_UI_Mouse_Over(GUI,mx,my);
 
+		int old_current_widget = GUI->current_widget;
+		GUI->current_widget = -1;
+		
 		for (uint x=0; x<GUI->Widgets.size(); x++)
 		{		
 			Rectangle<int> r_widget;
@@ -231,36 +242,36 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 			r_widget.setWidth(GUI->Widgets[x]->width * GUI->x_grid_size);
 			r_widget.setHeight(GUI->Widgets[x]->height * GUI->y_grid_size);
 			
-			if (r_widget.contains(mx,my) && GUI->Widgets[x]->type != deliriumUI_Panel)
+			if (r_widget.contains(mx,my))
 			{
  
-				int old_current_widget = GUI->current_widget;
 				if (old_current_widget > -1)
 				{
 					GUI->Widgets[old_current_widget]->hover = false; // New current widget switch hover off previous
-					GUI->Widgets[old_current_widget]->Draw(cr); // one and redraw it.
+					if (GUI->Widgets[old_current_widget]->type != deliriumUI_Panel) GUI->Widgets[old_current_widget]->Draw(cr); // one and redraw it.
 				}
 
 				GUI->current_widget = x;
 
 				GUI->Widgets[x]->hover = true;
-				GUI->Widgets[x]->Draw(cr);
+				if (GUI->Widgets[x]->type != deliriumUI_Panel) GUI->Widgets[x]->Draw(cr);
 			}
 		}
 	}
 
-	if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
-	{	
-		Delirium_UI_Left_Button_Press(GUI,-1,my);
-		
-	}
-	
+	if (GUI->current_widget > -1)
+	{
+		if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
+		{	
+			Delirium_UI_Left_Button_Press(GUI,cr,-1,my);
+		}
+	}	
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
 // LEFT MOUSE BUTTON PRESSED
 
-void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, int xm, int ym)
+void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm, int ym)
 {
 	int current_widget = GUI->current_widget;
 	if (xm > -1) GUI->drag = 1 - GUI->drag;
@@ -270,6 +281,14 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, int xm, int ym)
 		GUI->Widgets[current_widget]->pressed = 1 - GUI->Widgets[current_widget]->pressed;
 		GUI->Widgets[current_widget]->Left_Button_Press(xm,ym);
 		Delirium_UI_Convert_Value_To_Range(GUI,current_widget);
+
+		if (GUI->drag==0)
+		{
+			draw_flag = true;
+			GUI->Widgets[current_widget]->hover = false;
+			GUI->current_widget = -1;
+			GUI->Widgets[current_widget]->Draw(cr);
+		}
 	}
 }
 
@@ -309,6 +328,7 @@ void Delirium_UI_Mouse_Over(Delirium_UI_Surface* GUI, int xm, int ym)
 // CONVERT VALUE 0..1 TO MIN MAX RANGE
 void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface* GUI, int widget_number)
 {
+	if (widget_number < 0) return;
 	int current_value = GUI->Widgets[widget_number]->current_value;
 	float value = GUI->Widgets[widget_number]->normalised_values[current_value];
 	float scaled_value;
@@ -329,6 +349,7 @@ void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface* GUI, int widget_num
 // CONVERT MIN MAX RANGE TO VALUE 0..1
 void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface* GUI, int widget_number)
 {
+	if (widget_number < 0) return;
 	int current_value = GUI->Widgets[widget_number]->current_value;
 	float scaled_value = GUI->Widgets[widget_number]->values[current_value];
 	float min = GUI->Widgets[widget_number]->min;
@@ -349,6 +370,7 @@ void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface* GUI, int widget_num
 
 void Delirium_UI_Widget_Set_Integer(Delirium_UI_Surface* GUI, int widget_number, bool _integer)
 {
+	if (widget_number < 0) return;
 	GUI->Widgets[widget_number]->integer = _integer;
 }
 
