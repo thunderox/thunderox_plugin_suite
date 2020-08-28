@@ -123,6 +123,7 @@ enum Parameters {
     kParameterBufferSize = 0,
     kParametertriceratopsTime,
     kParametertriceratopsAmount,
+    kParametertriceratopsVolume,
     kParameterCount
 };
 

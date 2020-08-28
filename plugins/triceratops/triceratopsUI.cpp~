@@ -150,23 +150,21 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Value(GUI, widget_env1_route2, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount; 
 
-
-
-
-
 			//--------------------------------------------------------------------------------------------
 
 			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, 18, 7.5, 15.5,5.75, "AMP/FX", 0);
 
 			int widget_selector = Delirium_UI_Create_Widget(GUI, deliriumUI_Selector, 0,20,8.5,2,4,"WAVE", 0);
 
-			int widget_volume = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, 27, 9, 3, 3, "VOLUME", kParametertriceratopsTime);
+			int widget_volume = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, 27, 9, 3, 3, "VOLUME", kParametertriceratopsVolume);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_volume, 0,1);
 			Delirium_UI_Widget_Set_Value(GUI, widget_volume, 0.6);
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_volume, 0.6);
-			// fParameters_widget_number[kParametertriceratopsTime] = widget_osc1_volume; 
+			fParameters_widget_number[kParametertriceratopsVolume] = widget_volume; 
 
+			GUI->draw_flag = true;
 
+			cout << "CAIRO WINDOW = " << getParentWindow().getGraphicsContext().cairo << endl;
 		}
 
 		//------------------------------------------------------------------------------------------------------
@@ -238,7 +236,7 @@ class triceratopsUI : public UI
 			if (parameter_number > 0)
 			{	
 				float value = Delirium_UI_Widget_Get_Value(GUI);
-				 setParameterValue(parameter_number, value);
+				setParameterValue(parameter_number, value);
 			}
 			return true;
 
@@ -259,6 +257,14 @@ class triceratopsUI : public UI
 				Delirium_UI_Convert_Value_To_Range(GUI, current_widget);
 				GUI->Widgets[current_widget]->Draw(cr);
 				repaint();
+			}
+
+			int parameter_number = Delirium_UI_Widget_Get_Parameter_Number(GUI);
+
+			if (parameter_number > 0)
+			{	
+				float value = Delirium_UI_Widget_Get_Value(GUI);
+				setParameterValue(parameter_number, value);
 			}
 
 			return true;

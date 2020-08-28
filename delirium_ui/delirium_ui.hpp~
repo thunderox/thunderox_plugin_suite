@@ -43,7 +43,6 @@ class Delirium_UI_Widget_Base
 	virtual void Convert_Value_To_Scaled();
 	virtual void Convert_Scaled_To_Value();
 
-
 	float	x_position;
 	float	y_position;
 	float	width;
@@ -151,6 +150,8 @@ struct Delirium_UI_Surface
 	float y_grid_size;
 	int current_widget;
 	bool    drag;
+	bool draw_flag;
+
 
 	float background_rgb[3];
 	float foreground_rgb[3];
@@ -171,8 +172,8 @@ float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface*);
 void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface*, int, float);
 int Delirium_UI_Widget_Get_Parameter_Number(Delirium_UI_Surface*);
 void Delirium_UI_Display_All(Delirium_UI_Surface*, cairo_t*);
-void Delirium_UI_MouseOver(Delirium_UI_Surface*, cairo_t* cr, int,int);
-void Delirium_UI_Left_Button_Press(Delirium_UI_Surface*, int,int);
+void Delirium_UI_MouseOver(Delirium_UI_Surface*, cairo_t*, int,int);
+void Delirium_UI_Left_Button_Press(Delirium_UI_Surface*, cairo_t*, int,int);
 void Delirium_UI_Middle_Button_Press(Delirium_UI_Surface*);
 void Delirium_UI_Mouse_Over(Delirium_UI_Surface*, int,int);
 void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface*, int);

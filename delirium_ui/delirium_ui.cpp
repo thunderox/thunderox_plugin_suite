@@ -1,8 +1,6 @@
 
 #include "delirium_ui.hpp"
 
-bool draw_flag = true;
-
 //----------------------------------------------------------------------------------------------------------------------------------------
 
 Delirium_UI_Surface* Delirium_UI_Init(int width, int height, int gridX, int gridY)
@@ -22,7 +20,7 @@ Delirium_UI_Surface* Delirium_UI_Init(int width, int height, int gridX, int grid
 	GUI->background_rgb[2] = 0;
 
 	GUI->current_widget = -1;
-	draw_flag = true;
+	GUI->draw_flag = true;
 
 	return GUI;
 }
@@ -111,7 +109,7 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 		new_widget->default_values[0] = 0;
 		new_widget->current_value = 0;
 		new_widget->increment = 0.01;
-		new_widget->integer = false;
+		new_widget->integer = (type == deliriumUI_Selector);
 		new_widget->hover = false;
 		if (type == deliriumUI_Switch) new_widget->toggle_mode = true; else new_widget->toggle_mode = false;
 		GUI->Widgets.push_back(new_widget);
@@ -186,13 +184,14 @@ void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface* GUI, int widget_number,
 void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 {
 
-	if (draw_flag)
+	if (GUI->draw_flag)
 	{
 		// float r = GUI->background_rgb[0];
 		// float g = GUI->background_rgb[1];
 		// float b = GUI->background_rgb[2];
 
-		draw_flag = false;
+
+		GUI->draw_flag = false;
 
 		cairo_pattern_t *linpat;
 		linpat = cairo_pattern_create_linear (0,0,0,500);
@@ -284,7 +283,7 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 
 		if (GUI->drag==0)
 		{
-			draw_flag = true;
+			GUI->draw_flag = true;
 			GUI->Widgets[current_widget]->hover = false;
 			GUI->current_widget = -1;
 			GUI->Widgets[current_widget]->Draw(cr);

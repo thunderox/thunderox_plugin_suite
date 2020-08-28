@@ -93,7 +93,7 @@ class triceratopsPlugin : public Plugin
 					parameter.ranges.min = 0.0f;
 					parameter.ranges.max = 1.0f;
 					parameter.ranges.def = 0.5f;
-					fParameters[kParametertriceratopsTime] = 0.5;
+					fParameters[kParametertriceratopsTime] = parameter.ranges.def;
 					break;
 
 				case kParametertriceratopsAmount:
@@ -102,7 +102,18 @@ class triceratopsPlugin : public Plugin
 					parameter.hints = kParameterIsAutomable;
 					parameter.ranges.min = 0.0f;
 					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[kParametertriceratopsAmount] = parameter.ranges.def;
+					break;
+
+				case kParametertriceratopsVolume:
+					parameter.name   = "triceratops Volume";
+					parameter.symbol = "triceratops_volume";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
 					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.8f;
+					fParameters[kParametertriceratopsVolume] = parameter.ranges.def;
 					break;
 			}
 		}
@@ -134,7 +145,7 @@ class triceratopsPlugin : public Plugin
 		void run(const float** inputs, float** outputs, uint32_t frames,
              const MidiEvent* midiEvents, uint32_t midiEventCount) override
 		{
-			// cout << getParameterValue(kParametertriceratopsTime) << "," << getParameterValue(kParametertriceratopsAmount) << endl;
+			// cout << getParameterValue(kParametertriceratopsVolume) << endl;
 			// memcpy(outputs[0], inputs[0], frames * sizeof(float));
 
 			float* out_left = outputs[0];

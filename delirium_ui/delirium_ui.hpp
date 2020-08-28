@@ -43,7 +43,6 @@ class Delirium_UI_Widget_Base
 	virtual void Convert_Value_To_Scaled();
 	virtual void Convert_Scaled_To_Value();
 
-
 	float	x_position;
 	float	y_position;
 	float	width;
@@ -150,7 +149,9 @@ struct Delirium_UI_Surface
 	float x_grid_size;
 	float y_grid_size;
 	int current_widget;
-	bool    drag;
+	bool drag;
+	bool draw_flag;
+
 
 	float background_rgb[3];
 	float foreground_rgb[3];
