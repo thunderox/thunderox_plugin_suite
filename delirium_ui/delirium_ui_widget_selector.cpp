@@ -16,59 +16,55 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 	float w = width * x_grid_size;
 	float h = height * y_grid_size;
 
-	cairo_set_source_rgb(cr, 0.2,0,0);
+	cairo_set_source_rgb(cr, 0.15,0,0);
 	cairo_rectangle(cr, x, y, w, h);
 	cairo_fill(cr);
 
-	cairo_set_source_rgb(cr, 0.1,0,0);
-	cairo_set_line_width(cr, 2);	
 
-	if (toggle_mode)
+	// SHOW CURRENT WAVEFORM
+	
+	
+	cairo_set_source_rgb(cr, 0.6,0.6,0.6);		
+	
+	switch (int(values[current_value]))
 	{
-		cairo_rectangle(cr, x, y, w, h);
-		cairo_fill(cr);
-
-		cairo_set_source_rgb(cr, 0,0,0);
-		for (int wv=0; wv<6; wv++)
-		{
-			cairo_move_to(cr, x,font_size+32+y+(wv*30));
-			cairo_line_to(cr,  x+w,font_size+32+y+(wv*30));
+		case 0:
+			// SAW
+			cairo_move_to(cr,x+(w/4), y+(h/1.25));
+			cairo_line_to(cr, x+(w-(w/4)), y+(h/2.75));
 			cairo_stroke(cr);
-		}
-
-		cairo_set_source_rgb(cr, 0.5,0.5,0.5);
-		int wx = x+5;
-		int wy = y+font_size;
-		cairo_move_to(cr, wx,wy+25);
-		cairo_line_to(cr, wx+(w-10),wy+5);
-		cairo_stroke(cr);
-
-		wy+=30;
-		cairo_move_to(cr, wx,wy+25);
-		cairo_line_to(cr, wx,wy+5);
-		cairo_line_to(cr, wx+(w/2),wy+5);
-		cairo_line_to(cr, wx+(w/2),wy+25);
-		cairo_line_to(cr, wx+w-5,wy+25);
-		cairo_stroke(cr);
-
-		wy+=30;
-		cairo_move_to(cr,wx,wy);
-		for (int xpos=0; xpos<w-10; xpos++)
-		{
-			cairo_line_to(cr, wx+xpos, wy+30);
-		}
-		cairo_stroke(cr);
-
+			break;
+		case 1:
+				
+			// SQUARE
+			cairo_move_to(cr, x+(w/4), y+(h/1.25));
+			cairo_line_to(cr, x+(w/4), y+(h/2.75));
+			cairo_line_to(cr, x+(w-(w/4)), y+(h/2.75));
+			cairo_line_to(cr, x+(w-(w/4)), y+(h/1.25));
+			cairo_stroke(cr);
+			break;
+		case 2:
+			// SINE 
+			cairo_move_to(cr, x+(w/4), y+(h/2.75));
+	  		cairo_curve_to(cr, x+(w/2), y+(h*1.5), x+(w/2),y-(h/2), x+(w-(w/4)),y+(h/1.25));
+			cairo_stroke(cr);
+			break;
+			
+		case 3:
+			// S&H
+			cairo_move_to(cr, x+(w/8), y+(h/2));
+			for (int shx=(w/8)+(w/16); shx<(w-(w/8))-(w/16); shx+=(w/8))
+			{
+				float shy = (rand() % int(h)/4) - (2*(rand() % int(h)/4));  		
+				cairo_line_to(cr, x+shx, y+((h/1.75) + (shy/2)));			
+			}
+			cairo_line_to(cr, x+(w-(w/8)), y+(h/2));
+			cairo_stroke(cr);
+			break;
 	}
-	else
-	{
-		cairo_rectangle(cr, x, y, w, font_size+32);
-		cairo_fill(cr);
-	}
-
+		
 
 	// DRAW LABEL
-
 
 	cairo_set_source_rgb(cr, 0,0,0);
 	cairo_rectangle(cr, x, y, w,font_size);
@@ -90,6 +86,8 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 	cairo_move_to(cr,x_text_centred, y+font_size);
 	cairo_show_text(cr, label.c_str());
 
+
+
 }
 
 //-------------------------------------------------------------------------------------------
@@ -102,9 +100,14 @@ void Delirium_UI_Widget_Selector::Left_Button_Press(int xm, int ym)
 	float w = width * x_grid_size;
 	float h = height * y_grid_size;
 		
-	if (ym > y && ym < y+font_size+32)
+	toggle_mode = 1 - toggle_mode;
+
+	if (toggle_mode==0) 
 	{
-		toggle_mode = 1 - toggle_mode;
+		values[current_value]++;
+		if (values[current_value]>6) values[current_value]=0;
+		Convert_Scaled_To_Value();
+		cout << values[current_value] << endl;
 	}
 }
 

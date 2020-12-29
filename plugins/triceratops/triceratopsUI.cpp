@@ -154,7 +154,7 @@ class triceratopsUI : public UI
 
 			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, 18, 7.5, 15.5,5.75, "AMP/FX", 0);
 
-			int widget_selector = Delirium_UI_Create_Widget(GUI, deliriumUI_Selector, 0,20,8.5,2,4,"WAVE", 0);
+			int widget_selector = Delirium_UI_Create_Widget(GUI, deliriumUI_Selector, 0,20,8.5,2,2,"WAVE", 0);
 
 			int widget_volume = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, 27, 9, 3, 3, "VOLUME", kParametertriceratopsVolume);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_volume, 0,1);
