@@ -5,33 +5,33 @@
 
 void Delirium_UI_Widget_Panel::Draw(cairo_t* cr) 
 {
-	float widget_x_position = x_position * x_grid_size;
-	float widget_y_position = y_position * y_grid_size;
-	float widget_width = width * x_grid_size;
-	float widget_height = height * y_grid_size;
+	float wX = x_position * x_grid_size;
+	float wY = y_position * y_grid_size;
+	float wW = width * x_grid_size;
+	float wH = height * y_grid_size;
 
 	float r = 0.1;
 	float g = 0;
 	float b = 0;
 
 	cairo_text_extents_t extents;
-	int font_size = 14;
+ 
 	cairo_set_font_size(cr, font_size);
 	cairo_text_extents(cr, label.c_str(), &extents);
-	float x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
+	float x_text_centred = (wX + wW / 2) - extents.width / 2;
 
-	cairo_set_source_rgba(cr, 0.1,0.1,0.1,1);
-	cairo_rectangle(cr, widget_x_position-1, widget_y_position-font_size, widget_width+2, widget_height+font_size);
+	cairo_set_source_rgb(cr, 0.0, 0.0, 0.0);
+	cairo_rectangle(cr, wX - 1, wY - (font_size * 1.5), wW + 2, wH + (font_size * 1.5) );
 	cairo_fill(cr);
 
 	cairo_set_source_rgb(cr, 0.2,0,0);
-	cairo_rectangle(cr, widget_x_position,widget_y_position,widget_width,widget_height);
+	cairo_rectangle(cr, wX, wY + (font_size * 0.5), wW, wH);
 	cairo_fill(cr);
 
 	// -- text
 
-	cairo_set_source_rgba(cr, 1,1,1,0.75);
-	cairo_move_to(cr,x_text_centred, widget_y_position-1);
+	cairo_set_source_rgb(cr, 0.6, 0.6, 0.6);
+	cairo_move_to(cr,x_text_centred, wY - 1);
 	cairo_show_text(cr, label.c_str());
 }
 

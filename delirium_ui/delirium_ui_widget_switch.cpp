@@ -8,23 +8,13 @@
 
 void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 {
-	float widget_x_position = x_position * x_grid_size;
-	float widget_y_position = y_position * y_grid_size;
-	float widget_width = width * x_grid_size;
-	float widget_height = height * y_grid_size;
-
-	float sx = widget_x_position;
-	float sy = widget_y_position;
-	float sw = widget_width;
-	float sh = widget_height;
-
-	float x = widget_x_position;
-	float y = widget_y_position;
-	float w = widget_width;
-	float h = widget_height;
+	float wX = x_position * x_grid_size;
+	float wY = y_position * y_grid_size;
+	float wW = width * x_grid_size;
+	float wH = height * y_grid_size;
 
 	cairo_set_source_rgb(cr, 0.2,0,0);
-	cairo_rectangle(cr, widget_x_position-font_size,widget_y_position-font_size,widget_width+(font_size*1.5),widget_height+font_size);
+	cairo_rectangle(cr, wX - font_size, wY - font_size, wW + (font_size * 1.5), wH + font_size);
 	cairo_fill(cr);
 
 	float value = normalised_values[0];
@@ -32,50 +22,50 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 	cairo_text_extents_t extents;
 	cairo_set_font_size(cr, font_size);
 	cairo_text_extents(cr, label.c_str(), &extents);
-	float x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
+	float x_text_centred = (wX + wW / 2) - extents.width / 2;
 
-	string pig;
-	float switch_yp = sy+(sh/3.0);
+	string txt;
+	float switch_yp = wY + (wH / 2.0);
 
 	if (value)
 	{
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, sw/2.8, 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, wW / 2.8, 0.0, 2 * M_PI);
 
 		cairo_set_source_rgba(cr, 0,0,0,0.5);
 		cairo_fill(cr);
 
 		cairo_pattern_t* grad1;
-		grad1 = cairo_pattern_create_linear(sx+(sw/1.9), switch_yp, sx+(sw/3), sy+(sh/3) );
+		grad1 = cairo_pattern_create_linear(wX + (wW / 1.9), switch_yp, wX + (wW / 3), wY + (wH / 3) );
 
 		cairo_pattern_add_color_stop_rgba(grad1, 0,0.2,0.2,0.2,1);
 		cairo_pattern_add_color_stop_rgba(grad1, 0.3,0.4,0.4,0.4,1);
 		cairo_pattern_add_color_stop_rgba(grad1, 1,0.0,0.0,0.0,1);
 
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, sw/2.75, 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, wW / 2.75, 0.0, 2 * M_PI);
 
 		cairo_set_source(cr, grad1);
 		cairo_fill(cr);
 
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, sw/4.75, 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, wW / 4.75, 0.0, 2 * M_PI);
 
 		cairo_set_source_rgba(cr, 0,0,0,0.5);
 		cairo_fill(cr);
 
 		cairo_pattern_t* grad_led;
-		grad_led = cairo_pattern_create_radial(sx+(w/1.9), switch_yp, 0, sx+(sw/6), sy+(sh/6), h/2);
+		grad_led = cairo_pattern_create_radial(wX + (wW / 1.9), switch_yp, 0, wX + (wW / 3), wY + (wH / 3), wH / 2);
 
 		cairo_pattern_add_color_stop_rgba(grad_led, 0,0.0,0.9,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 0.3,0.0,0.1,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 0.9,0.0,0.10,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 1.0,0.0,0.0,0.0,1);
 
-		cairo_arc(cr, sx+(sw/1.7), switch_yp, sw/6, 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.7), switch_yp, wW / 6, 0.0, 2 * M_PI);
 		cairo_set_source(cr, grad_led);
 		cairo_fill(cr);
 
-		pig = "ON";
-		cairo_text_extents(cr, pig.c_str(), &extents);
-		x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
+		txt = "ON";
+		cairo_text_extents(cr, txt.c_str(), &extents);
+		x_text_centred = (wX + wW / 2) - extents.width / 2;
 
 		cairo_pattern_destroy(grad1);
 		cairo_pattern_destroy(grad_led);
@@ -89,45 +79,45 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 	}
 	else
 	{
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, (sw/2.8), 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, (wW / 2.8), 0.0, 2 * M_PI);
 
 		cairo_set_source_rgba(cr, 0,0,0,0.5);
 		cairo_fill(cr);
 	
 		cairo_pattern_t* grad1;
 
-		grad1 = cairo_pattern_create_linear(sx+(sw/1.9), switch_yp, sx+(sw/3), sy+(sh/3) );
+		grad1 = cairo_pattern_create_linear(wX + (wW / 1.9), switch_yp, wX + (wW / 3), wY + (wH / 3) );
 
 		cairo_pattern_add_color_stop_rgba(grad1, 0,0.2,0.2,0.2,1);
 		cairo_pattern_add_color_stop_rgba(grad1, 0.5,0.4,0.4,0.4,1);
 		cairo_pattern_add_color_stop_rgba(grad1, 1,0.0,0.0,0.0,1);
 
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, (sw/2.75), 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, (wW / 2.75), 0.0, 2 * M_PI);
 
 		cairo_set_source(cr, grad1);
 		cairo_fill(cr);
 
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, (sw/4.75), 0.0, 2 * M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, (wW / 4.75), 0.0, 2 * M_PI);
 
 		cairo_set_source_rgba(cr, 0,0,0,0.5);
 		cairo_fill(cr);
 
 		cairo_pattern_t* grad_led;
 
-		grad_led = cairo_pattern_create_radial(sx+(sw/2), switch_yp, 0, sx+(sw/2), sy+(sh/2), (sw/2.5) );
+		grad_led = cairo_pattern_create_radial(wX + (wW / 2), switch_yp, 0, wX + (wW / 2), wY + (wH / 2), (wW / 2.5) );
 
 		cairo_pattern_add_color_stop_rgba(grad_led, 0,0.0,0.2,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 0.3,0.0,0.01,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 0.8,0.0,0.01,0.0,1);
 	        cairo_pattern_add_color_stop_rgba(grad_led, 1.0,0.0,0.0,0.0,1);
 
-		cairo_arc(cr, sx+(sw/1.9), switch_yp, (sw/5.75), 0.0, 2*M_PI);
+		cairo_arc(cr, wX + (wW / 1.9), switch_yp, (wW / 5.75), 0.0, 2*M_PI);
 		cairo_set_source(cr, grad_led);
 		cairo_fill(cr);
 
-		pig = "OFF";
-		cairo_text_extents(cr, pig.c_str(), &extents);
-		x_text_centred = (widget_x_position + widget_width / 2) - extents.width / 2;
+		txt = "OFF";
+		cairo_text_extents(cr, txt.c_str(), &extents);
+		x_text_centred = (wX + wW / 2) - extents.width / 2;
 
 		cairo_pattern_destroy(grad1);
 		cairo_pattern_destroy(grad_led);
@@ -140,8 +130,8 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 		}		
 	}
 
-	cairo_move_to(cr,x_text_centred, sy);
-	cairo_show_text(cr, pig.c_str());
+	cairo_move_to(cr,x_text_centred, wY + font_size);
+	cairo_show_text(cr, txt.c_str());
 }
 
 //-------------------------------------------------------------------------------------------
