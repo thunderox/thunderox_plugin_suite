@@ -16,8 +16,12 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 	float w = width * x_grid_size;
 	float h = height * y_grid_size;
 
-	cairo_set_source_rgb(cr, 0.15,0,0);
+	cairo_set_source_rgb(cr, 0.2,0,0);
 	cairo_rectangle(cr, x, y, w, h);
+	cairo_fill(cr);
+	
+	cairo_set_source_rgb(cr, 0.15,0,0);
+	cairo_rectangle(cr, x, y + (font_size), w, h - (font_size * 3) );
 	cairo_fill(cr);
 	
 	cairo_text_extents_t extents;
@@ -36,16 +40,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 	{
 		case 0:
 			// SAW
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "SAW", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "SAW");
-
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);			
+			
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+			
 			cairo_move_to(cr,x+(w/4), y+(h/1.5));
 			cairo_line_to(cr, x+(w-(w/4)), y+(h/3));
 			cairo_stroke(cr);
@@ -53,16 +60,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			
 		case 1:	
 			// SQUARE
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "SQUARE", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "SQUARE");
 			
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);	
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+				
 			cairo_move_to(cr, x+(w/4), y+(h/1.5));
 			cairo_line_to(cr, x+(w/4), y+(h/3));
 			cairo_line_to(cr, x+(w-(w/4)), y+(h/3));
@@ -72,16 +82,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			
 		case 2:
 			// SINE
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "SINE", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "SINE"); 
 			
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);	
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+				
 			cairo_move_to(cr, x+(w/4), y+(h/2.75));
 	  		cairo_curve_to(cr, x+(w/2), y+(h*1.5), x+(w/2),y-(h/2), x+(w-(w/4)),y+(h/1.5));
 			cairo_stroke(cr);
@@ -89,16 +102,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			
 		case 3:
 			// S&H
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "S&H", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "S&H"); 
 			
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);	
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+			
 			cairo_move_to(cr, x+(w/8), y+(h/1.75));
 			cairo_line_to(cr, x+((w/6)*1), y+(h/2) + h/5);	
 			cairo_line_to(cr, x+((w/6)*2), y+(h/2) + h/5);	
@@ -115,16 +131,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			case 4:
 
 			// NOISE
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "NOISE", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "NOISE");
 			
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);	
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+				
 			cairo_move_to(cr, x+(w/8), y+(h/2));
 			cairo_line_to(cr, x+((w/12)*1), y+(h/2) + h/8);
 			cairo_line_to(cr, x+((w/12)*2), y+(h/2) - h/8);	
@@ -141,16 +160,19 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			
 			case 5:
 			// ISAW
-			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
 
 			cairo_text_extents(cr, "ISAW", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "ISAW");
 
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);			
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+						
 			cairo_move_to(cr,x+(w/4), y+(h/3));
 			cairo_line_to(cr, x+(w-(w/4)), y+(h/1.5));
 			cairo_stroke(cr);
@@ -159,15 +181,18 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 			case 6:	
 			// SQUARE
 			
-			cairo_rectangle(cr, x, y, w,font_size);
-			cairo_fill(cr);
-
 			cairo_text_extents(cr, "ISQUARE", &extents);
 			x_text_centred = (x + w / 2) - extents.width / 2;
 			cairo_move_to(cr,x_text_centred, y+h-(font_size/2));
 			cairo_show_text(cr, "ISQUARE");
 			
-			cairo_set_source_rgb(cr, 0.5,0.5,0.5);	
+			if (hover)
+			{
+				cairo_set_source_rgb(cr, 0.7,0.7,0.7);
+			} else {
+				cairo_set_source_rgb(cr, 0.5,0.5,0.5);
+			}
+				
 			cairo_move_to(cr, x+(w/4), y+(h/3));
 			cairo_line_to(cr, x+(w/4), y+(h/1.5));
 			cairo_line_to(cr, x+(w-(w/4)), y+(h/1.5));
@@ -178,7 +203,7 @@ void Delirium_UI_Widget_Selector::Draw(cairo_t* cr)
 		
 
 	// DRAW LABEL
-
+	
 	cairo_set_source_rgb(cr, 0,0,0);
 	cairo_rectangle(cr, x, y, w,font_size);
 	cairo_fill(cr);

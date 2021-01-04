@@ -38,10 +38,10 @@ class triceratopsUI : public UI
 			
 			// OSCILATOR PANEL
 			
-			float panelX = 1;
+			float panelX = 0.5;
 			float panelY = 1;
 
-			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 18,5.75, "OSCILLATORS", 0);
+			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 19,5.75, "OSCILLATORS", 0);
 
 			int widget_logo = Delirium_UI_Create_Widget(GUI, deliriumUI_Logo, 0, panelX + 13.5, panelY + 0.5, 3.5, 6, "", kParametertriceratopsTime);
 
@@ -97,7 +97,7 @@ class triceratopsUI : public UI
 			panelY = 1;
 
 
-			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 18,5.75, "LFO", 0);
+			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 19.5,5.75, "LFO", 0);
 
 			int widget_lfo1_retrig = Delirium_UI_Create_Widget(GUI, deliriumUI_Switch, 0, panelX + 0.5, panelY + 0.5, 2, 2, "ON", kParametertriceratopsTime);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_retrig, 0,1);
@@ -111,33 +111,35 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Increment(GUI, widget_lfo1_speed, 1);
 			Delirium_UI_Widget_Set_Integer(GUI, widget_lfo1_speed, true);
 			// fParameters_widget_number[kParametertriceratopsTime] = widget_osc1_volume; 
+			
+			int widget_lfo_wave = Delirium_UI_Create_Widget(GUI, deliriumUI_Selector, 0, panelX + 2.5, panelY + 0.5, 2, 2.5,"WAVE", 0);
 
-			int widget_lfo1_osc1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 3.5, panelY + 0.5, 1, 5.25, "OSC-1", kParametertriceratopsAmount);
+			int widget_lfo1_osc1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 5, panelY + 0.5, 1, 5.25, "OSC-1", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_osc1, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_osc1, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_lfo1_osc2 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 5.5, panelY + 0.5, 1, 5.25, "OSC-2", kParametertriceratopsAmount);
+			int widget_lfo1_osc2 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 7, panelY + 0.5, 1, 5.25, "OSC-2", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_osc2, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_osc2, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_lfo1_osc3 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 7.5, panelY + 0.5, 1, 5.25, "OSC-3", kParametertriceratopsAmount);
+			int widget_lfo1_osc3 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 9, panelY + 0.5, 1, 5.25, "OSC-3", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_osc3, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_osc3, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_lfo1_route1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 9.5, panelY + 0.5, 1, 5.25, "FILTER", kParametertriceratopsAmount);
+			int widget_lfo1_route1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 11, panelY + 0.5, 1, 5.25, "FILTER", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_route1, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_route1, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_lfo1_route2 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 11.5, panelY + 0.5, 1, 5.25, "OSC1-PW", kParametertriceratopsAmount);
+			int widget_lfo1_route2 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 13.5, panelY + 0.5, 1, 5.25, "OUT-1", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_route2, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_route2, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_lfo1_route3 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 13.5, panelY + 0.5, 1, 5.25, "AMP", kParametertriceratopsAmount);
+			int widget_lfo1_route3 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 15.5, panelY + 0.5, 1, 5.25, "OUT-2", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_lfo1_route3, 1,0);
 			Delirium_UI_Widget_Set_Value(GUI, widget_lfo1_route3, 0);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
@@ -145,15 +147,15 @@ class triceratopsUI : public UI
 			//--------------------------------------------------------------------------------------------
 			// ENVELOPE PANEL
 			
-			panelX = 1;
+			panelX = 0.5;
 			panelY = 7.5;
 
-			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 18, 5.75, "ENVELOPES", 0);
+			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 19, 5.75, "ENVELOPES", 0);
 
 
-			int widget_amp_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.5, panelY + 0.5, 6, 2,"Amp",0); 
+			int widget_amp_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.5, panelY + 1, 6, 2,"AMP",0); 
 
-			int widget_filter_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.5, panelY + 3.5, 6, 2,"Filter",0);
+			int widget_filter_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.5, panelY + 3.5, 6, 2,"FILTER",0);
  
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount; 
 
@@ -173,9 +175,30 @@ class triceratopsUI : public UI
 			panelX = 20;
 			panelY = 7.5;
 
-			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 18,5.75, "AMP/FX", 0);
+			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 19.5,5.75, "AMP, FILTER & FX", 0);
+			
+			
+			int widget_filter_cutoff = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 6, panelY + 0.5, 1, 5.25, "CUTOFF", kParametertriceratopsAmount);
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_cutoff, 1,0);
+			Delirium_UI_Widget_Set_Value(GUI, widget_filter_cutoff, 0);
+			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
+			
+			int widget_filter_res = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 8, panelY + 0.5, 1, 5.25, "RES", kParametertriceratopsAmount);
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_res, 1,0);
+			Delirium_UI_Widget_Set_Value(GUI, widget_filter_res, 0);
+			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
+			
+			int widget_filter_key_follow = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 11.5, panelY + 0.5, 1, 5.25, "KEYF", kParametertriceratopsAmount);
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_key_follow, 1,-1);
+			Delirium_UI_Widget_Set_Value(GUI, widget_filter_key_follow, 0);
+			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
+			
+			int widget_master_tune = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 13.5, panelY + 0.5, 1, 5.25, "TUNE", kParametertriceratopsAmount);
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_master_tune, -7,7);
+			Delirium_UI_Widget_Set_Value(GUI, widget_master_tune, 0);
+			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 
-			int widget_volume = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, panelX + 13, panelY + 1, 4, 4, "VOLUME", kParametertriceratopsVolume);
+			int widget_volume = Delirium_UI_Create_Widget(GUI, deliriumUI_Knob, 0, panelX + 15, panelY + 1, 4, 4, "VOLUME", kParametertriceratopsVolume);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_volume, 0,1);
 			Delirium_UI_Widget_Set_Value(GUI, widget_volume, 0.6);
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_volume, 0.6);
