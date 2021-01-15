@@ -22,6 +22,7 @@ FILES_UI  = \
 	../../delirium_ui/delirium_ui_widget_panel.cpp \
 	../../delirium_ui/delirium_ui_widget_adsr.cpp \
 	../../delirium_ui/delirium_ui_widget_selector.cpp \
+	../../delirium_ui/delirium_ui_widget_filter.cpp \
 	triceratopsUI.cpp
 
 # --------------------------------------------------------------

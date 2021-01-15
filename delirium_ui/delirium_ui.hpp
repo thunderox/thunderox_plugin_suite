@@ -24,7 +24,8 @@ typedef enum
 	deliriumUI_Selector=9,
 	deliriumUI_Panel=10,
 	deliriumUI_Label=11,
-	deliriumUI_Logo=12
+	deliriumUI_Logo=12,
+	deliriumUI_Filter=13
 } deliriumUI_WidgetType;
 
 
@@ -141,6 +142,15 @@ class Delirium_UI_Widget_Selector : public Delirium_UI_Widget_Base
 	void Mouse_Over(int,int);
 };
 
+class Delirium_UI_Widget_Filter : public Delirium_UI_Widget_Base
+{
+	public:
+	void Draw(cairo_t*);
+	void Left_Button_Press(int,int);
+	float filter_frequency;
+	float filter_resonance;
+};
+
 struct Delirium_UI_Surface
 {
 
@@ -160,6 +170,7 @@ struct Delirium_UI_Surface
 	bool group_visible[32];
 
 	vector <Delirium_UI_Widget_Base*> Widgets;
+	int parameter_widget_number[512];
 };
 
 Delirium_UI_Surface* Delirium_UI_Init(int,int,int,int);
@@ -180,6 +191,7 @@ void Delirium_UI_Convert_Value_To_Range(Delirium_UI_Surface*, int);
 void Delirium_UI_Convert_Range_To_Value(Delirium_UI_Surface*, int);
 void Delirium_UI_Cleanup(Delirium_UI_Surface*);
 void Delirium_UI_Widget_Set_Integer(Delirium_UI_Surface*, int, bool);
+
 
 #endif
 

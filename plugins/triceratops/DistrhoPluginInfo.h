@@ -124,6 +124,9 @@ enum Parameters {
     kParametertriceratopsTime,
     kParametertriceratopsAmount,
     kParametertriceratopsVolume,
+    kParametertriceratops_FilterType,
+    kParametertriceratops_FilterFrequency,
+    kParametertriceratops_FilterResonance,
     kParameterCount
 };
 

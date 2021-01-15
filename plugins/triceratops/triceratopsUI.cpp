@@ -176,17 +176,40 @@ class triceratopsUI : public UI
 			panelY = 7.5;
 
 			Delirium_UI_Create_Widget(GUI, deliriumUI_Panel, 0, panelX, panelY, 19.5,5.75, "AMP, FILTER & FX", 0);
+
 			
+			// FILTER CUTOFF FREQUENCY
 			
-			int widget_filter_cutoff = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 6, panelY + 0.5, 1, 5.25, "CUTOFF", kParametertriceratopsAmount);
+			int widget_filter_cutoff = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0,
+				panelX + 6, panelY + 0.5, 1, 5.25, "CUTOFF",kParametertriceratops_FilterFrequency);
+				
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_cutoff, 1,0);
-			Delirium_UI_Widget_Set_Value(GUI, widget_filter_cutoff, 0);
+			Delirium_UI_Widget_Set_Value(GUI, widget_filter_cutoff, 0.5);
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
 			
-			int widget_filter_res = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 8, panelY + 0.5, 1, 5.25, "RES", kParametertriceratopsAmount);
-			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_res, 1,0);
-			Delirium_UI_Widget_Set_Value(GUI, widget_filter_res, 0);
+			// FILTER RESONANCE AMOUNT
+			
+			int widget_filter_resonance = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0,
+				panelX + 8, panelY + 0.5, 1, 5.25, "RES", kParametertriceratops_FilterResonance);
+				
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_resonance, 1,0);
+
 			// fParameters_widget_number[kParametertriceratopsAmount] = widget_triceratops_amount;
+			
+			// FILTER TYPE SELECTOR
+			
+			int widget_filter_type = Delirium_UI_Create_Widget(GUI, deliriumUI_Filter, 0, panelX + 0.5, panelY + 1, 2, 4, "FILTER", kParametertriceratops_FilterType);
+			fParameters_widget_number[kParametertriceratops_FilterFrequency] = widget_filter_type;	
+			
+			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[widget_filter_type];
+			
+			wdg->filter_frequency = 0.5;
+			wdg->filter_resonance = 0;
+			
+			Delirium_UI_Widget_Set_Value(GUI, widget_filter_cutoff, wdg->filter_frequency);
+			Delirium_UI_Widget_Set_Value(GUI, wdg->filter_resonance, 0);
+
+			// FILTER FOLLOW KEYBOARD
 			
 			int widget_filter_key_follow = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 11.5, panelY + 0.5, 1, 5.25, "KEYF", kParametertriceratopsAmount);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_key_follow, 1,-1);
@@ -206,7 +229,8 @@ class triceratopsUI : public UI
 
 			GUI->draw_flag = true;
 
-			cout << "CAIRO WINDOW = " << getParentWindow().getGraphicsContext().cairo << endl;
+			cout << "CAIRO WINDOW = " << getParentWindow().getGraphicsContext().cairo << endl;			
+			
 		}
 
 		//------------------------------------------------------------------------------------------------------
@@ -239,6 +263,14 @@ class triceratopsUI : public UI
 				{	
 					float value = Delirium_UI_Widget_Get_Value(GUI);
 					 setParameterValue(parameter_number, value);
+					 
+					 if (parameter_number == kParametertriceratops_FilterFrequency)
+					 {
+					 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+			 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+						wdg->filter_frequency = value;
+						GUI->Widgets[wdg_number]->Draw(cr);
+					 }
 				}
 				return true;
 
@@ -255,6 +287,14 @@ class triceratopsUI : public UI
 					setParameterValue(parameter_number, 0);
 					Delirium_UI_Middle_Button_Press(GUI);	
 					repaint();	
+					
+					if (parameter_number == kParametertriceratops_FilterFrequency)
+					{
+						int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+						Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+						wdg->filter_frequency = 0;
+						GUI->Widgets[wdg_number]->Draw(cr);	
+					}			
 				}
 			}
 
@@ -279,6 +319,14 @@ class triceratopsUI : public UI
 			{	
 				float value = Delirium_UI_Widget_Get_Value(GUI);
 				setParameterValue(parameter_number, value);
+				
+				 if (parameter_number == kParametertriceratops_FilterFrequency)
+				 {
+				 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+						Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+					wdg->filter_frequency = value;
+					GUI->Widgets[wdg_number]->Draw(cr);
+				 }
 			}
 			return true;
 
@@ -295,6 +343,8 @@ class triceratopsUI : public UI
 
 			if (current_widget > 0)
 			{	
+				if (GUI->Widgets[current_widget]->type == deliriumUI_Panel) return true;
+			
 				GUI->Widgets[current_widget]->Mouse_Scroll(delta);
 				Delirium_UI_Convert_Value_To_Range(GUI, current_widget);
 				GUI->Widgets[current_widget]->Draw(cr);
@@ -307,6 +357,14 @@ class triceratopsUI : public UI
 			{	
 				float value = Delirium_UI_Widget_Get_Value(GUI);
 				setParameterValue(parameter_number, value);
+				
+				if (parameter_number == kParametertriceratops_FilterFrequency)
+				{
+					int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+					Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+					wdg->filter_frequency = value;
+					GUI->Widgets[wdg_number]->Draw(cr);	
+				}
 			}
 
 			return true;

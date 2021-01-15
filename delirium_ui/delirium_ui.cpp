@@ -90,12 +90,19 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 		new_widget = new Delirium_UI_Widget_Selector();
 		widget_created = true;
 	}
+	
+	if (type == deliriumUI_Filter)
+	{
+		new_widget = new Delirium_UI_Widget_Filter();
+		widget_created = true;
+	}
 
 
 	if (widget_created)
 	{
 		new_widget->group = group;
 		new_widget->parameter_number = parameter_number;
+		GUI->parameter_widget_number[parameter_number] = GUI->Widgets.size();
 		new_widget->x_position = grid_x_position;
 		new_widget->y_position = grid_y_position;
 		new_widget->width = grid_width;
