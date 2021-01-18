@@ -198,7 +198,7 @@ class triceratopsUI : public UI
 			
 			// FILTER TYPE SELECTOR
 			
-			int widget_filter_type = Delirium_UI_Create_Widget(GUI, deliriumUI_Filter, 0, panelX + 0.5, panelY + 1, 2, 4, "FILTER", kParametertriceratops_FilterType);
+			int widget_filter_type = Delirium_UI_Create_Widget(GUI, deliriumUI_Filter, 0, panelX + 0.5, panelY + 1, 2.5, 4, "FILTER", kParametertriceratops_FilterType);
 			fParameters_widget_number[kParametertriceratops_FilterFrequency] = widget_filter_type;	
 			
 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[widget_filter_type];
@@ -271,6 +271,14 @@ class triceratopsUI : public UI
 						wdg->filter_frequency = value;
 						GUI->Widgets[wdg_number]->Draw(cr);
 					 }
+
+					if (parameter_number == kParametertriceratops_FilterResonance)
+					 {
+					 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+			 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+						wdg->filter_resonance = value;
+						GUI->Widgets[wdg_number]->Draw(cr);
+					 }
 				}
 				return true;
 
@@ -294,7 +302,15 @@ class triceratopsUI : public UI
 						Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
 						wdg->filter_frequency = 0;
 						GUI->Widgets[wdg_number]->Draw(cr);	
-					}			
+					}
+					
+					if (parameter_number == kParametertriceratops_FilterResonance)
+					 {
+					 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+			 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+						wdg->filter_resonance = 0;
+						GUI->Widgets[wdg_number]->Draw(cr);
+					 }			
 				}
 			}
 
@@ -327,6 +343,15 @@ class triceratopsUI : public UI
 					wdg->filter_frequency = value;
 					GUI->Widgets[wdg_number]->Draw(cr);
 				 }
+				 
+				if (parameter_number == kParametertriceratops_FilterResonance)
+				 {
+				 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+		 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+					wdg->filter_resonance = value;
+					GUI->Widgets[wdg_number]->Draw(cr);
+				 }
+					 
 			}
 			return true;
 
@@ -365,6 +390,14 @@ class triceratopsUI : public UI
 					wdg->filter_frequency = value;
 					GUI->Widgets[wdg_number]->Draw(cr);	
 				}
+				
+				if (parameter_number == kParametertriceratops_FilterResonance)
+				 {
+				 	int wdg_number = GUI->parameter_widget_number[kParametertriceratops_FilterType];
+		 			Delirium_UI_Widget_Filter* wdg = (Delirium_UI_Widget_Filter*)GUI->Widgets[wdg_number];
+					wdg->filter_resonance = value;
+					GUI->Widgets[wdg_number]->Draw(cr);
+				 }
 			}
 
 			return true;
