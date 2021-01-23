@@ -241,7 +241,6 @@ void Delirium_UI_Widget_Selector::Left_Button_Press(int xm, int ym)
 		values[current_value]++;
 		if (values[current_value]>6) values[current_value]=0;
 		Convert_Scaled_To_Value();
-		cout << values[current_value] << endl;
 	}
 }
 
