@@ -173,6 +173,7 @@ struct Delirium_UI_Surface
 	int parameter_widget_number[512];
 	
 	int osc_nav1, osc_nav2, osc_nav3;
+	int lfo_nav1, lfo_nav2, lfo_nav3;
 
 };
 
