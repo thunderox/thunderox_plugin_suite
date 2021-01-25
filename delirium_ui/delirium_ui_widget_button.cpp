@@ -15,22 +15,23 @@ void Delirium_UI_Widget_Button::Draw(cairo_t* cr)
 
 	// -- text
 
-	if (hover)
+	if (values[1]==1)
 	{
-		cairo_set_source_rgb(cr, 0.125,0,0); 
+		cairo_set_source_rgb(cr, 0.3,0,0); 
 		cairo_rectangle(cr, wX, wY, wW, wH);
 		cairo_fill(cr);
 	
-		cairo_set_source_rgb(cr, 0.8, 0.8, 0.8); 
 	}
 	else
 	{
 		cairo_set_source_rgb(cr, 0,0,0); 
 		cairo_rectangle(cr, wX, wY, wW, wH);
 		cairo_fill(cr);
-	
-		cairo_set_source_rgb(cr, 0.6, 0.6, 0.6); 
 	}
+	
+
+	cairo_set_source_rgb(cr, 0.7, 0.7, 0.7); 
+
 	
 	cairo_set_font_size(cr, font_size);
 	cairo_text_extents_t extents;

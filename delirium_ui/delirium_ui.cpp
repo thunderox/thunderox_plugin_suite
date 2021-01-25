@@ -267,13 +267,12 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 					}
 				}
 
-				GUI->current_widget = x;
-
-
 				int widget_group = GUI->Widgets[x]->group;
 				bool widget_visible = GUI->group_visible[widget_group];
+				
 				if (widget_visible)
 				{
+					GUI->current_widget = x;
 					GUI->Widgets[x]->hover = true;
 					if (GUI->Widgets[x]->type != deliriumUI_Panel) GUI->Widgets[x]->Draw(cr);
 				}
@@ -301,13 +300,19 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 	int current_widget = GUI->current_widget;
 	int widget_group = GUI->Widgets[current_widget]->group;	
 	bool widget_visible = GUI->group_visible[widget_group];
+
 	if (!widget_visible) return;
+	
+
 	
 	if (current_widget == GUI->osc_nav1)
 	{
 		GUI->group_visible[1] = true;
 		GUI->group_visible[2] = false;
 		GUI->group_visible[3] = false;
+		GUI->Widgets[GUI->osc_nav1]->values[1] = 1;
+		GUI->Widgets[GUI->osc_nav2]->values[1] = 0;
+		GUI->Widgets[GUI->osc_nav3]->values[1] = 0;
 		Delirium_UI_Display_All(GUI, cr);
 	}
 	
@@ -316,6 +321,9 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 		GUI->group_visible[1] = false;
 		GUI->group_visible[2] = true;
 		GUI->group_visible[3] = false;
+		GUI->Widgets[GUI->osc_nav1]->values[1] = 0;
+		GUI->Widgets[GUI->osc_nav2]->values[1] = 1;
+		GUI->Widgets[GUI->osc_nav3]->values[1] = 0;
 		Delirium_UI_Display_All(GUI, cr);
 	}
 	
@@ -324,6 +332,9 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 		GUI->group_visible[1] = false;
 		GUI->group_visible[2] = false;
 		GUI->group_visible[3] = true;
+		GUI->Widgets[GUI->osc_nav1]->values[1] = 0;
+		GUI->Widgets[GUI->osc_nav2]->values[1] = 0;
+		GUI->Widgets[GUI->osc_nav3]->values[1] = 1;
 		Delirium_UI_Display_All(GUI, cr);
 	}
 	

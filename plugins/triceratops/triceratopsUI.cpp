@@ -55,6 +55,14 @@ class triceratopsUI : public UI
 			GUI->osc_nav2 = Delirium_UI_Create_Widget(GUI, deliriumUI_Button, 0, panelX + 4, panelY + 0.25, 3, 0.75, "OSC 2", 0);
 			GUI->osc_nav3 = Delirium_UI_Create_Widget(GUI, deliriumUI_Button, 0, panelX + 7.5, panelY + 0.25,3, 0.75, "OSC 3", 0);
 			
+			Delirium_UI_Widget_Button* default_osc_nav = (Delirium_UI_Widget_Button*)GUI->Widgets[GUI->osc_nav1];
+			GUI->group_visible[1] = true;
+			GUI->group_visible[2] = false;
+			GUI->group_visible[3] = false;
+			default_osc_nav->values[1] = 1;
+			// default_osc_nav->values[1] = 0;
+			// default_osc_nav->values[1] = 0;
+			
 			// OSCILATOR ONE ------------------------------------------------------------------------------------------
 
 			int widget_osc1_active = Delirium_UI_Create_Widget(GUI, deliriumUI_Switch, group_osc1, panelX + 0.5, panelY + 1.25, 2, 2, "ON", kParametertriceratopsTime);
