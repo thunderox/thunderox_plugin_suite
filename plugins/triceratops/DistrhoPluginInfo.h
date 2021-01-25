@@ -131,4 +131,5 @@ enum Parameters {
 };
 
 
+
 #endif // DISTRHO_PLUGIN_INFO_H_INCLUDED

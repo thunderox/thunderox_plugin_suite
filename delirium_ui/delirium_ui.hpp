@@ -171,6 +171,9 @@ struct Delirium_UI_Surface
 
 	vector <Delirium_UI_Widget_Base*> Widgets;
 	int parameter_widget_number[512];
+	
+	int osc_nav1, osc_nav2, osc_nav3;
+
 };
 
 Delirium_UI_Surface* Delirium_UI_Init(int,int,int,int);

@@ -8,16 +8,36 @@
 void Delirium_UI_Widget_Button::Draw(cairo_t* cr) 
 {
 
-	float widget_x_position = x_position * x_grid_size;
-	float widget_y_position = y_position * y_grid_size;
-	float widget_width = width * x_grid_size;
-	float widget_height = height * y_grid_size;
+	float wX = x_position * x_grid_size;
+	float wY = y_position * y_grid_size;
+	float wW = width * x_grid_size;
+	float wH = height * y_grid_size;
 
-	cairo_set_source_rgba(cr, 0,0,0,1); 
+	// -- text
 
-	cairo_rectangle(cr, widget_x_position,widget_y_position,widget_width,widget_height);
-	cairo_fill(cr);
-
+	if (hover)
+	{
+		cairo_set_source_rgb(cr, 0.125,0,0); 
+		cairo_rectangle(cr, wX, wY, wW, wH);
+		cairo_fill(cr);
+	
+		cairo_set_source_rgb(cr, 0.8, 0.8, 0.8); 
+	}
+	else
+	{
+		cairo_set_source_rgb(cr, 0,0,0); 
+		cairo_rectangle(cr, wX, wY, wW, wH);
+		cairo_fill(cr);
+	
+		cairo_set_source_rgb(cr, 0.6, 0.6, 0.6); 
+	}
+	
+	cairo_set_font_size(cr, font_size);
+	cairo_text_extents_t extents;
+	cairo_text_extents(cr, label.c_str(), &extents);
+	float x_text_centred = (wX + wW / 2) - extents.width / 2;
+	cairo_move_to(cr,x_text_centred, wY + (font_size * 1.5));
+	cairo_show_text(cr, label.c_str());
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------

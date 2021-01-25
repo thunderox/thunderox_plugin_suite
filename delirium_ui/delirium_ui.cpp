@@ -212,7 +212,10 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 
 		for (uint x=0; x<GUI->Widgets.size(); x++)
 		{
-			GUI->Widgets[x]->Draw(cr);
+			int widget_group = GUI->Widgets[x]->group;
+			bool widget_visible = GUI->group_visible[widget_group];
+			if (widget_visible)		
+				GUI->Widgets[x]->Draw(cr);
 		}
 	
 	}	
@@ -221,7 +224,10 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 		int current_widget = GUI->current_widget;
 		if (current_widget > -1)
 		{
-			if (GUI->Widgets[current_widget]->type != deliriumUI_Panel) GUI->Widgets[current_widget]->Draw(cr);
+			int widget_group = GUI->Widgets[current_widget]->group;
+			bool widget_visible = GUI->group_visible[widget_group];
+			if (widget_visible)
+				if (GUI->Widgets[current_widget]->type != deliriumUI_Panel) GUI->Widgets[current_widget]->Draw(cr);
 		}
 	}
 
@@ -231,7 +237,6 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 
 void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 {
-
 	if (GUI->drag == 0)
 	{
 		Delirium_UI_Mouse_Over(GUI,mx,my);
@@ -253,14 +258,25 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
  
 				if (old_current_widget > -1)
 				{
-					GUI->Widgets[old_current_widget]->hover = false; // New current widget switch hover off previous
-					if (GUI->Widgets[old_current_widget]->type != deliriumUI_Panel) GUI->Widgets[old_current_widget]->Draw(cr); // one and redraw it.
+					int widget_group = GUI->Widgets[old_current_widget]->group;
+					bool widget_visible = GUI->group_visible[widget_group];
+					if (widget_visible)
+					{
+						GUI->Widgets[old_current_widget]->hover = false; // New current widget switch hover off previous
+						if (GUI->Widgets[old_current_widget]->type != deliriumUI_Panel) GUI->Widgets[old_current_widget]->Draw(cr); // one and redraw it.
+					}
 				}
 
 				GUI->current_widget = x;
 
-				GUI->Widgets[x]->hover = true;
-				if (GUI->Widgets[x]->type != deliriumUI_Panel) GUI->Widgets[x]->Draw(cr);
+
+				int widget_group = GUI->Widgets[x]->group;
+				bool widget_visible = GUI->group_visible[widget_group];
+				if (widget_visible)
+				{
+					GUI->Widgets[x]->hover = true;
+					if (GUI->Widgets[x]->type != deliriumUI_Panel) GUI->Widgets[x]->Draw(cr);
+				}
 			}
 		}
 	}
@@ -269,7 +285,10 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 	{
 		if (GUI->drag == 1 && !GUI->Widgets[GUI->current_widget]->toggle_mode)
 		{	
-			Delirium_UI_Left_Button_Press(GUI,cr,-1,my);
+			int widget_group = GUI->Widgets[GUI->current_widget]->group;
+			bool widget_visible = GUI->group_visible[widget_group];
+			if (widget_visible)
+				Delirium_UI_Left_Button_Press(GUI,cr,-1,my);
 		}
 	}	
 }
@@ -280,6 +299,34 @@ void Delirium_UI_MouseOver(Delirium_UI_Surface* GUI, cairo_t* cr, int mx,int my)
 void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm, int ym)
 {
 	int current_widget = GUI->current_widget;
+	int widget_group = GUI->Widgets[current_widget]->group;	
+	bool widget_visible = GUI->group_visible[widget_group];
+	if (!widget_visible) return;
+	
+	if (current_widget == GUI->osc_nav1)
+	{
+		GUI->group_visible[1] = true;
+		GUI->group_visible[2] = false;
+		GUI->group_visible[3] = false;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
+	if (current_widget == GUI->osc_nav2)
+	{
+		GUI->group_visible[1] = false;
+		GUI->group_visible[2] = true;
+		GUI->group_visible[3] = false;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
+	if (current_widget == GUI->osc_nav3)
+	{
+		GUI->group_visible[1] = false;
+		GUI->group_visible[2] = false;
+		GUI->group_visible[3] = true;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
 	if (xm > -1) GUI->drag = 1 - GUI->drag;
 	
 	if (current_widget > -1)
@@ -304,6 +351,9 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 void Delirium_UI_Middle_Button_Press(Delirium_UI_Surface* GUI)
 {
 	int current_widget = GUI->current_widget;
+	int widget_group = GUI->Widgets[current_widget]->group;	
+	bool widget_visible = GUI->group_visible[widget_group];
+	if (!widget_visible) return;
 
 	if (current_widget > -1)
 	{

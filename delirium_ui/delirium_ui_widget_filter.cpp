@@ -88,7 +88,19 @@ void Delirium_UI_Widget_Filter::Draw(cairo_t* cr)
 			cairo_show_text(cr, "BANDPASS");
 			break;
 			
-		case 3:			
+		case 3:		
+			cairo_set_source_rgb(cr, 0.5, 0.5, 0.5);
+			cairo_move_to(cr, (wX + wW - 5), wY + (wH/3));
+			cairo_line_to(cr, (wX + wW - 5) - (filter_freq_x_offset + 20), wY + (wH/3));
+			cairo_line_to(cr, (wX + wW - 5) - (filter_freq_x_offset + 20), wY + (wH/3) - (filter_resonance * 24));
+			cairo_line_to(cr, (wX + wW - 5) - (filter_freq_x_offset + 30), wY + (wH/3));
+			cairo_line_to(cr, (wX + wW - 5) - (filter_freq_x_offset + 30), wY + (wH/3));
+			cairo_line_to(cr, (wX + wW) - (wW - 10), wY + (wH / 1.5));
+			cairo_stroke(cr);
+			
+			
+			
+			break;	
 			cairo_text_extents(cr, "HIGH PASS", &extents);
 			x_text_centred = (wX + wW / 2) - extents.width / 2;
 
