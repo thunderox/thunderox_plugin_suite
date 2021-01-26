@@ -21,8 +21,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 	cairo_text_extents_t extents;
 	cairo_set_font_size(cr, font_size);
-	cairo_text_extents(cr, label.c_str(), &extents);
-	float x_text_centred = (wX + wW / 2) - extents.width / 2;
+	float x_text_centred;
 
 	string txt;
 	float switch_yp = wY + (wH / 2.0);
@@ -65,7 +64,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 		txt = "ON";
 		cairo_text_extents(cr, txt.c_str(), &extents);
-		x_text_centred = (wX + wW / 2) - extents.width / 2;
+		x_text_centred = (wX + (wW / 2)) - extents.width / 2.5;
 
 		cairo_pattern_destroy(grad1);
 		cairo_pattern_destroy(grad_led);
@@ -117,7 +116,7 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 
 		txt = "OFF";
 		cairo_text_extents(cr, txt.c_str(), &extents);
-		x_text_centred = (wX + wW / 2) - extents.width / 2;
+		x_text_centred = (wX + (wW / 2)) - extents.width / 2.5;
 
 		cairo_pattern_destroy(grad1);
 		cairo_pattern_destroy(grad_led);
@@ -130,8 +129,15 @@ void Delirium_UI_Widget_Switch::Draw(cairo_t* cr)
 		}		
 	}
 
+
 	cairo_move_to(cr,x_text_centred, wY + font_size);
 	cairo_show_text(cr, txt.c_str());
+	
+	cairo_text_extents(cr, label.c_str(), &extents);
+	x_text_centred = (wX + (wW / 2)) - extents.width / 2;
+	cairo_move_to(cr,x_text_centred, wY + wH);
+	cairo_show_text(cr, label.c_str());
+	
 }
 
 //-------------------------------------------------------------------------------------------

@@ -65,7 +65,7 @@ void Delirium_UI_Widget_ADSR::Draw(cairo_t* cr)
 	
 		cairo_text_extents(cr, number.str().c_str(), &extents);
 		x_text_centred = (x + w / 2) - extents.width / 2;
-		cairo_move_to(cr,x_text_centred, (h+y)-font_size);
+		cairo_move_to(cr,x_text_centred, (h+y)-(font_size*0.5));
 		cairo_show_text(cr, number.str().c_str());
 	}
 
