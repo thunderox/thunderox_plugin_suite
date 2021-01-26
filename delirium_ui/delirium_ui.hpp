@@ -174,6 +174,7 @@ struct Delirium_UI_Surface
 	
 	int osc_nav1, osc_nav2, osc_nav3;
 	int lfo_nav1, lfo_nav2, lfo_nav3;
+	int vol_nav, fx_nav, mod_nav;
 
 };
 

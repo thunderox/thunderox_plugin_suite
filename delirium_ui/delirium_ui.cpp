@@ -373,6 +373,41 @@ void Delirium_UI_Left_Button_Press(Delirium_UI_Surface* GUI, cairo_t* cr, int xm
 		Delirium_UI_Display_All(GUI, cr);
 	}
 	
+	
+	if (current_widget == GUI->vol_nav)
+	{
+		GUI->group_visible[7] = true;
+		GUI->group_visible[8] = false;
+		GUI->group_visible[9] = false;
+		GUI->Widgets[GUI->vol_nav]->values[1] = 1;
+		GUI->Widgets[GUI->fx_nav]->values[1] = 0;
+		GUI->Widgets[GUI->mod_nav]->values[1] = 0;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
+	if (current_widget == GUI->fx_nav)
+	{
+		GUI->group_visible[7] = false;
+		GUI->group_visible[8] = true;
+		GUI->group_visible[9] = false;
+		GUI->Widgets[GUI->vol_nav]->values[1] = 0;
+		GUI->Widgets[GUI->fx_nav]->values[1] = 1;
+		GUI->Widgets[GUI->mod_nav]->values[1] = 0;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
+	if (current_widget == GUI->mod_nav)
+	{
+		GUI->group_visible[7] = false;
+		GUI->group_visible[8] = false;
+		GUI->group_visible[9] = true;
+		GUI->Widgets[GUI->vol_nav]->values[1] = 0;
+		GUI->Widgets[GUI->fx_nav]->values[1] = 0;
+		GUI->Widgets[GUI->mod_nav]->values[1] = 1;
+		Delirium_UI_Display_All(GUI, cr);
+	}
+	
+		
 	if (xm > -1) GUI->drag = 1 - GUI->drag;
 	
 	if (current_widget > -1)

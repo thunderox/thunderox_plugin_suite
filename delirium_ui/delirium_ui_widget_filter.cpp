@@ -110,12 +110,12 @@ void Delirium_UI_Widget_Filter::Draw(cairo_t* cr)
 			break;
 			
 		case 4:			
-			cairo_text_extents(cr, "VOWEL", &extents);
+			cairo_text_extents(cr, "FORMANT", &extents);
 			x_text_centred = (wX + wW / 2) - extents.width / 2;
 
 			cairo_set_source_rgb(cr, 0.6, 0.6, 0.6);
 			cairo_move_to(cr,x_text_centred, wY + wH - 2);
-			cairo_show_text(cr, "VOWEL");
+			cairo_show_text(cr, "FORMANT");
 			break;
 	}
 	
@@ -145,7 +145,7 @@ void Delirium_UI_Widget_Filter::Left_Button_Press(int xm, int ym)
 	if (toggle_mode==0) 
 	{
 		values[current_value]++;
-		if (values[current_value]>4) values[current_value]=0;
+		if (values[0]>4) values[0]=0;
 		Convert_Scaled_To_Value();
 	}
 }
