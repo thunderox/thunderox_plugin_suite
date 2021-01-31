@@ -21,6 +21,7 @@ Delirium_UI_Surface* Delirium_UI_Init(int width, int height, int gridX, int grid
 
 	GUI->current_widget = -1;
 	GUI->draw_flag = true;
+	GUI->drawn_at_least_once = false;
 
 	return GUI;
 }
@@ -190,6 +191,8 @@ void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface* GUI, int widget_number,
 
 void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 {
+	
+	if (GUI->drawn_at_least_once < 3) GUI->draw_flag = true;
 
 	if (GUI->draw_flag)
 	{
@@ -217,6 +220,8 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 			if (widget_visible)		
 				GUI->Widgets[x]->Draw(cr);
 		}
+		
+		GUI->drawn_at_least_once++;
 	
 	}	
 	else

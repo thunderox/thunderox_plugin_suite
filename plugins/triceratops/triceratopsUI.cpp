@@ -41,9 +41,7 @@ class triceratopsUI : public UI
 			float panelX = 0.5;
 			float panelY = 0.5;
 
-
-
-			
+			GUI->group_visible[0] = true;
 
 			
 			//------------------------------------------------------------------------------------------------------------------------------------------
@@ -398,6 +396,9 @@ class triceratopsUI : public UI
 			default_lfo_nav1->values[1] = 1;
 
 			int widget_amp_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.25, panelY + 0.75, 5, 2.5,"AMP",0); 
+			Delirium_UI_Widget_ADSR* wdg_amp_env = (Delirium_UI_Widget_ADSR*)GUI->Widgets[widget_amp_env];
+			wdg_amp_env->default_values[0] = 1;
+			wdg_amp_env->values[0] = 1;
 
 			int widget_filter_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.25, panelY + 3.75, 5, 2.5,"FILTER",0);
 			
@@ -451,8 +452,10 @@ class triceratopsUI : public UI
 			GUI->mod_nav = Delirium_UI_Create_Widget(GUI, deliriumUI_Button, 0, panelX + 7.5, panelY + 0.25,3, 0.75, "MOD", 0);
 									
 			Delirium_UI_Widget_Button* default_vol_nav = (Delirium_UI_Widget_Button*)GUI->Widgets[GUI->vol_nav];
-			default_vol_nav->values[1] = 1;
-
+			default_vol_nav->values[0] = 0.5;
+			default_vol_nav->normalised_values[0] = 0.5;
+			default_vol_nav->default_values[0] = 0.5;
+			default_vol_nav->current_value = 0.5;
 			
 			// FILTER CUTOFF FREQUENCY
 			
@@ -481,7 +484,8 @@ class triceratopsUI : public UI
 			
 			wdg->filter_frequency = 0.5;
 			wdg->filter_resonance = 0;
-			wdg->values[0] = 2;
+			wdg->values[0] = 1;
+			wdg->current_value = 1;
 			
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_filter_type, 0,4);
 			Delirium_UI_Widget_Set_Value(GUI, widget_filter_type, 2);
@@ -507,9 +511,7 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_volume, 0.6);
 			fParameters_widget_number[kParametertriceratopsVolume] = widget_volume; 
 
-			GUI->draw_flag = true;
-
-			cout << "CAIRO WINDOW = " << getParentWindow().getGraphicsContext().cairo << endl;			
+			GUI->draw_flag = true;		
 			
 		}
 
@@ -524,6 +526,7 @@ class triceratopsUI : public UI
 
 		void onDisplay()
 		{
+			
 			cairo_t* cr = getParentWindow().getGraphicsContext().cairo;
 			Delirium_UI_Display_All(GUI, cr);
 		}

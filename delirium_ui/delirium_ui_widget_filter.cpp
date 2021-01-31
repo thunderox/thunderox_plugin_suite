@@ -144,7 +144,7 @@ void Delirium_UI_Widget_Filter::Left_Button_Press(int xm, int ym)
 
 	if (toggle_mode==0) 
 	{
-		values[current_value]++;
+		values[0]++;
 		if (values[0]>4) values[0]=0;
 		Convert_Scaled_To_Value();
 	}
