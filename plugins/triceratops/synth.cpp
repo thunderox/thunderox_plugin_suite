@@ -1,7 +1,7 @@
 
 
 #include "synth.h"
-#include <fstream>
+#include "minblep.h"
 
 // CONSTRUCTOR
 
@@ -74,25 +74,18 @@ synth::synth()
 	dc2 = 0;
 	dc3 = 0;
 
+	int iSize = 2048;
+	gMinBLEP.lpTable=(double*)malloc(iSize);
 	
-	// load table
-	FILE *fp = NULL;
-
-	//fp = fopen("minblep.mat","rb");
-
-	// unsigned int iSize;
-
-	// fseek(fp,0x134,SEEK_SET);
-
-	// int err = fread(&iSize,sizeof(uint),1,fp);
-	// gMinBLEP.c=iSize/sizeof(double);
-
-	// gMinBLEP.lpTable=(double*)malloc(iSize);
-
-	// err = fread(gMinBLEP.lpTable,iSize,1,fp);
-
+	int g=0;
 	
-	// fclose(fp);
+	for (int x=0; x<iSize/sizeof(double); x++)
+	{
+		gMinBLEP.lpTable[0] = minBLEP_table[x];
+		cout << sizeof(minBLEP_table) / sizeof(double) << endl;
+	}
+
+
 
 
 

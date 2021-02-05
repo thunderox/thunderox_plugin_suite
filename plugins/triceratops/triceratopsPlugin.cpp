@@ -28,6 +28,7 @@
 #include "JCRev.h"
 #include "eq.h"
 
+
 using namespace std;
 
 const int max_notes = 12;
@@ -258,6 +259,7 @@ class triceratopsPlugin : public Plugin
 Plugin* createPlugin()
 {
 	triceratopsPlugin* triceratops = new triceratopsPlugin();
+	
 	return triceratops;
 }
 
