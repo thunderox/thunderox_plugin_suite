@@ -21,7 +21,16 @@
 #include <string>
 #include <iostream>
 #include <vector> 
+#include <math.h>
+#include "synth.h"
+#include "lfo.h"
+#include "nix-echo.hpp"
+#include "JCRev.h"
+#include "eq.h"
+
 using namespace std;
+
+const int max_notes = 12;
 
 START_NAMESPACE_DISTRHO
 
@@ -34,26 +43,103 @@ class triceratopsPlugin : public Plugin
 		{ 
 			float left,right; 
 		};
+		float srate;
+
+		int midi_keys[128];
+			
+		int current_synth;
+		int old_synth;
+		
+		float* pitch_bend;
+		float* channel_after_touch;
+	
+		synth synths[max_notes];
+
+		nixecho* echo;
+		noise* nixnoise;
+		JCRev* reverb[16];
+		
+		EQSTATE* eq_right;
 
 		uint32_t buffer_frame;
-
+	
 		// triceratops Audio Buffer
 		vector <audio_stereo> audio_buffer; 
 		
 		triceratopsPlugin() : Plugin(kParameterCount, 0, 0)
 		{
 
-		srate = getSampleRate();
+			srate = getSampleRate();
 
-		audio_buffer.resize(srate*5);
-		buffer_frame = 0;
+			audio_buffer.resize(srate*5);
+
+			// Initialize EQs
+			
+			EQSTATE* eq_left = new EQSTATE();
+			init_3band_state(eq_left,220,5000,srate);	
+			eq_left->lg = 0.0; // BASS
+			eq_left->mg = 1.0; // MIDS
+			eq_left->hg = 1.0; // HIGHS
+		
+			EQSTATE* eq_right = new EQSTATE();
+			init_3band_state(eq_right,220,5000,srate);		
+			eq_right->lg = 0.0; // BASS
+			eq_right->mg = 1.0; // MIDS
+			eq_right->hg = 1.0; // HIGHS 
+			
+			// Initialize LFOs
+			
+			LFO* lfo1;	
+			LFO* lfo2;
+			LFO* lfo3;
+		
+			float* lfo1_out;
+			float* lfo2_out;
+			float* lfo3_out;
+		
+			float lfo1_rand;
+			float lfo2_rand;
+			float lfo3_rand;
+		
+			lfo1_out = (float*)malloc(sizeof(float)*4096);	
+			lfo2_out = (float*)malloc(sizeof(float)*4096);
+			lfo3_out = (float*)malloc(sizeof(float)*4096);
+		
+			memset( lfo1_out, 0, sizeof(float)*4096 );
+			memset( lfo2_out, 0, sizeof(float)*4096 );
+			memset( lfo3_out, 0, sizeof(float)*4096 );
+			
+			// Initialise Echo
+		
+			nixecho* echo = new nixecho();
+			echo->set_sample_rate(srate);
+		
+			//Initialize Noise
+		
+			noise* nixnoise = new noise();
+					
+			lfo1_rand = nixnoise->tick();
+			lfo2_rand = nixnoise->tick();
+			lfo3_rand = nixnoise->tick();
+		
+			// -----------------
+		
+			float pitch_bend;
+			float channel_after_touch;
+			int current_synth = 0;
+			int old_synth = 0;
+
+			buffer_frame = 0;
 	
 			// clear all parameters
 			std::memset(fParameters, 0, sizeof(float)*kParameterCount);
 
 			// we can know buffer-size right at the start
 			fParameters[kParameterBufferSize] = getBufferSize();
+
 		}
+		
+
 
 		const char* getLabel() const
 		{
@@ -116,6 +202,7 @@ class triceratopsPlugin : public Plugin
 					fParameters[kParametertriceratopsVolume] = parameter.ranges.def;
 					break;
 			}
+
 		}
 
 		/* --------------------------------------------------------------------------------------------------------
@@ -145,12 +232,12 @@ class triceratopsPlugin : public Plugin
 		void run(const float** inputs, float** outputs, uint32_t frames,
              const MidiEvent* midiEvents, uint32_t midiEventCount) override
 		{
-			cout << getParameterValue(TRICERATOPS_OSC1_DETUNE) << endl;
+			// cout << getParameterValue(TRICERATOPS_OSC1_DETUNE) << endl;
 			// memcpy(outputs[0], inputs[0], frames * sizeof(float));
 
 			float* out_left = outputs[0];
 			float* out_right = outputs[1];
-
+			
 
 
 
@@ -166,15 +253,17 @@ class triceratopsPlugin : public Plugin
 
 		int bpm;
 		uint32_t buffer_length;
-		float srate;
-
-
-
 };
 
 Plugin* createPlugin()
 {
-    return new triceratopsPlugin;
+	triceratopsPlugin* triceratops = new triceratopsPlugin();
+	return triceratops;
 }
 
 END_NAMESPACE_DISTRHO
+
+
+
+
+

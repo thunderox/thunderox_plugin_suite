@@ -8,6 +8,16 @@ NAME = thunderox_triceratops
 # Files to build
 
 FILES_DSP = \
+	synth.cpp \
+	lfo.cpp \
+	nix-echo.cpp \
+	fastmaths.cpp \
+	Reverb.cpp \
+	Object.cpp \
+	JCRev.cpp \
+	Filter.cpp \
+	eq.cpp \
+	DLineN.cpp \
 	triceratopsPlugin.cpp
 
 FILES_UI  = \
