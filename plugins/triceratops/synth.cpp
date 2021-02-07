@@ -75,19 +75,14 @@ synth::synth()
 	dc3 = 0;
 
 	int iSize = 2048;
-	gMinBLEP.lpTable=(double*)malloc(iSize);
+	gMinBLEP.lpTable=(double*)malloc(iSize * sizeof(double) );
 	
 	int g=0;
 	
-	for (int x=0; x<iSize/sizeof(double); x++)
+	for (int x=0; x<iSize; x++)
 	{
-		gMinBLEP.lpTable[0] = minBLEP_table[x];
-		cout << sizeof(minBLEP_table) / sizeof(double) << endl;
+		gMinBLEP.lpTable[x] = minBLEP_table[x];
 	}
-
-
-
-
 
 	buf0_left=0; buf1_left=0;
 

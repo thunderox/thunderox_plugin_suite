@@ -55,6 +55,7 @@ class triceratopsPlugin : public Plugin
 		float* channel_after_touch;
 	
 		synth synths[max_notes];
+		params* synth_params;
 
 		nixecho* echo;
 		noise* nixnoise;
@@ -67,6 +68,140 @@ class triceratopsPlugin : public Plugin
 		// triceratops Audio Buffer
 		vector <audio_stereo> audio_buffer; 
 		
+		float PARAM_OUT_LEFT,
+		PARAM_OUT_RIGHT,
+		PARAM_CONTROL,
+
+		PARAM_MASTER_VOLUME,
+		PARAM_MASTER_TUNE,
+		PARAM_AMP_DRIVE,
+		PARAM_FILTER_MODE,
+		PARAM_CUTOFF,
+		PARAM_RESONANCE,
+		PARAM_FILTER_KEY_FOLLOW,
+		PARAM_LEGATO,
+		PARAM_SYNC,
+		PARAM_WARMTH,
+		PARAM_FM,
+		PARAM_PANIC,
+
+		PARAM_OSC1_ACTIVE,
+		PARAM_OSC1_VOLUME,
+		PARAM_OSC1_PULSEWIDTH,
+		PARAM_OSC1_WAVE,
+		PARAM_OSC1_OCTAVE,
+		PARAM_OSC1_DETUNE,
+		PARAM_OSC1_DETUNE_CENTRE,
+		PARAM_OSC1_INERTIA,
+
+		PARAM_OSC2_ACTIVE,
+		PARAM_OSC2_VOLUME,
+		PARAM_OSC2_PULSEWIDTH,
+		PARAM_OSC2_WAVE,
+		PARAM_OSC2_OCTAVE,
+		PARAM_OSC2_DETUNE,
+		PARAM_OSC2_DETUNE_CENTRE,
+		PARAM_OSC2_INERTIA,
+
+		PARAM_OSC3_ACTIVE,
+		PARAM_OSC3_VOLUME,
+		PARAM_OSC3_PULSEWIDTH,
+		PARAM_OSC3_WAVE,
+		PARAM_OSC3_OCTAVE,
+		PARAM_OSC3_DETUNE,
+		PARAM_OSC3_DETUNE_CENTRE,
+		PARAM_OSC3_INERTIA,
+
+		PARAM_ADSR1_ATTACK,
+		PARAM_ADSR1_DECAY,
+		PARAM_ADSR1_SUSTAIN,
+		PARAM_ADSR1_RELEASE,
+		PARAM_ADSR1_ROUTE_ONE,
+		PARAM_ADSR1_ROUTE_ONE_DEST,
+		PARAM_ADSR1_ROUTE_TWO,
+		PARAM_ADSR1_ROUTE_TWO_DEST,
+
+		PARAM_ADSR2_ATTACK,
+		PARAM_ADSR2_DECAY,
+		PARAM_ADSR2_SUSTAIN,
+		PARAM_ADSR2_RELEASE,
+		PARAM_ADSR2_ROUTE_ONE,
+		PARAM_ADSR2_ROUTE_ONE_DEST,
+		PARAM_ADSR2_ROUTE_TWO,
+		PARAM_ADSR2_ROUTE_TWO_DEST,
+
+		PARAM_ADSR3_ATTACK,
+		PARAM_ADSR3_DECAY,
+		PARAM_ADSR3_SUSTAIN,
+		PARAM_ADSR3_RELEASE,
+		PARAM_ADSR3_LFO1_AMOUNT,
+		PARAM_ADSR3_LFO2_AMOUNT,
+		PARAM_ADSR3_LFO3_AMOUNT,
+
+		PARAM_LFO1_RETRIG,
+		PARAM_LFO1_SPEED,
+		PARAM_LFO1_WAVE,
+		PARAM_LFO1_DCO1_PITCH,
+		PARAM_LFO1_DCO2_PITCH,
+		PARAM_LFO1_DCO3_PITCH,
+		PARAM_LFO1_FILTER,
+		PARAM_LFO1_ROUTE_ONE,
+		PARAM_LFO1_ROUTE_ONE_DEST,
+		PARAM_LFO1_ROUTE_TWO,
+		PARAM_LFO1_ROUTE_TWO_DEST,
+
+		PARAM_LFO2_RETRIG,
+		PARAM_LFO2_SPEED,
+		PARAM_LFO2_WAVE,
+		PARAM_LFO2_DCO1_PITCH,
+		PARAM_LFO2_DCO2_PITCH,
+		PARAM_LFO2_DCO3_PITCH,
+		PARAM_LFO2_FILTER,
+		PARAM_LFO2_ROUTE_ONE,
+		PARAM_LFO2_ROUTE_ONE_DEST,
+		PARAM_LFO2_ROUTE_TWO,
+		PARAM_LFO2_ROUTE_TWO_DEST,
+
+		PARAM_LFO3_RETRIG,
+		PARAM_LFO3_SPEED,
+		PARAM_LFO3_WAVE,
+		PARAM_LFO3_DCO1_PITCH,
+		PARAM_LFO3_DCO2_PITCH,
+		PARAM_LFO3_DCO3_PITCH,
+		PARAM_LFO3_FILTER,
+		PARAM_LFO3_ROUTE_ONE,
+		PARAM_LFO3_ROUTE_ONE_DEST,
+		PARAM_LFO3_ROUTE_TWO,
+		PARAM_LFO3_ROUTE_TWO_DEST,
+
+		PARAM_FX_ECHO_ACTIVE,
+		PARAM_FX_ECHO_SPEED,
+		PARAM_FX_ECHO_DECAY,
+		PARAM_FX_ECHO_EQ_LOW,
+		PARAM_FX_ECHO_EQ_MID,
+		PARAM_FX_ECHO_EQ_HIGH,
+
+		PARAM_UNISON_ACTIVATE,
+		PARAM_UNISON_ONE,
+		PARAM_UNISON_TWO,
+		PARAM_UNISON_THREE,
+
+		PARAM_MODIFIER_DIRT,
+
+		PARAM_FX_REVERB_ACTIVE,
+		PARAM_FX_REVERB_DECAY,
+		PARAM_FX_REVERB_MIX,
+
+		PARAM_MODIFIER_STEREO_MODE,
+		PARAM_OSC1_PAN,
+		PARAM_OSC2_PAN,
+		PARAM_OSC3_PAN,
+		PARAM_MODIFIER_RING,
+
+		PARAM_PRESET_CATEGORY,
+		PARAM_PITCH_BEND_RANGE,
+		PARAM_MIDI_CHANNEL;
+			
 		triceratopsPlugin() : Plugin(kParameterCount, 0, 0)
 		{
 
@@ -259,7 +394,30 @@ class triceratopsPlugin : public Plugin
 Plugin* createPlugin()
 {
 	triceratopsPlugin* triceratops = new triceratopsPlugin();
-	
+	for (int x=0; x<max_notes; x++)
+	{
+		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_VOLUME = &triceratops->PARAM_MASTER_VOLUME;
+		triceratops->synths[x].synth_params->TRICERATOPS_AMP_DRIVE = &triceratops->PARAM_AMP_DRIVE;
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->PARAM_FILTER_MODE;
+		triceratops->synths[x].synth_params->TRICERATOPS_CUTOFF = &triceratops->PARAM_CUTOFF;
+		triceratops->synths[x].synth_params->TRICERATOPS_RESONANCE = &triceratops->PARAM_RESONANCE;		
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_KEY_FOLLOW = &triceratops->PARAM_FILTER_KEY_FOLLOW;
+		triceratops->synths[x].synth_params->TRICERATOPS_LEGATO = &triceratops->PARAM_LEGATO;
+		triceratops->synths[x].synth_params->TRICERATOPS_SYNC = &triceratops->PARAM_SYNC;
+		triceratops->synths[x].synth_params->TRICERATOPS_WARMTH = &triceratops->PARAM_WARMTH;		
+		triceratops->synths[x].synth_params->TRICERATOPS_FM = &triceratops->PARAM_FM;
+		triceratops->synths[x].synth_params->TRICERATOPS_PANIC = &triceratops->PARAM_PANIC;		
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_ACTIVE = &triceratops->PARAM_OSC1_ACTIVE;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_VOLUME = &triceratops->PARAM_OSC1_VOLUME;
+		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH = &triceratops->PARAM_OSC1_PULSEWIDTH;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_WAVE; = &triceratops->PARAM_OSC1_WAVE;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_OCTAVE = &triceratops->PARAM_OSC1_OCTAVE;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_OCTAVE = &triceratops->PARAM_OSC1_OCTAVE;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_DETUNE_CENTRE = &triceratops->PARAMS_OSC1_DETUNE_CENTRE;
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_INERTIA = &triceratops->PARAM_OSC1_INERTIA;
+
+	}
 	return triceratops;
 }
 
