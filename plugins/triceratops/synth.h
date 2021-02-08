@@ -9,9 +9,9 @@ using namespace std;
 const int route_none = 0;
 const int route_cutoff = 1;
 const int route_res = 2;
-const int route_dco1 = 3;
-const int route_dco2 = 4;
-const int route_dco3 = 5;
+const int route_OSC1 = 3;
+const int route_OSC2 = 4;
+const int route_OSC3 = 5;
 const int route_pw1 = 6;
 const int route_pw2 = 7;
 const int route_pw3 = 8;
@@ -95,9 +95,9 @@ typedef struct
 	float* TRICERATOPS_LFO1_RETRIG;
 	float* TRICERATOPS_LFO1_SPEED;
 	float* TRICERATOPS_LFO1_WAVE;
-	float* TRICERATOPS_LFO1_DCO1_PITCH;
-	float* TRICERATOPS_LFO1_DCO2_PITCH;
-	float* TRICERATOPS_LFO1_DCO3_PITCH;
+	float* TRICERATOPS_LFO1_OSC1_AMOUNT;
+	float* TRICERATOPS_LFO1_OSC2_AMOUNT;
+	float* TRICERATOPS_LFO1_OSC3_AMOUNT;
 	float* TRICERATOPS_LFO1_FILTER;
 	float* TRICERATOPS_LFO1_ROUTE_ONE;
 	float* TRICERATOPS_LFO1_ROUTE_ONE_DEST;
@@ -107,9 +107,9 @@ typedef struct
 	float* TRICERATOPS_LFO2_RETRIG;
 	float* TRICERATOPS_LFO2_SPEED;
 	float* TRICERATOPS_LFO2_WAVE;
-	float* TRICERATOPS_LFO2_DCO1_PITCH;
-	float* TRICERATOPS_LFO2_DCO2_PITCH;
-	float* TRICERATOPS_LFO2_DCO3_PITCH;
+	float* TRICERATOPS_LFO2_OSC1_AMOUNT;
+	float* TRICERATOPS_LFO2_OSC2_AMOUNT;
+	float* TRICERATOPS_LFO2_OSC3_AMOUNT;
 	float* TRICERATOPS_LFO2_FILTER;
 	float* TRICERATOPS_LFO2_ROUTE_ONE;
 	float* TRICERATOPS_LFO2_ROUTE_ONE_DEST;
@@ -119,9 +119,9 @@ typedef struct
 	float* TRICERATOPS_LFO3_RETRIG;
 	float* TRICERATOPS_LFO3_SPEED;
 	float* TRICERATOPS_LFO3_WAVE;
-	float* TRICERATOPS_LFO3_DCO1_PITCH;
-	float* TRICERATOPS_LFO3_DCO2_PITCH;
-	float* TRICERATOPS_LFO3_DCO3_PITCH;
+	float* TRICERATOPS_LFO3_OSC1_AMOUNT;
+	float* TRICERATOPS_LFO3_OSC2_AMOUNT;
+	float* TRICERATOPS_LFO3_OSC3_AMOUNT;
 	float* TRICERATOPS_LFO3_FILTER;
 	float* TRICERATOPS_LFO3_ROUTE_ONE;
 	float* TRICERATOPS_LFO3_ROUTE_ONE_DEST;
@@ -147,9 +147,9 @@ typedef struct
 	float* TRICERATOPS_FX_REVERB_MIX;
 
 	float* TRICERATOPS_MODIFIER_STEREO_MODE;
-	float* TRICERATOPS_DCO1_PAN;
-	float* TRICERATOPS_DCO2_PAN;
-	float* TRICERATOPS_DCO3_PAN;
+	float* TRICERATOPS_OSC1_PAN;
+	float* TRICERATOPS_OSC2_PAN;
+	float* TRICERATOPS_OSC3_PAN;
 	float* TRICERATOPS_MODIFIER_RING;
 
 	float* TRICERATOPS_CATEGORY;
@@ -248,9 +248,9 @@ class synth
 	LFO* sinewave_osc[6];
 	noise* nixnoise;
 
-	int dco_count_one;
+	int OSC_count_one;
 
-	float dco_frequency;
+	float OSC_frequency;
 	float dc1,dc2,dc3;
 
 	inertia inertia_one;

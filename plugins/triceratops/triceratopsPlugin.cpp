@@ -231,7 +231,8 @@ class triceratopsPlugin : public Plugin
 		void setParameterValue(uint32_t index, float value) override
 		{
 			fParameters[index] = value;
-			cout << synths[0].synth_params->TRICERATOPS_MASTER_VOLUME << "," << fParameters[6] << endl;
+			cout << fParameters[TRICERATOPS_OSC1_PULSEWIDTH] << "      -      " << synths[0].synth_params->TRICERATOPS_PULSEWIDTH_ONE[0] << endl;
+			// cout << synths[0].synth_params->TRICERATOPS_ATTACK_TWO[0] << "," << fParameters[TRICERATOPS_ADSR2_ATTACK] << endl;
 		}
 
 		void run(const float** inputs, float** outputs, uint32_t frames,
@@ -331,9 +332,9 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO1_RETRIG];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_SPEED = &triceratops->fParameters[TRICERATOPS_LFO1_SPEED];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_WAVE = &triceratops->fParameters[TRICERATOPS_LFO1_WAVE];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO1_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO2_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_OSC1_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO1_OSC1_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_OSC2_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO1_OSC2_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_OSC3_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO1_OSC3_AMOUNT];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_FILTER = &triceratops->fParameters[TRICERATOPS_LFO1_FILTER];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_ONE];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_ONE_DEST];
@@ -343,9 +344,9 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO2_RETRIG];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_SPEED = &triceratops->fParameters[TRICERATOPS_LFO2_SPEED];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_WAVE = &triceratops->fParameters[TRICERATOPS_LFO2_WAVE];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO1_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO2_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_OSC1_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO2_OSC1_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_OSC2_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO2_OSC2_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_OSC3_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO2_OSC3_AMOUNT];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_FILTER = &triceratops->fParameters[TRICERATOPS_LFO2_FILTER];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_ONE];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_ONE_DEST];
@@ -355,9 +356,9 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO3_RETRIG];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_SPEED = &triceratops->fParameters[TRICERATOPS_LFO3_SPEED];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_WAVE = &triceratops->fParameters[TRICERATOPS_LFO3_WAVE];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO1_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO2_PITCH];
-		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_OSC1_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO3_OSC1_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_OSC2_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO3_OSC2_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_OSC3_AMOUNT = &triceratops->fParameters[TRICERATOPS_LFO3_OSC3_AMOUNT];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_FILTER = &triceratops->fParameters[TRICERATOPS_LFO3_FILTER];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_ONE];
 		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_ONE_DEST];
@@ -383,9 +384,9 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_FX_REVERB_MIX = &triceratops->fParameters[TRICERATOPS_FX_REVERB_MIX];
 		
 		triceratops->synths[x].synth_params->TRICERATOPS_MODIFIER_STEREO_MODE = &triceratops->fParameters[TRICERATOPS_MODIFIER_STEREO_MODE];
-		triceratops->synths[x].synth_params->TRICERATOPS_DCO1_PAN = &triceratops->fParameters[TRICERATOPS_OSC1_PAN];
-		triceratops->synths[x].synth_params->TRICERATOPS_DCO2_PAN = &triceratops->fParameters[TRICERATOPS_OSC2_PAN];
-		triceratops->synths[x].synth_params->TRICERATOPS_DCO3_PAN = &triceratops->fParameters[TRICERATOPS_OSC3_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_PAN = &triceratops->fParameters[TRICERATOPS_OSC1_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC2_PAN = &triceratops->fParameters[TRICERATOPS_OSC2_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_OSC3_PAN = &triceratops->fParameters[TRICERATOPS_OSC3_PAN];
 		triceratops->synths[x].synth_params->TRICERATOPS_MODIFIER_RING = &triceratops->fParameters[TRICERATOPS_MODIFIER_RING];
 		
 		triceratops->synths[x].synth_params->TRICERATOPS_CATEGORY = &triceratops->fParameters[TRICERATOPS_PRESET_CATEGORY];
