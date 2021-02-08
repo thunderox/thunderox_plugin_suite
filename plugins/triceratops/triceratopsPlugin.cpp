@@ -38,7 +38,9 @@ START_NAMESPACE_DISTRHO
 class triceratopsPlugin : public Plugin
 {
 	public:
-
+		// Parameters
+		float fParameters[kParameterCount];
+		
 		// Audio Struct
 		struct audio_stereo
 		{ 
@@ -67,141 +69,7 @@ class triceratopsPlugin : public Plugin
 	
 		// triceratops Audio Buffer
 		vector <audio_stereo> audio_buffer; 
-		
-		float PARAM_OUT_LEFT,
-		PARAM_OUT_RIGHT,
-		PARAM_CONTROL,
-
-		PARAM_MASTER_VOLUME,
-		PARAM_MASTER_TUNE,
-		PARAM_AMP_DRIVE,
-		PARAM_FILTER_MODE,
-		PARAM_CUTOFF,
-		PARAM_RESONANCE,
-		PARAM_FILTER_KEY_FOLLOW,
-		PARAM_LEGATO,
-		PARAM_SYNC,
-		PARAM_WARMTH,
-		PARAM_FM,
-		PARAM_PANIC,
-
-		PARAM_OSC1_ACTIVE,
-		PARAM_OSC1_VOLUME,
-		PARAM_OSC1_PULSEWIDTH,
-		PARAM_OSC1_WAVE,
-		PARAM_OSC1_OCTAVE,
-		PARAM_OSC1_DETUNE,
-		PARAM_OSC1_DETUNE_CENTRE,
-		PARAM_OSC1_INERTIA,
-
-		PARAM_OSC2_ACTIVE,
-		PARAM_OSC2_VOLUME,
-		PARAM_OSC2_PULSEWIDTH,
-		PARAM_OSC2_WAVE,
-		PARAM_OSC2_OCTAVE,
-		PARAM_OSC2_DETUNE,
-		PARAM_OSC2_DETUNE_CENTRE,
-		PARAM_OSC2_INERTIA,
-
-		PARAM_OSC3_ACTIVE,
-		PARAM_OSC3_VOLUME,
-		PARAM_OSC3_PULSEWIDTH,
-		PARAM_OSC3_WAVE,
-		PARAM_OSC3_OCTAVE,
-		PARAM_OSC3_DETUNE,
-		PARAM_OSC3_DETUNE_CENTRE,
-		PARAM_OSC3_INERTIA,
-
-		PARAM_ADSR1_ATTACK,
-		PARAM_ADSR1_DECAY,
-		PARAM_ADSR1_SUSTAIN,
-		PARAM_ADSR1_RELEASE,
-		PARAM_ADSR1_ROUTE_ONE,
-		PARAM_ADSR1_ROUTE_ONE_DEST,
-		PARAM_ADSR1_ROUTE_TWO,
-		PARAM_ADSR1_ROUTE_TWO_DEST,
-
-		PARAM_ADSR2_ATTACK,
-		PARAM_ADSR2_DECAY,
-		PARAM_ADSR2_SUSTAIN,
-		PARAM_ADSR2_RELEASE,
-		PARAM_ADSR2_ROUTE_ONE,
-		PARAM_ADSR2_ROUTE_ONE_DEST,
-		PARAM_ADSR2_ROUTE_TWO,
-		PARAM_ADSR2_ROUTE_TWO_DEST,
-
-		PARAM_ADSR3_ATTACK,
-		PARAM_ADSR3_DECAY,
-		PARAM_ADSR3_SUSTAIN,
-		PARAM_ADSR3_RELEASE,
-		PARAM_ADSR3_LFO1_AMOUNT,
-		PARAM_ADSR3_LFO2_AMOUNT,
-		PARAM_ADSR3_LFO3_AMOUNT,
-
-		PARAM_LFO1_RETRIG,
-		PARAM_LFO1_SPEED,
-		PARAM_LFO1_WAVE,
-		PARAM_LFO1_DCO1_PITCH,
-		PARAM_LFO1_DCO2_PITCH,
-		PARAM_LFO1_DCO3_PITCH,
-		PARAM_LFO1_FILTER,
-		PARAM_LFO1_ROUTE_ONE,
-		PARAM_LFO1_ROUTE_ONE_DEST,
-		PARAM_LFO1_ROUTE_TWO,
-		PARAM_LFO1_ROUTE_TWO_DEST,
-
-		PARAM_LFO2_RETRIG,
-		PARAM_LFO2_SPEED,
-		PARAM_LFO2_WAVE,
-		PARAM_LFO2_DCO1_PITCH,
-		PARAM_LFO2_DCO2_PITCH,
-		PARAM_LFO2_DCO3_PITCH,
-		PARAM_LFO2_FILTER,
-		PARAM_LFO2_ROUTE_ONE,
-		PARAM_LFO2_ROUTE_ONE_DEST,
-		PARAM_LFO2_ROUTE_TWO,
-		PARAM_LFO2_ROUTE_TWO_DEST,
-
-		PARAM_LFO3_RETRIG,
-		PARAM_LFO3_SPEED,
-		PARAM_LFO3_WAVE,
-		PARAM_LFO3_DCO1_PITCH,
-		PARAM_LFO3_DCO2_PITCH,
-		PARAM_LFO3_DCO3_PITCH,
-		PARAM_LFO3_FILTER,
-		PARAM_LFO3_ROUTE_ONE,
-		PARAM_LFO3_ROUTE_ONE_DEST,
-		PARAM_LFO3_ROUTE_TWO,
-		PARAM_LFO3_ROUTE_TWO_DEST,
-
-		PARAM_FX_ECHO_ACTIVE,
-		PARAM_FX_ECHO_SPEED,
-		PARAM_FX_ECHO_DECAY,
-		PARAM_FX_ECHO_EQ_LOW,
-		PARAM_FX_ECHO_EQ_MID,
-		PARAM_FX_ECHO_EQ_HIGH,
-
-		PARAM_UNISON_ACTIVATE,
-		PARAM_UNISON_ONE,
-		PARAM_UNISON_TWO,
-		PARAM_UNISON_THREE,
-
-		PARAM_MODIFIER_DIRT,
-
-		PARAM_FX_REVERB_ACTIVE,
-		PARAM_FX_REVERB_DECAY,
-		PARAM_FX_REVERB_MIX,
-
-		PARAM_MODIFIER_STEREO_MODE,
-		PARAM_OSC1_PAN,
-		PARAM_OSC2_PAN,
-		PARAM_OSC3_PAN,
-		PARAM_MODIFIER_RING,
-
-		PARAM_PRESET_CATEGORY,
-		PARAM_PITCH_BEND_RANGE,
-		PARAM_MIDI_CHANNEL;
-			
+					
 		triceratopsPlugin() : Plugin(kParameterCount, 0, 0)
 		{
 
@@ -363,6 +231,7 @@ class triceratopsPlugin : public Plugin
 		void setParameterValue(uint32_t index, float value) override
 		{
 			fParameters[index] = value;
+			cout << synths[0].synth_params->TRICERATOPS_MASTER_VOLUME << "," << fParameters[6] << endl;
 		}
 
 		void run(const float** inputs, float** outputs, uint32_t frames,
@@ -373,9 +242,6 @@ class triceratopsPlugin : public Plugin
 
 			float* out_left = outputs[0];
 			float* out_right = outputs[1];
-			
-
-
 
 			// cout << timePos.bbt.beatsPerMinute << endl;
 		}
@@ -384,8 +250,7 @@ class triceratopsPlugin : public Plugin
 
 	private:
 
-		// Parameters
-		float fParameters[kParameterCount];
+
 
 		int bpm;
 		uint32_t buffer_length;
@@ -396,30 +261,139 @@ Plugin* createPlugin()
 	triceratopsPlugin* triceratops = new triceratopsPlugin();
 	for (int x=0; x<max_notes; x++)
 	{
-		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_VOLUME = &triceratops->PARAM_MASTER_VOLUME;
-		triceratops->synths[x].synth_params->TRICERATOPS_AMP_DRIVE = &triceratops->PARAM_AMP_DRIVE;
-		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->PARAM_FILTER_MODE;
-		triceratops->synths[x].synth_params->TRICERATOPS_CUTOFF = &triceratops->PARAM_CUTOFF;
-		triceratops->synths[x].synth_params->TRICERATOPS_RESONANCE = &triceratops->PARAM_RESONANCE;		
-		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_KEY_FOLLOW = &triceratops->PARAM_FILTER_KEY_FOLLOW;
-		triceratops->synths[x].synth_params->TRICERATOPS_LEGATO = &triceratops->PARAM_LEGATO;
-		triceratops->synths[x].synth_params->TRICERATOPS_SYNC = &triceratops->PARAM_SYNC;
-		triceratops->synths[x].synth_params->TRICERATOPS_WARMTH = &triceratops->PARAM_WARMTH;		
-		triceratops->synths[x].synth_params->TRICERATOPS_FM = &triceratops->PARAM_FM;
-		triceratops->synths[x].synth_params->TRICERATOPS_PANIC = &triceratops->PARAM_PANIC;		
+		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_VOLUME = &triceratops->fParameters[TRICERATOPS_MASTER_VOLUME];
+		triceratops->synths[x].synth_params->TRICERATOPS_AMP_DRIVE = &triceratops->fParameters[TRICERATOPS_AMP_DRIVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->fParameters[TRICERATOPS_FILTER_MODE]				;
+		triceratops->synths[x].synth_params->TRICERATOPS_CUTOFF = &triceratops->fParameters[TRICERATOPS_CUTOFF];
+		triceratops->synths[x].synth_params->TRICERATOPS_RESONANCE = &triceratops->fParameters[TRICERATOPS_RESONANCE];		
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_KEY_FOLLOW =&triceratops->fParameters[TRICERATOPS_FILTER_KEY_FOLLOW];
+		triceratops->synths[x].synth_params->TRICERATOPS_LEGATO = &triceratops->fParameters[TRICERATOPS_LEGATO];
+		triceratops->synths[x].synth_params->TRICERATOPS_SYNC = &triceratops->fParameters[TRICERATOPS_SYNC];
+		triceratops->synths[x].synth_params->TRICERATOPS_WARMTH = &triceratops->fParameters[TRICERATOPS_WARMTH];		
+		triceratops->synths[x].synth_params->TRICERATOPS_FM = &triceratops->fParameters[TRICERATOPS_FM];
+		triceratops->synths[x].synth_params->TRICERATOPS_PANIC = &triceratops->fParameters[TRICERATOPS_PANIC];		
 		
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_ACTIVE = &triceratops->PARAM_OSC1_ACTIVE;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_VOLUME = &triceratops->PARAM_OSC1_VOLUME;
-		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH = &triceratops->PARAM_OSC1_PULSEWIDTH;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_WAVE; = &triceratops->PARAM_OSC1_WAVE;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_OCTAVE = &triceratops->PARAM_OSC1_OCTAVE;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_OCTAVE = &triceratops->PARAM_OSC1_OCTAVE;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_DETUNE_CENTRE = &triceratops->PARAMS_OSC1_DETUNE_CENTRE;
-		triceratops->synths[x].synth_params->TRICERATOPS_OSC1_INERTIA = &triceratops->PARAM_OSC1_INERTIA;
+		triceratops->synths[x].synth_params->TRICERATOPS_ACTIVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_ACTIVE]; 
+		triceratops->synths[x].synth_params->TRICERATOPS_VOLUME_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_VOLUME];
+		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_PULSEWIDTH];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_DETUNE];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_DETUNE_CENTRE];
+		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_INERTIA];
+		
+				
+		triceratops->synths[x].synth_params->TRICERATOPS_ACTIVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_ACTIVE]; 
+		triceratops->synths[x].synth_params->TRICERATOPS_VOLUME_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_VOLUME];
+		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_PULSEWIDTH];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_DETUNE];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_DETUNE_CENTRE];
+		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_INERTIA];
+		
+				
+		triceratops->synths[x].synth_params->TRICERATOPS_ACTIVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_ACTIVE]; 
+		triceratops->synths[x].synth_params->TRICERATOPS_VOLUME_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_VOLUME];
+		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_PULSEWIDTH];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_DETUNE];
+		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_DETUNE_CENTRE];
+		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_INERTIA];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_ATTACK_ONE = &triceratops->fParameters[TRICERATOPS_ADSR1_ATTACK];
+		triceratops->synths[x].synth_params->TRICERATOPS_DECAY_ONE = &triceratops->fParameters[TRICERATOPS_ADSR1_DECAY];
+		triceratops->synths[x].synth_params->TRICERATOPS_SUSTAIN_ONE = &triceratops->fParameters[TRICERATOPS_ADSR1_SUSTAIN];
+		triceratops->synths[x].synth_params->TRICERATOPS_RELEASE_ONE = &triceratops->fParameters[TRICERATOPS_ADSR1_RELEASE];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR1_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_ADSR1_ROUTE_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR1_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_ADSR1_ROUTE_ONE_DEST];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR1_ROUTE_TWO = &triceratops->fParameters[TRICERATOPS_ADSR1_ROUTE_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR1_ROUTE_TWO_DEST = &triceratops->fParameters[TRICERATOPS_ADSR1_ROUTE_TWO_DEST];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_ATTACK_TWO = &triceratops->fParameters[TRICERATOPS_ADSR2_ATTACK];
+		triceratops->synths[x].synth_params->TRICERATOPS_DECAY_TWO = &triceratops->fParameters[TRICERATOPS_ADSR2_DECAY];
+		triceratops->synths[x].synth_params->TRICERATOPS_SUSTAIN_TWO = &triceratops->fParameters[TRICERATOPS_ADSR2_SUSTAIN];
+		triceratops->synths[x].synth_params->TRICERATOPS_RELEASE_TWO = &triceratops->fParameters[TRICERATOPS_ADSR2_RELEASE];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR2_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_ADSR2_ROUTE_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR2_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_ADSR2_ROUTE_ONE_DEST];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR2_ROUTE_TWO = &triceratops->fParameters[TRICERATOPS_ADSR2_ROUTE_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR2_ROUTE_TWO_DEST = &triceratops->fParameters[TRICERATOPS_ADSR2_ROUTE_TWO_DEST];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_ATTACK_THREE = &triceratops->fParameters[TRICERATOPS_ADSR3_ATTACK];
+		triceratops->synths[x].synth_params->TRICERATOPS_DECAY_THREE = &triceratops->fParameters[TRICERATOPS_ADSR3_DECAY];
+		triceratops->synths[x].synth_params->TRICERATOPS_SUSTAIN_THREE = &triceratops->fParameters[TRICERATOPS_ADSR3_SUSTAIN];
+		triceratops->synths[x].synth_params->TRICERATOPS_RELEASE_THREE = &triceratops->fParameters[TRICERATOPS_ADSR3_RELEASE];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR3_LFO1_AMOUNT = &triceratops->fParameters[TRICERATOPS_ADSR3_LFO1_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR3_LFO2_AMOUNT = &triceratops->fParameters[TRICERATOPS_ADSR3_LFO2_AMOUNT];
+		triceratops->synths[x].synth_params->TRICERATOPS_ADSR3_LFO3_AMOUNT = &triceratops->fParameters[TRICERATOPS_ADSR3_LFO3_AMOUNT];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO1_RETRIG];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_SPEED = &triceratops->fParameters[TRICERATOPS_LFO1_SPEED];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_WAVE = &triceratops->fParameters[TRICERATOPS_LFO1_WAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO1_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO2_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO1_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_FILTER = &triceratops->fParameters[TRICERATOPS_LFO1_FILTER];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_ONE_DEST];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_TWO = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO1_ROUTE_TWO_DEST = &triceratops->fParameters[TRICERATOPS_LFO1_ROUTE_TWO_DEST];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO2_RETRIG];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_SPEED = &triceratops->fParameters[TRICERATOPS_LFO2_SPEED];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_WAVE = &triceratops->fParameters[TRICERATOPS_LFO2_WAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO1_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO2_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO2_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_FILTER = &triceratops->fParameters[TRICERATOPS_LFO2_FILTER];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_ONE_DEST];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_TWO = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO2_ROUTE_TWO_DEST = &triceratops->fParameters[TRICERATOPS_LFO2_ROUTE_TWO_DEST];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_RETRIG = &triceratops->fParameters[TRICERATOPS_LFO3_RETRIG];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_SPEED = &triceratops->fParameters[TRICERATOPS_LFO3_SPEED];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_WAVE = &triceratops->fParameters[TRICERATOPS_LFO3_WAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO1_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO1_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO2_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO2_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_DCO3_PITCH = &triceratops->fParameters[TRICERATOPS_LFO3_DCO3_PITCH];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_FILTER = &triceratops->fParameters[TRICERATOPS_LFO3_FILTER];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_ONE = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_ONE_DEST = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_ONE_DEST];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_TWO = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_LFO3_ROUTE_TWO_DEST = &triceratops->fParameters[TRICERATOPS_LFO3_ROUTE_TWO_DEST];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_ACTIVE = &triceratops->fParameters[TRICERATOPS_FX_ECHO_ACTIVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_SPEED = &triceratops->fParameters[TRICERATOPS_FX_ECHO_SPEED];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_DECAY = &triceratops->fParameters[TRICERATOPS_FX_ECHO_DECAY];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_EQ_LOW = &triceratops->fParameters[TRICERATOPS_FX_ECHO_EQ_LOW];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_EQ_MID = &triceratops->fParameters[TRICERATOPS_FX_ECHO_EQ_MID];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_ECHO_EQ_HIGH = &triceratops->fParameters[TRICERATOPS_FX_ECHO_EQ_HIGH];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_UNISON_ACTIVATE = &triceratops->fParameters[TRICERATOPS_UNISON_ACTIVATE];
+		triceratops->synths[x].synth_params->TRICERATOPS_UNISON_ONE = &triceratops->fParameters[TRICERATOPS_UNISON_ONE];
+		triceratops->synths[x].synth_params->TRICERATOPS_UNISON_TWO = &triceratops->fParameters[TRICERATOPS_UNISON_TWO];
+		triceratops->synths[x].synth_params->TRICERATOPS_UNISON_THREE = &triceratops->fParameters[TRICERATOPS_UNISON_THREE];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_MODIFIER_DIRT = &triceratops->fParameters[TRICERATOPS_MODIFIER_DIRT];
 
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_REVERB_ACTIVE = &triceratops->fParameters[TRICERATOPS_FX_REVERB_ACTIVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_REVERB_DECAY = &triceratops->fParameters[TRICERATOPS_FX_REVERB_DECAY];
+		triceratops->synths[x].synth_params->TRICERATOPS_FX_REVERB_MIX = &triceratops->fParameters[TRICERATOPS_FX_REVERB_MIX];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_MODIFIER_STEREO_MODE = &triceratops->fParameters[TRICERATOPS_MODIFIER_STEREO_MODE];
+		triceratops->synths[x].synth_params->TRICERATOPS_DCO1_PAN = &triceratops->fParameters[TRICERATOPS_OSC1_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_DCO2_PAN = &triceratops->fParameters[TRICERATOPS_OSC2_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_DCO3_PAN = &triceratops->fParameters[TRICERATOPS_OSC3_PAN];
+		triceratops->synths[x].synth_params->TRICERATOPS_MODIFIER_RING = &triceratops->fParameters[TRICERATOPS_MODIFIER_RING];
+		
+		triceratops->synths[x].synth_params->TRICERATOPS_CATEGORY = &triceratops->fParameters[TRICERATOPS_PRESET_CATEGORY];
+		triceratops->synths[x].synth_params->TRICERATOPS_PITCH_BEND_RANGE = &triceratops->fParameters[TRICERATOPS_PITCH_BEND_RANGE];
+		triceratops->synths[x].synth_params->TRICERATOPS_MIDI_CHANNEL = &triceratops->fParameters[TRICERATOPS_MIDI_CHANNEL];
 	}
 	return triceratops;
-}
+}      
 
 END_NAMESPACE_DISTRHO
 

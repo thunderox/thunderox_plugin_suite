@@ -155,6 +155,7 @@ typedef struct
 	float* TRICERATOPS_CATEGORY;
 	float* TRICERATOPS_PITCH_BEND_RANGE;
 	float* TRICERATOPS_MIDI_CHANNEL;
+	
 } params;
 
 ///------------ oscillator  structs
