@@ -186,25 +186,904 @@ class triceratopsPlugin : public Plugin
 					fParameters[kParametertriceratopsTime] = parameter.ranges.def;
 					break;
 
-				case kParametertriceratopsAmount:
-					parameter.name   = "triceratops Amount";
-					parameter.symbol = "triceratops_amount";
-					parameter.hints = kParameterIsAutomable;
-					parameter.ranges.min = 0.0f;
-					parameter.ranges.max = 1.0f;
-					parameter.ranges.def = 1.0f;
-					fParameters[kParametertriceratopsAmount] = parameter.ranges.def;
-					break;
 
-				case kParametertriceratopsVolume:
-					parameter.name   = "triceratops Volume";
-					parameter.symbol = "triceratops_volume";
+				case TRICERATOPS_MASTER_VOLUME:
+					parameter.name   = "Volume";
+					parameter.symbol = "master_volume";
 					parameter.hints = kParameterIsAutomable;
 					parameter.ranges.min = 0.0f;
 					parameter.ranges.max = 1.0f;
 					parameter.ranges.def = 0.8f;
-					fParameters[kParametertriceratopsVolume] = parameter.ranges.def;
+					fParameters[TRICERATOPS_MASTER_VOLUME] = parameter.ranges.def;
 					break;
+					
+				case TRICERATOPS_MASTER_TUNE:
+					parameter.name   = "Master tune";
+					parameter.symbol = "master_tune";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -7.0f;
+					parameter.ranges.max = 7.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_MASTER_TUNE] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_FILTER_MODE:
+					parameter.name   = "Filter mode";
+					parameter.symbol = "filter_mode";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_FILTER_MODE] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_FILTER_FREQUENCY:
+					parameter.name   = "Filter cutoff";
+					parameter.symbol = "cutoff";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.5f;
+					fParameters[TRICERATOPS_FILTER_FREQUENCY] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_FILTER_RESONANCE:
+					parameter.name   = "Filter resonance";
+					parameter.symbol = "resonance";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_FILTER_RESONANCE] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_FILTER_KEY_FOLLOW:
+					parameter.name   = "Filter key follow";
+					parameter.symbol = "filter_key_follow";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -1.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_FILTER_KEY_FOLLOW] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_LEGATO:
+					parameter.name   = "Legato";
+					parameter.symbol = "legato";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LEGATO] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_SYNC:
+					parameter.name   = "Sync";
+					parameter.symbol = "sync";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_SYNC] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_WARMTH:
+					parameter.name   = "Sync";
+					parameter.symbol = "warmth";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_WARMTH] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_FM:
+					parameter.name   = "FM";
+					parameter.symbol = "fm";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_FM] = parameter.ranges.def;
+					break;
+					
+				case TRICERATOPS_PANIC:
+					parameter.name   = "Panic";
+					parameter.symbol = "panic";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_FM] = parameter.ranges.def;
+					break;
+					
+					// -- OSCILATOR ONE
+					
+					case TRICERATOPS_OSC1_ACTIVE:
+					parameter.name   = "Active 1";
+					parameter.symbol = "active_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_OSC1_ACTIVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_VOLUME:
+					parameter.name   = "Volume 1";
+					parameter.symbol = "volume_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.8f;
+					fParameters[TRICERATOPS_OSC1_VOLUME] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_PULSEWIDTH:
+					parameter.name   = "pulsewidth 1";
+					parameter.symbol = "pulsewidth_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -0.5f;
+					parameter.ranges.max = 0.5f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC1_PULSEWIDTH] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_WAVE:
+					parameter.name   = "Waveform 1";
+					parameter.symbol = "wave_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC1_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_OCTAVE:
+					parameter.name   = "Octave 1";
+					parameter.symbol = "octave_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -5.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = -2.0f;
+					fParameters[TRICERATOPS_OSC1_OCTAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_DETUNE:
+					parameter.name   = "Detune 1";
+					parameter.symbol = "detune_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -7.0f;
+					parameter.ranges.max = 7.0f;
+					parameter.ranges.def = -0.0f;
+					fParameters[TRICERATOPS_OSC1_DETUNE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC1_INERTIA:
+					parameter.name   = "Inertia 1";
+					parameter.symbol = "inertia_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC1_INERTIA] = parameter.ranges.def;
+					break;
+					
+					// -- OSCILATOR TWO
+					
+					case TRICERATOPS_OSC2_ACTIVE:
+					parameter.name   = "Active 2";
+					parameter.symbol = "active_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC2_ACTIVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_VOLUME:
+					parameter.name   = "Volume 2";
+					parameter.symbol = "volume_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.8f;
+					fParameters[TRICERATOPS_OSC2_VOLUME] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_PULSEWIDTH:
+					parameter.name   = "pulsewidth 2";
+					parameter.symbol = "pulsewidth_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -0.5f;
+					parameter.ranges.max = 0.5f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC2_PULSEWIDTH] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_WAVE:
+					parameter.name   = "Waveform 2";
+					parameter.symbol = "wave_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC2_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_OCTAVE:
+					parameter.name   = "Octave 2";
+					parameter.symbol = "octave_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -5.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = -2.0f;
+					fParameters[TRICERATOPS_OSC2_OCTAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_DETUNE:
+					parameter.name   = "Detune 2";
+					parameter.symbol = "detune_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -7.0f;
+					parameter.ranges.max = 7.0f;
+					parameter.ranges.def = -0.0f;
+					fParameters[TRICERATOPS_OSC2_DETUNE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC2_INERTIA:
+					parameter.name   = "Inertia 2";
+					parameter.symbol = "inertia_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC2_INERTIA] = parameter.ranges.def;
+					break;
+					
+					// -- OSCILATOR THREE
+					
+					case TRICERATOPS_OSC3_ACTIVE:
+					parameter.name   = "Active 3";
+					parameter.symbol = "active_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC3_ACTIVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_VOLUME:
+					parameter.name   = "Volume 3";
+					parameter.symbol = "volume_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.8f;
+					fParameters[TRICERATOPS_OSC3_VOLUME] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_PULSEWIDTH:
+					parameter.name   = "pulsewidth 3";
+					parameter.symbol = "pulsewidth_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -0.5f;
+					parameter.ranges.max = 0.5f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC3_PULSEWIDTH] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_WAVE:
+					parameter.name   = "Waveform 3";
+					parameter.symbol = "wave_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC3_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_OCTAVE:
+					parameter.name   = "Octave 3";
+					parameter.symbol = "octave_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -5.0f;
+					parameter.ranges.max = 5.0f;
+					parameter.ranges.def = -2.0f;
+					fParameters[TRICERATOPS_OSC3_OCTAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_DETUNE:
+					parameter.name   = "Detune 3";
+					parameter.symbol = "detune_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = -7.0f;
+					parameter.ranges.max = 7.0f;
+					parameter.ranges.def = -0.0f;
+					fParameters[TRICERATOPS_OSC3_DETUNE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_OSC3_INERTIA:
+					parameter.name   = "Inertia 3";
+					parameter.symbol = "inertia_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_OSC3_INERTIA] = parameter.ranges.def;
+					break;
+					
+					// ADSR ONE
+					
+					case TRICERATOPS_ADSR1_ATTACK:
+					parameter.name   = "Attack 1";
+					parameter.symbol = "attack_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR1_ATTACK] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_DECAY:
+					parameter.name   = "Decay 1";
+					parameter.symbol = "decay_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.75f;
+					fParameters[TRICERATOPS_ADSR1_DECAY] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_SUSTAIN:
+					parameter.name   = "Sustain 1";
+					parameter.symbol = "sustain_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR1_SUSTAIN] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_RELEASE:
+					parameter.name   = "Release 1";
+					parameter.symbol = "release_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.3f;
+					fParameters[TRICERATOPS_ADSR1_RELEASE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_ROUTE_ONE:
+					parameter.name   = "ADSR1 Route one";
+					parameter.symbol = "adsr1_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_ADSR1_ROUTE_ONE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_ROUTE_ONE_DEST:
+					parameter.name   = "ADSR1 Route one dest";
+					parameter.symbol = "adsr1_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 14.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR1_ROUTE_ONE_DEST] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_ROUTE_TWO:
+					parameter.name   = "ADSR1 Route two";
+					parameter.symbol = "adsr1_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_ADSR1_ROUTE_TWO] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR1_ROUTE_TWO_DEST:
+					parameter.name   = "ADSR1 Route two dest";
+					parameter.symbol = "adsr1_route_two_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 14.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR1_ROUTE_TWO_DEST] = parameter.ranges.def;
+					break;
+						
+					// ADSR TWO
+					
+					case TRICERATOPS_ADSR2_ATTACK:
+					parameter.name   = "Attack 2";
+					parameter.symbol = "attack_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR2_ATTACK] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_DECAY:
+					parameter.name   = "Decay 2";
+					parameter.symbol = "decay_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.75f;
+					fParameters[TRICERATOPS_ADSR2_DECAY] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_SUSTAIN:
+					parameter.name   = "Sustain 2";
+					parameter.symbol = "sustain_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR2_SUSTAIN] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_RELEASE:
+					parameter.name   = "Release 2";
+					parameter.symbol = "release_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.3f;
+					fParameters[TRICERATOPS_ADSR2_RELEASE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_ROUTE_ONE:
+					parameter.name   = "ADSR2 Route one";
+					parameter.symbol = "adsr2_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_ADSR2_ROUTE_ONE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_ROUTE_ONE_DEST:
+					parameter.name   = "ADSR2 Route one dest";
+					parameter.symbol = "adsr2_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 14.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR2_ROUTE_ONE_DEST] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_ROUTE_TWO:
+					parameter.name   = "ADSR2 Route two";
+					parameter.symbol = "adsr2_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_ADSR2_ROUTE_TWO] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR2_ROUTE_TWO_DEST:
+					parameter.name   = "ADSR2 Route two dest";
+					parameter.symbol = "adsr2_route_two_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 14.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR2_ROUTE_TWO_DEST] = parameter.ranges.def;
+					break;
+					// ADSR THREE
+					
+					case TRICERATOPS_ADSR3_ATTACK:
+					parameter.name   = "Attack 3";
+					parameter.symbol = "attack_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR3_ATTACK] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_DECAY:
+					parameter.name   = "Decay 3";
+					parameter.symbol = "decay_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.75f;
+					fParameters[TRICERATOPS_ADSR3_DECAY] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_SUSTAIN:
+					parameter.name   = "Sustain 3";
+					parameter.symbol = "sustain_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR3_SUSTAIN] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_RELEASE:
+					parameter.name   = "Release 3";
+					parameter.symbol = "release_three";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.3f;
+					fParameters[TRICERATOPS_ADSR3_RELEASE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_LFO1_AMOUNT:
+					parameter.name   = "ADSR3 Route one";
+					parameter.symbol = "adsr3_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR3_LFO1_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_LFO2_AMOUNT:
+					parameter.name   = "ADSR3 Route one dest";
+					parameter.symbol = "adsr3_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR3_LFO2_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_ADSR3_LFO3_AMOUNT:
+					parameter.name   = "ADSR3 Route two";
+					parameter.symbol = "adsr3_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_ADSR3_LFO3_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					// LFO ONE
+					
+					case TRICERATOPS_LFO1_RETRIG:
+					parameter.name   = "LFO1 RETRIG";
+					parameter.symbol = "lfo1_retrig";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_RETRIG] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_SPEED:
+					parameter.name   = "LFO1 SPEED";
+					parameter.symbol = "lfo1_speed";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 600.0f;
+					parameter.ranges.def = 120.0f;
+					fParameters[TRICERATOPS_LFO1_SPEED] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_WAVE:
+					parameter.name   = "LFO1 WAVE";
+					parameter.symbol = "lfo1_wave";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 6.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_OSC1_AMOUNT:
+					parameter.name   = "LFO1 TO DCO1 PITCH";
+					parameter.symbol = "lfo1_dco1_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_OSC1_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_OSC2_AMOUNT:
+					parameter.name   = "LFO1 TO DCO2 PITCH";
+					parameter.symbol = "lfo1_dco2_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_OSC2_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_OSC3_AMOUNT:
+					parameter.name   = "LFO1 TO DCO3 PITCH";
+					parameter.symbol = "lfo1_dco3_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_OSC3_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_FILTER:
+					parameter.name   = "LFO1 TO FILTER";
+					parameter.symbol = "lfo1_filter";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_FILTER] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_ROUTE_ONE:
+					parameter.name   = "LFO1 ROUTE ONE";
+					parameter.symbol = "lfo1_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_ROUTE_ONE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_ROUTE_ONE_DEST:
+					parameter.name   = "LFO1 ROUTE ONE DEST";
+					parameter.symbol = "lfo1_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 2.0f;
+					fParameters[TRICERATOPS_LFO1_ROUTE_ONE_DEST] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_ROUTE_TWO:
+					parameter.name   = "LFO1 ROUTE TWO";
+					parameter.symbol = "lfo1_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_ROUTE_TWO] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO1_ROUTE_TWO_DEST:
+					parameter.name   = "LFO1 ROUTE TWO DEST";
+					parameter.symbol = "lfo1_route_two_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO1_ROUTE_TWO_DEST] = parameter.ranges.def;
+					break;
+					
+					// LFO TWO
+					
+					case TRICERATOPS_LFO2_RETRIG:
+					parameter.name   = "LFO2 RETRIG";
+					parameter.symbol = "lfo2_retrig";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_RETRIG] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_SPEED:
+					parameter.name   = "LFO2 SPEED";
+					parameter.symbol = "lfo2_speed";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 600.0f;
+					parameter.ranges.def = 120.0f;
+					fParameters[TRICERATOPS_LFO2_SPEED] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_WAVE:
+					parameter.name   = "LFO2 WAVE";
+					parameter.symbol = "lfo2_wave";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 6.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_OSC1_AMOUNT:
+					parameter.name   = "LFO2 TO DCO1 PITCH";
+					parameter.symbol = "lfo2_dco1_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_OSC1_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_OSC2_AMOUNT:
+					parameter.name   = "LFO2 TO DCO2 PITCH";
+					parameter.symbol = "lfo2_dco2_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_OSC2_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_OSC3_AMOUNT:
+					parameter.name   = "LFO2 TO DCO3 PITCH";
+					parameter.symbol = "lfo2_dco3_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_OSC3_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_FILTER:
+					parameter.name   = "LFO2 TO FILTER";
+					parameter.symbol = "lfo2_filter";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_FILTER] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_ROUTE_ONE:
+					parameter.name   = "LFO2 ROUTE ONE";
+					parameter.symbol = "lfo2_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_ROUTE_ONE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_ROUTE_ONE_DEST:
+					parameter.name   = "LFO2 ROUTE ONE DEST";
+					parameter.symbol = "lfo2_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 2.0f;
+					fParameters[TRICERATOPS_LFO2_ROUTE_ONE_DEST] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_ROUTE_TWO:
+					parameter.name   = "LFO2 ROUTE TWO";
+					parameter.symbol = "lfo2_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_ROUTE_TWO] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO2_ROUTE_TWO_DEST:
+					parameter.name   = "LFO2 ROUTE TWO DEST";
+					parameter.symbol = "lfo2_route_two_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO2_ROUTE_TWO_DEST] = parameter.ranges.def;
+					break;
+					
+					// LFO THREE
+					
+					case TRICERATOPS_LFO3_RETRIG:
+					parameter.name   = "LFO3 RETRIG";
+					parameter.symbol = "lfo3_retrig";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_RETRIG] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_SPEED:
+					parameter.name   = "LFO3 SPEED";
+					parameter.symbol = "lfo3_speed";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 600.0f;
+					parameter.ranges.def = 120.0f;
+					fParameters[TRICERATOPS_LFO3_SPEED] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_WAVE:
+					parameter.name   = "LFO3 WAVE";
+					parameter.symbol = "lfo3_wave";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 6.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_WAVE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_OSC1_AMOUNT:
+					parameter.name   = "LFO3 TO DCO1 PITCH";
+					parameter.symbol = "lfo3_dco1_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_OSC1_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_OSC2_AMOUNT:
+					parameter.name   = "LFO3 TO DCO2 PITCH";
+					parameter.symbol = "lfo3_dco2_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_OSC2_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_OSC3_AMOUNT:
+					parameter.name   = "LFO3 TO DCO3 PITCH";
+					parameter.symbol = "lfo3_dco3_pitch";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_OSC3_AMOUNT] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_FILTER:
+					parameter.name   = "LFO3 TO FILTER";
+					parameter.symbol = "lfo3_filter";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_FILTER] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_ROUTE_ONE:
+					parameter.name   = "LFO3 ROUTE ONE";
+					parameter.symbol = "lfo3_route_one";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_ROUTE_ONE] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_ROUTE_ONE_DEST:
+					parameter.name   = "LFO3 ROUTE ONE DEST";
+					parameter.symbol = "lfo3_route_one_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 2.0f;
+					fParameters[TRICERATOPS_LFO3_ROUTE_ONE_DEST] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_ROUTE_TWO:
+					parameter.name   = "LFO3 ROUTE TWO";
+					parameter.symbol = "lfo3_route_two";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 1.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_ROUTE_TWO] = parameter.ranges.def;
+					break;
+					
+					case TRICERATOPS_LFO3_ROUTE_TWO_DEST:
+					parameter.name   = "LFO3 ROUTE TWO DEST";
+					parameter.symbol = "lfo3_route_two_dest";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 10.0f;
+					parameter.ranges.def = 0.0f;
+					fParameters[TRICERATOPS_LFO3_ROUTE_TWO_DEST] = parameter.ranges.def;
+					break;
+
 			}
 
 		}
@@ -231,7 +1110,7 @@ class triceratopsPlugin : public Plugin
 		void setParameterValue(uint32_t index, float value) override
 		{
 			fParameters[index] = value;
-			cout << fParameters[TRICERATOPS_OSC1_PULSEWIDTH] << "      -      " << synths[0].synth_params->TRICERATOPS_PULSEWIDTH_ONE[0] << endl;
+			
 			// cout << synths[0].synth_params->TRICERATOPS_ATTACK_TWO[0] << "," << fParameters[TRICERATOPS_ADSR2_ATTACK] << endl;
 		}
 
@@ -265,8 +1144,8 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_VOLUME = &triceratops->fParameters[TRICERATOPS_MASTER_VOLUME];
 		triceratops->synths[x].synth_params->TRICERATOPS_AMP_DRIVE = &triceratops->fParameters[TRICERATOPS_AMP_DRIVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->fParameters[TRICERATOPS_FILTER_MODE]				;
-		triceratops->synths[x].synth_params->TRICERATOPS_CUTOFF = &triceratops->fParameters[TRICERATOPS_CUTOFF];
-		triceratops->synths[x].synth_params->TRICERATOPS_RESONANCE = &triceratops->fParameters[TRICERATOPS_RESONANCE];		
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_FREQUENCY = &triceratops->fParameters[TRICERATOPS_FILTER_FREQUENCY];
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_RESONANCE = &triceratops->fParameters[TRICERATOPS_FILTER_RESONANCE];		
 		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_KEY_FOLLOW =&triceratops->fParameters[TRICERATOPS_FILTER_KEY_FOLLOW];
 		triceratops->synths[x].synth_params->TRICERATOPS_LEGATO = &triceratops->fParameters[TRICERATOPS_LEGATO];
 		triceratops->synths[x].synth_params->TRICERATOPS_SYNC = &triceratops->fParameters[TRICERATOPS_SYNC];

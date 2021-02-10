@@ -1355,7 +1355,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 			if (synth_params->TRICERATOPS_ADSR2_ROUTE_TWO_DEST[0]==1)
 				routes += synth_params->TRICERATOPS_ADSR2_ROUTE_TWO[0] * env_filter_level * (velocity * 0.01);
 
-			routes += synth_params->TRICERATOPS_CUTOFF[0];
+			routes += synth_params->TRICERATOPS_FILTER_FREQUENCY[0];
 			if (synth_params->TRICERATOPS_MODIFIER_DIRT[0] > 0)
 				routes += (nixnoise->tick()*synth_params->TRICERATOPS_MODIFIER_DIRT[0] * 0.001);
 
@@ -1396,7 +1396,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 			if (synth_params->TRICERATOPS_ADSR2_ROUTE_TWO_DEST[0]==2)
 				routes += synth_params->TRICERATOPS_ADSR2_ROUTE_TWO[0] * env_filter_level;
 	
-			routes += synth_params->TRICERATOPS_RESONANCE[0];
+			routes += synth_params->TRICERATOPS_FILTER_RESONANCE[0];
 	
 			float resonance = routes;
 			float in = 0;
