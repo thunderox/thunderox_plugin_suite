@@ -1,0 +1,118 @@
+2021.02.11:14:23:35.158: main Phoenix Miner 5.3b Linux/gcc - Release build
+2021.02.11:14:23:35.158: main Cmd line: -pool ssl://eu1.ethermine.org:5555 -wal 0x9263211117D118eaB6291C174B1dd915636dCE35.cyptherthor2 
+2021.02.11:14:23:35.158: main No CUDA driver found
+2021.02.11:14:23:35.215: main OpenCL driver version: 20.30-1109583
+2021.02.11:14:23:35.215: main Available GPUs for mining:
+2021.02.11:14:23:35.215: main GPU1: Radeon RX 580 Series (pcie 8), OpenCL 1.2, 7.6 GB VRAM, 36 CUs
+2021.02.11:14:23:35.215: main AMD sysfs monitor initialized
+2021.02.11:14:23:35.215: main Eth: the pool list contains 1 pool (1 from command-line)
+2021.02.11:14:23:35.215: main Eth: primary pool: ssl://eu1.ethermine.org:5555
+2021.02.11:14:23:35.216: main Starting GPU mining
+2021.02.11:14:23:35.216: main GPU1: fan PWM control mode 2, min 0, max 255
+2021.02.11:14:23:35.316: wdog Starting watchdog thread
+2021.02.11:14:23:35.317: main Eth: Connecting to ethash pool ssl://eu1.ethermine.org:5555 (proto: EthProxy)
+2021.02.11:14:23:35.317: main GPU1: 22C 43% 32W
+GPUs power: 32.1 W
+2021.02.11:14:23:35.477: eths Eth: Connected to SSL ethash pool eu1.ethermine.org:5555 (172.65.207.106)
+2021.02.11:14:23:35.517: main Listening for CDM remote manager at port 3333 in read-only mode
+2021.02.11:14:23:35.683: eths Eth: Send: {"id":1,"jsonrpc":"2.0","method":"eth_submitLogin","worker":"eth1.0","params":["0x9263211117D118eaB6291C174B1dd915636dCE35.cyptherthor2"]}
+
+2021.02.11:14:23:35.784: eths Eth: Received: {"id":1,"jsonrpc":"2.0","result":true}
+2021.02.11:14:23:35.784: eths Eth: Send: {"id":5,"jsonrpc":"2.0","method":"eth_getWork","params":[]}
+
+2021.02.11:14:23:35.886: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xe265386fea7097979bf313116134d25bbd3fee67a6d86856767fbfbc51682cf9","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:35.886: eths Eth: New job #e265386f from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:35.887: GPU1 GPU1: Starting up... (0)
+2021.02.11:14:23:35.887: GPU1 GPU1: Generating ethash light cache for epoch #394
+2021.02.11:14:23:37.013: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb58488922bfc2fa3d858be2aec1cce8de82f465b83d1c842b23e532a8120bbb1","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:37.013: eths Eth: New job #b5848892 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:38.144: GPU1 Light cache generated in 2.3 s (28.9 MB/s)
+2021.02.11:14:23:38.685: GPU1 GPU1: Free VRAM: 7.542 GB; used: 0.036 GB
+2021.02.11:14:23:38.685: GPU1 GPU1: Allocating DAG (4.09) GB; good for epoch up to #396
+2021.02.11:14:23:38.692: GPU1 GPU1: Generating DAG for epoch #394
+2021.02.11:14:23:40.229: GPU1 GPU1: DAG  14%
+2021.02.11:14:23:40.325: main Eth speed: 0.000 MH/s, shares: 0/0/0, time: 0:00
+2021.02.11:14:23:41.108: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x93c368f06bafe1242a78e15e0490bd4e37e046ee016619dc333127e093a36d0f","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:41.108: eths Eth: New job #93c368f0 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:41.746: GPU1 GPU1: DAG  28%
+2021.02.11:14:23:43.264: GPU1 GPU1: DAG  43%
+2021.02.11:14:23:44.782: GPU1 GPU1: DAG  57%
+2021.02.11:14:23:45.333: main Eth speed: 0.000 MH/s, shares: 0/0/0, time: 0:00
+2021.02.11:14:23:45.683: eths Eth: Send: {"id":5,"jsonrpc":"2.0","method":"eth_getWork","params":[]}
+
+2021.02.11:14:23:46.304: GPU1 GPU1: DAG  71%
+2021.02.11:14:23:47.246: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xe16b32e88246b6a0365eeab40599bd1abf6774d455ae58004f999edfa5d6e6b4","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:47.246: eths Eth: New job #e16b32e8 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:47.348: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xe16b32e88246b6a0365eeab40599bd1abf6774d455ae58004f999edfa5d6e6b4","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:47.822: GPU1 GPU1: DAG  85%
+2021.02.11:14:23:49.088: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x791cc01ce98923187fddae4bf7794e02f4485770dcad1463e93865876563b5cb","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a4"]}
+2021.02.11:14:23:49.088: eths Eth: New job #791cc01c from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:49.341: GPU1 GPU1: DAG  99%
+2021.02.11:14:23:49.443: GPU1 GPU1: DAG generated in 10.8 s (388.4 MB/s)
+2021.02.11:14:23:49.444: GPU1 GPU1: Using Ethash OCL kernels (Ellesmere; -clkernel 1)
+2021.02.11:14:23:49.444: GPU1 GPU1: no -gt value specified, switching to auto-tune
+2021.02.11:14:23:49.444: GPU1 GPU1: starting auto-tune process
+2021.02.11:14:23:50.341: main Eth speed: 23.743 MH/s, shares: 0/0/0, time: 0:00
+2021.02.11:14:23:50.880: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb381567a606651154e9456dc846f10daf295c9a83e7fabe586bd37e6be3f7381","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a5"]}
+2021.02.11:14:23:50.880: eths Eth: New job #b381567a from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:51.135: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xa80389a7742441e71985ad8f56552323ea3383f846a4af41118a27f245e77909","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a5"]}
+2021.02.11:14:23:51.135: eths Eth: New job #a80389a7 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:55.024: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xa97051cd72dd3ebc103b6951380a63adcbe09773a62a97381f90096ba411a989","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a5"]}
+2021.02.11:14:23:55.024: eths Eth: New job #a97051cd from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:55.351: main Eth speed: 24.295 MH/s, shares: 0/0/0, time: 0:00
+2021.02.11:14:23:55.683: eths Eth: Send: {"id":5,"jsonrpc":"2.0","method":"eth_getWork","params":[]}
+
+2021.02.11:14:23:55.683: eths Eth: Send: {"id":6,"jsonrpc":"2.0","method":"eth_submitHashrate","params":["0x172b6f2","0xa788a603200e70b16d41a1d6be183ec433586e128279c56b5c285fc3ef3a5b47"]}
+
+2021.02.11:14:23:55.740: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xa97051cd72dd3ebc103b6951380a63adcbe09773a62a97381f90096ba411a989","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a5"]}
+2021.02.11:14:23:56.041: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x41aa996b9fd1a005b01a50ab961c720f1f1992a24c2e99386f03f7c736f7a3d3","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a6"]}
+2021.02.11:14:23:56.041: eths Eth: New job #41aa996b from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:56.149: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x3916a8d0bc3091e40d6fd5d137df70b4bee4d88fbfb0feff094732022b9573f9","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a6"]}
+2021.02.11:14:23:56.149: eths Eth: New job #3916a8d0 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:23:56.614: GPU1 Eth: GPU1: ETH share found!
+2021.02.11:14:23:56.614: eths Eth: Send: {"id":4,"jsonrpc":"2.0","method":"eth_submitWork","params":["0x84efb06aa9136023","0x3916a8d0bc3091e40d6fd5d137df70b4bee4d88fbfb0feff094732022b9573f9","0xe80365686b86756ec2932267a53f6ace20562ded4de673ac8cc407875dea6664"]}
+
+2021.02.11:14:23:56.614: eths Eth: Share actual difficulty: 5744 MH
+2021.02.11:14:23:56.656: eths Eth: Received: {"id":6,"jsonrpc":"2.0","result":true}
+2021.02.11:14:23:56.661: eths Eth: Received: {"id":4,"jsonrpc":"2.0","result":true}
+2021.02.11:14:23:56.661: eths Eth: Share accepted in 47 ms
+2021.02.11:14:24:00.112: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xa92c17d5ede4a45ebb816b967000ab885e1986a2a4f99ba349ef12994b5654d0","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a6"]}
+2021.02.11:14:24:00.112: eths Eth: New job #a92c17d5 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:00.359: main Eth speed: 23.978 MH/s, shares: 1/0/0, time: 0:00
+2021.02.11:14:24:00.754: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xa866610f4b24373187ce220e7b668a68fad55b082b39169faaebb21b664def1f","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:00.754: eths Eth: New job #a866610f from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:00.959: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x09f00fdff7c153f97eacc0c542c423b8564165d28424a20c6f72a1e15d36af67","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:00.959: eths Eth: New job #09f00fdf from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:04.848: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb80022e9de493d16179738224c9f4d266a43de5f02dd1da42e807b1ac157aad3","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:04.848: eths Eth: New job #b80022e9 from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:05.368: main Eth speed: 22.703 MH/s, shares: 1/0/0, time: 0:00
+2021.02.11:14:24:05.368: main GPU1: 44C 50% 131W
+GPUs power: 131.1 W
+2021.02.11:14:24:05.683: eths Eth: Send: {"id":5,"jsonrpc":"2.0","method":"eth_getWork","params":[]}
+
+2021.02.11:14:24:05.769: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb80022e9de493d16179738224c9f4d266a43de5f02dd1da42e807b1ac157aad3","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:08.736: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x03d3a09e68a973623271dbb110ab8d0b3e75798673ae68a1433161092018bbdc","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:08.736: eths Eth: New job #03d3a09e from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:10.377: main Eth speed: 22.146 MH/s, shares: 1/0/0, time: 0:00
+2021.02.11:14:24:12.896: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb60cf8eafdf98c6956b670a7eab55ce1447e74de99de41e2eca30ef1bc4cab20","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:12.896: eths Eth: New job #b60cf8ea from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:15.385: main Eth speed: 22.430 MH/s, shares: 1/0/0, time: 0:00
+2021.02.11:14:24:15.683: eths Eth: Send: {"id":5,"jsonrpc":"2.0","method":"eth_getWork","params":[]}
+
+2021.02.11:14:24:15.683: eths Eth: Send: {"id":6,"jsonrpc":"2.0","method":"eth_submitHashrate","params":["0x15d37e2","0xa788a603200e70b16d41a1d6be183ec433586e128279c56b5c285fc3ef3a5b47"]}
+
+2021.02.11:14:24:15.797: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xb60cf8eafdf98c6956b670a7eab55ce1447e74de99de41e2eca30ef1bc4cab20","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:16.821: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0x37a2346be55e6742f5af97439190aaec4e4c2fa6a9e30c38ee74ddc1e2ebac64","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:16.821: eths Eth: New job #37a2346b from ssl://eu1.ethermine.org:5555; diff: 4000MH
+2021.02.11:14:24:20.392: main  
+2021.02.11:14:24:20.392: main *** 0:00 *** 2/11 14:24 **************************************
+2021.02.11:14:24:20.392: main Eth: Mining ETH on ssl://eu1.ethermine.org:5555 for 0:00
+2021.02.11:14:24:20.392: main Eth speed: 22.206 MH/s, shares: 1/0/0, time: 0:00
+2021.02.11:14:24:20.392: main 1 GPU(s) are auto-tuning. Hashrate may be low until they are ready.
+2021.02.11:14:24:20.392: main Eth: Accepted shares 1 (0 stales), rejected shares 0 (0 stales)
+2021.02.11:14:24:20.392: main Eth: Incorrect shares 0 (0.00%), est. stales percentage 0.00% 
+2021.02.11:14:24:20.392: main Eth: Maximum difficulty of found share: 5744 MH
+2021.02.11:14:24:20.392: main Eth: Average speed (5 min): 22.562 MH/s
+2021.02.11:14:24:20.392: main  
+2021.02.11:14:24:20.844: eths Eth: Received: {"id":0,"jsonrpc":"2.0","result":["0xeed8761fb5363add6be1a4755a273f164c8b191994c25568926c6587623960ab","0xecea8576ebef188c15f64731e7a9f84c1cb41d85516730fa7b0bab88c4feb506","0x0000000112e0be826d694b2e62d01511f12a6061fbaec8bc02357593e70e52ba","0xb499a7"]}
+2021.02.11:14:24:20.844: eths Eth: New job #eed8761f from ssl://eu1.ethermine.org:5555; diff: 4000MH

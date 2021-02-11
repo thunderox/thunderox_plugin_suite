@@ -135,6 +135,9 @@ void Delirium_UI_Widget_Set_Value(Delirium_UI_Surface* GUI, int widget_number, f
 	int current_value = GUI->Widgets[widget_number]->current_value;
 	GUI->Widgets[widget_number]->values[current_value] = scaled_value;
 	Delirium_UI_Convert_Range_To_Value(GUI, widget_number);
+	
+	
+	
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -172,7 +175,7 @@ void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface* GUI, int widget_n
 int Delirium_UI_Widget_Get_Parameter_Number(Delirium_UI_Surface* GUI)
 {
 	if (GUI->current_widget > -1)
-		return GUI->Widgets[GUI->current_widget]->parameter_number;
+		return GUI->Widgets[GUI->current_widget]->parameter_number + GUI->Widgets[GUI->current_widget]->current_value;
 			else return -1;
 }
 

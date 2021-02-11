@@ -147,7 +147,7 @@ class triceratopsPlugin : public Plugin
 
 		const char* getLabel() const
 		{
-			return "ThunderOx triceratops";
+			return "ThunderOx Triceratops";
 		}
 
 		const char* getMaker() const
@@ -1111,7 +1111,9 @@ class triceratopsPlugin : public Plugin
 		{
 			fParameters[index] = value;
 			
-			// cout << synths[0].synth_params->TRICERATOPS_ATTACK_TWO[0] << "," << fParameters[TRICERATOPS_ADSR2_ATTACK] << endl;
+			// cout << index << "," << value << endl;
+			
+			// cout << synths[0].synth_params->TRICERATOPS_DECAY_THREE[0] << "," << fParameters[TRICERATOPS_ADSR3_DECAY] << endl;
 		}
 
 		void run(const float** inputs, float** outputs, uint32_t frames,
