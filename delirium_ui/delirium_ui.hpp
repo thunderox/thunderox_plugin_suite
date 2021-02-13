@@ -187,6 +187,7 @@ void Delirium_UI_Widget_Set_Increment(Delirium_UI_Surface*, int, float);
 void Delirium_UI_Widget_Set_Min_Max(Delirium_UI_Surface*, int, float, float);
 float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface*);
 void Delirium_UI_Widget_Set_Default_Value(Delirium_UI_Surface*, int, float);
+int Delirium_UI_Widget_Get_Current_Value(Delirium_UI_Surface*);
 int Delirium_UI_Widget_Get_Parameter_Number(Delirium_UI_Surface*);
 void Delirium_UI_Display_All(Delirium_UI_Surface*, cairo_t*);
 void Delirium_UI_MouseOver(Delirium_UI_Surface*, cairo_t*, int,int);

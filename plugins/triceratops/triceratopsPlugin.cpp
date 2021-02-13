@@ -1119,7 +1119,7 @@ class triceratopsPlugin : public Plugin
 		void run(const float** inputs, float** outputs, uint32_t frames,
              const MidiEvent* midiEvents, uint32_t midiEventCount) override
 		{
-			// cout << getParameterValue(TRICERATOPS_OSC1_DETUNE) << endl;
+			// cout << getParameterValue(TRICERATOPS_ADSR1_DECAY) << endl;
 			// memcpy(outputs[0], inputs[0], frames * sizeof(float));
 
 			float* out_left = outputs[0];

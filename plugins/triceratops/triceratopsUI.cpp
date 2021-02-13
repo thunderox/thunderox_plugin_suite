@@ -42,7 +42,6 @@ class triceratopsUI : public UI
 			float panelY = 0.5;
 
 			GUI->group_visible[0] = true;
-
 			
 			//------------------------------------------------------------------------------------------------------------------------------------------
 			//------------------------------------------------------------------------------------------------------------------------------------------
@@ -449,16 +448,26 @@ class triceratopsUI : public UI
 
 			int widget_amp_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.25, panelY + 0.75, 5, 2.5,"AMP",TRICERATOPS_ADSR1_ATTACK); 
 			fParameters_widget_number[TRICERATOPS_ADSR1_ATTACK] = widget_amp_env; 
-			
+			fParameters_widget_number[TRICERATOPS_ADSR1_ATTACK+1] = widget_amp_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR1_ATTACK+2] = widget_amp_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR1_ATTACK+3] = widget_amp_env; 
+						
 			Delirium_UI_Widget_ADSR* wdg_amp_env = (Delirium_UI_Widget_ADSR*)GUI->Widgets[widget_amp_env];
 			wdg_amp_env->default_values[0] = 1;
 			wdg_amp_env->values[0] = 1;
 
 			int widget_filter_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 0.25, panelY + 3.75, 5, 2.5,"FILTER",TRICERATOPS_ADSR2_ATTACK);
 			fParameters_widget_number[TRICERATOPS_ADSR2_ATTACK] = widget_filter_env;
+			fParameters_widget_number[TRICERATOPS_ADSR2_ATTACK+1] = widget_filter_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR2_ATTACK+2] = widget_filter_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR2_ATTACK+3] = widget_filter_env; 
 			
 			int widget_mod_env = Delirium_UI_Create_Widget(GUI, deliriumUI_ADSR, 0, panelX + 13.75, panelY + 0.75, 5, 2.5,"MOD",TRICERATOPS_ADSR3_ATTACK); 
 			fParameters_widget_number[TRICERATOPS_ADSR3_ATTACK] = widget_mod_env;
+			fParameters_widget_number[TRICERATOPS_ADSR3_ATTACK+1] = widget_mod_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR3_ATTACK+2] = widget_mod_env; 
+			fParameters_widget_number[TRICERATOPS_ADSR3_ATTACK+3] = widget_mod_env; 
+
 
 			int widget_env1_route1 = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, 0, panelX + 6, panelY + 1.25, 1, 5.25, "AMP", TRICERATOPS_ADSR1_ROUTE_ONE);
 			Delirium_UI_Widget_Set_Min_Max(GUI, widget_env1_route1, 1,0);
@@ -553,8 +562,10 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_volume, 0.6);
 			fParameters_widget_number[TRICERATOPS_MASTER_VOLUME] = widget_volume; 
 
-			GUI->draw_flag = true;		
-			
+			GUI->draw_flag = true;					
+			GUI->drag = 0;
+			GUI->drawn_at_least_once = 0;
+			GUI->current_widget = -1;		
 		}
 
 		//------------------------------------------------------------------------------------------------------
@@ -594,10 +605,11 @@ class triceratopsUI : public UI
 				repaint();
 				
 				int parameter_number = Delirium_UI_Widget_Get_Parameter_Number(GUI);
+				
 				if (parameter_number > 0)
 				{	
 					float value = Delirium_UI_Widget_Get_Value(GUI);
-					 setParameterValue(parameter_number, value);
+					setParameterValue(parameter_number, value);
 					 
 					 if (parameter_number == TRICERATOPS_FILTER_FREQUENCY)
 					 {
@@ -755,9 +767,17 @@ class triceratopsUI : public UI
 			int widget_number = fParameters_widget_number[index];
 
 			if (widget_number > 0)
+			{
+				Delirium_UI_Widget_Base* wdg = (Delirium_UI_Widget_Base*)GUI->Widgets[widget_number];
+				if (index > wdg->parameter_number) wdg->current_value = ( index - wdg->parameter_number);
+				cout << index << "-" << wdg->current_value << endl;
 				Delirium_UI_Widget_Set_Value(GUI, widget_number, value);
-
+				
+			}
 			// trigger repaint
+			
+			GUI->draw_flag = true;		
+			
 			repaint();
 		}
 

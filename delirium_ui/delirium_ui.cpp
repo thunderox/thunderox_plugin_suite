@@ -13,8 +13,6 @@ Delirium_UI_Surface* Delirium_UI_Init(int width, int height, int gridX, int grid
 	GUI->x_grid_size = width/gridX;
 	GUI->y_grid_size = width/gridY;
 
-	GUI->drag = 0;
-
 	GUI->background_rgb[0] = 0.1;
 	GUI->background_rgb[1] = 0;
 	GUI->background_rgb[2] = 0;
@@ -124,7 +122,7 @@ int  Delirium_UI_Create_Widget(Delirium_UI_Surface* GUI, int type, int group, fl
 
 	}
 
-	return GUI->Widgets.size() - 1; // Return Number Of Widget Created
+	return GUI->Widgets.size() - 1; // Return Number Of Widgets Created
 }
 
 //----------------------------------------------------------------------------------------------------------------------------------------
@@ -158,6 +156,17 @@ float Delirium_UI_Widget_Get_Value(Delirium_UI_Surface* GUI)
 	int current_value = GUI->Widgets[GUI->current_widget]->current_value;
 
 	return GUI->Widgets[GUI->current_widget]->values[current_value];
+}
+
+// SET WIDGET DEFAULT VALUE
+
+int Delirium_UI_Widget_Get_Current_Value(Delirium_UI_Surface* GUI)
+{	
+	int current_widget = GUI->current_widget;
+	if (current_widget < 0) return -1;
+	int current_value = GUI->Widgets[current_widget]->current_value;
+	if (current_value < 0) return -1;
+	return current_value;
 }
 
 // SET WIDGET DEFAULT VALUE
@@ -235,7 +244,9 @@ void Delirium_UI_Display_All(Delirium_UI_Surface* GUI, cairo_t* cr)
 			int widget_group = GUI->Widgets[current_widget]->group;
 			bool widget_visible = GUI->group_visible[widget_group];
 			if (widget_visible)
+			{
 				if (GUI->Widgets[current_widget]->type != deliriumUI_Panel) GUI->Widgets[current_widget]->Draw(cr);
+			}
 		}
 	}
 
