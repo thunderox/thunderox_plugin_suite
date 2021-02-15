@@ -770,7 +770,6 @@ class triceratopsUI : public UI
 			{
 				Delirium_UI_Widget_Base* wdg = (Delirium_UI_Widget_Base*)GUI->Widgets[widget_number];
 				if (index > wdg->parameter_number) wdg->current_value = ( index - wdg->parameter_number);
-				cout << index << "-" << wdg->current_value << endl;
 				Delirium_UI_Widget_Set_Value(GUI, widget_number, value);
 				
 			}

@@ -108,7 +108,6 @@
 enum Parameters {
 	kParameterBufferSize = 0,
 	kParametertriceratopsTime,
-	kParametertriceratopsAmount,
     
 	TRICERATOPS_OUT_LEFT,
 	TRICERATOPS_OUT_RIGHT,

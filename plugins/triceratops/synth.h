@@ -290,6 +290,9 @@ class synth
 	float gain2_right;
 	float  ratio_right;
 	float cap_right;  
+	
+	float rate;
+	float s_rate;
 
 
 	// private stuff
@@ -299,8 +302,7 @@ class synth
 	double memory[11];
 	double cutoff_modded;
 	double morph_coeff[11];
-	float rate;
-	float s_rate;
+
 
 	osc_t *osc_Create(double);
 	void osc_AddBLEP(osc_t *lpO, double offset, double amp);

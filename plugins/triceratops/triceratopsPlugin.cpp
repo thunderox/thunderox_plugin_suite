@@ -50,8 +50,8 @@ class triceratopsPlugin : public Plugin
 
 		int midi_keys[128];
 			
-		int current_synth;
-		int old_synth;
+		int current_synth = 0;
+		int old_synth = 0;
 		
 		float* pitch_bend;
 		float* channel_after_touch;
@@ -93,13 +93,17 @@ class triceratopsPlugin : public Plugin
 			
 			// Initialize LFOs
 			
-			LFO* lfo1;	
-			LFO* lfo2;
-			LFO* lfo3;
+			LFO* lfo1 = new LFO(srate);	
+			LFO* lfo2 = new LFO(srate);
+			LFO* lfo3 = new LFO(srate);
 		
 			float* lfo1_out;
 			float* lfo2_out;
 			float* lfo3_out;
+			
+			int lfo1_count = 0;
+			int lfo2_count = 0;
+			int lfo3_count = 0;
 		
 			float lfo1_rand;
 			float lfo2_rand;
@@ -128,13 +132,32 @@ class triceratopsPlugin : public Plugin
 		
 			// -----------------
 		
-			float pitch_bend;
-			float channel_after_touch;
-			int current_synth = 0;
-			int old_synth = 0;
+			float pitch_bend = 0;
+			float channel_after_touch = 0;
 
 			buffer_frame = 0;
+			
+			for (int x=0; x<16; ++x)
+			{
+				reverb[x] = new JCRev((float)x/3,srate);
+				reverb[x]->clear();
+				reverb[x]->setEffectMix(1.0);
+			}
+			
+			for (int x=0; x<128; x++) { midi_keys[x] = -1; }
+			
+			for (int x=0; x<max_notes; x++)
+			{
+				synths[x].rate = srate;
+				synths[x].lfo1_out = &lfo1_out;			
+				synths[x].lfo2_out = &lfo2_out;	
+				synths[x].lfo3_out = &lfo3_out;
+				synths[x].pitch_bend = &pitch_bend;
+				synths[x].channel_after_touch = &channel_after_touch;		
 	
+			}	
+			
+			
 			// clear all parameters
 			std::memset(fParameters, 0, sizeof(float)*kParameterCount);
 
@@ -1121,10 +1144,52 @@ class triceratopsPlugin : public Plugin
 		{
 			// cout << getParameterValue(TRICERATOPS_ADSR1_DECAY) << endl;
 			// memcpy(outputs[0], inputs[0], frames * sizeof(float));
+						
+			// cout << midiEvents << endl;
+
+		        for (uint32_t i=0; i<midiEventCount; ++i)
+		        {
+		        	const uint8_t* ev = midiEvents[i].data;
+		        	int midi_channel = 0;
+		        	if ((int)ev[0]  == 0x90 + midi_channel && (int)ev[2] > 0)
+				{
+					cout << "NOTE ON!" << endl; 
+				}
+				else if ((int)ev[0] == 0x80 + midi_channel || ((int)ev[0]  & 0xF0 == 0x90 && (int)ev[2] == 0))
+				{
+					cout << "NOTE OFF!" << endl; 
+				}
+		        	
+			}
+			/*
 
 			float* out_left = outputs[0];
 			float* out_right = outputs[1];
 
+			float froq = 0;
+
+			for (uint32_t x=0; x<frames; x++)
+			{
+				froq += 0.01;
+				
+				if (froq > 0.9) froq = -9;
+				
+				out_left[x] = froq;
+				out_right[x] = -froq;
+			}
+			
+			char b1 = midiEvents->data[0];
+			bool eventType = (b1 == 0x9);
+			if (eventType)
+				{
+				int gerbil;
+			
+			
+			
+			// cout << "Yes it is!" << endl;
+			}
+			
+			*/
 			// cout << timePos.bbt.beatsPerMinute << endl;
 		}
 
@@ -1145,7 +1210,7 @@ Plugin* createPlugin()
 	{
 		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_VOLUME = &triceratops->fParameters[TRICERATOPS_MASTER_VOLUME];
 		triceratops->synths[x].synth_params->TRICERATOPS_AMP_DRIVE = &triceratops->fParameters[TRICERATOPS_AMP_DRIVE];
-		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->fParameters[TRICERATOPS_FILTER_MODE]				;
+		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_MODE = &triceratops->fParameters[TRICERATOPS_FILTER_MODE];
 		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_FREQUENCY = &triceratops->fParameters[TRICERATOPS_FILTER_FREQUENCY];
 		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_RESONANCE = &triceratops->fParameters[TRICERATOPS_FILTER_RESONANCE];		
 		triceratops->synths[x].synth_params->TRICERATOPS_FILTER_KEY_FOLLOW =&triceratops->fParameters[TRICERATOPS_FILTER_KEY_FOLLOW];
