@@ -562,6 +562,23 @@ class triceratopsUI : public UI
 			Delirium_UI_Widget_Set_Default_Value(GUI, widget_volume, 0.6);
 			fParameters_widget_number[TRICERATOPS_MASTER_VOLUME] = widget_volume; 
 
+			//------- MOD PANEL
+
+			panelX = 20;
+			panelY = 7.75;
+			
+			// MIDI CHANNEL
+			
+			int widget_midi_channel = Delirium_UI_Create_Widget(GUI, deliriumUI_Fader, group_mod,
+				panelX + 4, panelY + 1.25, 1, 5.25, "MIDI-CH",TRICERATOPS_MIDI_CHANNEL);
+				
+			Delirium_UI_Widget_Set_Min_Max(GUI, widget_midi_channel, 1,14);
+			fParameters_widget_number[TRICERATOPS_MIDI_CHANNEL] = widget_midi_channel;
+			Delirium_UI_Widget_Set_Integer(GUI, widget_midi_channel, true);
+			Delirium_UI_Widget_Set_Value(GUI, widget_midi_channel,1);
+						
+			//-----------------------------
+
 			GUI->draw_flag = true;					
 			GUI->drag = 0;
 			GUI->drawn_at_least_once = 0;

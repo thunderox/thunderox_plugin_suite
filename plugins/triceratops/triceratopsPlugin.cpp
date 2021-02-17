@@ -53,8 +53,8 @@ class triceratopsPlugin : public Plugin
 		int current_synth = 0;
 		int old_synth = 0;
 		
-		float* pitch_bend;
-		float* channel_after_touch;
+		float* pitch_bend = new float();
+		float* channel_after_touch = new float();
 	
 		synth synths[max_notes];
 		params* synth_params;
@@ -1106,6 +1106,16 @@ class triceratopsPlugin : public Plugin
 					parameter.ranges.def = 0.0f;
 					fParameters[TRICERATOPS_LFO3_ROUTE_TWO_DEST] = parameter.ranges.def;
 					break;
+					
+					case TRICERATOPS_MIDI_CHANNEL:
+					parameter.name   = "Midi channel";
+					parameter.symbol = "midi_channel";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 1.0f;
+					parameter.ranges.max = 14.0f;
+					parameter.ranges.def = 1.0f;
+					fParameters[TRICERATOPS_MIDI_CHANNEL] = parameter.ranges.def;
+					break;
 
 			}
 
@@ -1146,19 +1156,84 @@ class triceratopsPlugin : public Plugin
 			// memcpy(outputs[0], inputs[0], frames * sizeof(float));
 						
 			// cout << midiEvents << endl;
+			
+			float* out_left = outputs[0];
+			float* out_right = outputs[1];
+			
+			memset( out_left, 0, sizeof(double)*(frames*0.5) );
+			memset( out_right, 0, sizeof(double)*(frames*0.5) );
+			
+			if (fParameters[TRICERATOPS_FX_ECHO_ACTIVE])
+			{
+					echo->eq->lg = fParameters[TRICERATOPS_FX_ECHO_EQ_LOW];
+					echo->eq->mg = fParameters[TRICERATOPS_FX_ECHO_EQ_MID];
+					echo->eq->hg = fParameters[TRICERATOPS_FX_ECHO_EQ_HIGH];
+					echo->eq2->lg = fParameters[TRICERATOPS_FX_ECHO_EQ_LOW];
+					echo->eq2->mg = fParameters[TRICERATOPS_FX_ECHO_EQ_MID];
+					echo->eq2->hg = fParameters[TRICERATOPS_FX_ECHO_EQ_HIGH];
+	
+			}			
+			
+			// MIDI 
+			
+			int midi_channel = fParameters[TRICERATOPS_MIDI_CHANNEL] - 1;
 
 		        for (uint32_t i=0; i<midiEventCount; ++i)
+		        
+		        // PITCHBEND
 		        {
-		        	const uint8_t* ev = midiEvents[i].data;
-		        	int midi_channel = 0;
+        	        	const uint8_t* ev = midiEvents[i].data;
+		        
+		        	// PITCHBEND
+		        	
+				if ((int)ev[0] == 0xE0 + midi_channel) 
+				{
+					pitch_bend[0] = ((float)(((int)ev[2] * 128) + (int)ev[1]) / 8192)-1;		
+					
+					cout << pitch_bend[0] << endl;
+				}
+				
+				if ((int)ev[0] == 0xD0 + midi_channel)
+				{
+					channel_after_touch[0] = ((float)((int)ev[1])/64);
+				}
+			
+				// NOTE ON / OFF
+
 		        	if ((int)ev[0]  == 0x90 + midi_channel && (int)ev[2] > 0)
 				{
 					cout << "NOTE ON!" << endl; 
+					
+					for (int x=0; x<max_notes; ++x)
+					{
+						if (synths[x].env_amp_state  == synths[x].env_state_release
+							&& synths[x].env_amp_level < 0.5
+								|| synths[x].env_amp_state == synths[x].env_state_dormant)
+						{
+							current_synth = x;
+						}
+						
+						if (fParameters[TRICERATOPS_LEGATO] == 1)
+						{
+							current_synth = 0;
+						}
+					
+						synths[current_synth].update_counter = -1;
+	
+						midi_keys[(int)ev[1]] = current_synth;
+						synths[current_synth].midi_key = (int)ev[1];
+						synths[current_synth].velocity =  (int)ev[2];					
+					}
+					
+					cout << current_synth << endl;
+					
 				}
 				else if ((int)ev[0] == 0x80 + midi_channel || ((int)ev[0]  & 0xF0 == 0x90 && (int)ev[2] == 0))
 				{
 					cout << "NOTE OFF!" << endl; 
 				}
+				
+
 		        	
 			}
 			/*
