@@ -250,7 +250,7 @@ class synth
 
 	int OSC_count_one;
 
-	float OSC_frequency;
+	float osc_frequency;
 	float dc1,dc2,dc3;
 
 	inertia inertia_one;

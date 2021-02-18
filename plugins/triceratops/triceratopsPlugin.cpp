@@ -63,10 +63,31 @@ class triceratopsPlugin : public Plugin
 		noise* nixnoise;
 		JCRev* reverb[16];
 		
+		EQSTATE* eq_left;
 		EQSTATE* eq_right;
 
 		uint32_t buffer_frame;
+		
+		// Set Up LFOs
 	
+		LFO* lfo1 = new LFO(srate);	
+		LFO* lfo2 = new LFO(srate);
+		LFO* lfo3 = new LFO(srate);
+	
+		float* lfo1_out;
+		float* lfo2_out;
+		float* lfo3_out;
+			
+		int lfo1_count = 0;
+		int lfo2_count = 0;
+		int lfo3_count = 0;
+		
+		float lfo1_rand;
+		float lfo2_rand;
+		float lfo3_rand;
+		
+
+			
 		// triceratops Audio Buffer
 		vector <audio_stereo> audio_buffer; 
 					
@@ -79,35 +100,19 @@ class triceratopsPlugin : public Plugin
 
 			// Initialize EQs
 			
-			EQSTATE* eq_left = new EQSTATE();
+			eq_left = new EQSTATE();
 			init_3band_state(eq_left,220,5000,srate);	
 			eq_left->lg = 0.0; // BASS
 			eq_left->mg = 1.0; // MIDS
 			eq_left->hg = 1.0; // HIGHS
 		
-			EQSTATE* eq_right = new EQSTATE();
+			eq_right = new EQSTATE();
 			init_3band_state(eq_right,220,5000,srate);		
 			eq_right->lg = 0.0; // BASS
 			eq_right->mg = 1.0; // MIDS
 			eq_right->hg = 1.0; // HIGHS 
 			
-			// Initialize LFOs
-			
-			LFO* lfo1 = new LFO(srate);	
-			LFO* lfo2 = new LFO(srate);
-			LFO* lfo3 = new LFO(srate);
-		
-			float* lfo1_out;
-			float* lfo2_out;
-			float* lfo3_out;
-			
-			int lfo1_count = 0;
-			int lfo2_count = 0;
-			int lfo3_count = 0;
-		
-			float lfo1_rand;
-			float lfo2_rand;
-			float lfo3_rand;
+			// Initialise LFOs
 		
 			lfo1_out = (float*)malloc(sizeof(float)*4096);	
 			lfo2_out = (float*)malloc(sizeof(float)*4096);
@@ -119,12 +124,12 @@ class triceratopsPlugin : public Plugin
 			
 			// Initialise Echo
 		
-			nixecho* echo = new nixecho();
+			echo = new nixecho();
 			echo->set_sample_rate(srate);
 		
 			//Initialize Noise
 		
-			noise* nixnoise = new noise();
+			nixnoise = new noise();
 					
 			lfo1_rand = nixnoise->tick();
 			lfo2_rand = nixnoise->tick();
@@ -132,8 +137,6 @@ class triceratopsPlugin : public Plugin
 		
 			// -----------------
 		
-			float pitch_bend = 0;
-			float channel_after_touch = 0;
 
 			buffer_frame = 0;
 			
@@ -152,8 +155,8 @@ class triceratopsPlugin : public Plugin
 				synths[x].lfo1_out = &lfo1_out;			
 				synths[x].lfo2_out = &lfo2_out;	
 				synths[x].lfo3_out = &lfo3_out;
-				synths[x].pitch_bend = &pitch_bend;
-				synths[x].channel_after_touch = &channel_after_touch;		
+				synths[x].pitch_bend = pitch_bend;
+				synths[x].channel_after_touch = channel_after_touch;		
 	
 			}	
 			
@@ -1116,6 +1119,16 @@ class triceratopsPlugin : public Plugin
 					parameter.ranges.def = 1.0f;
 					fParameters[TRICERATOPS_MIDI_CHANNEL] = parameter.ranges.def;
 					break;
+					
+					case TRICERATOPS_PITCH_BEND_RANGE:
+					parameter.name   = "Bend Range";
+					parameter.symbol = "bend_range";
+					parameter.hints = kParameterIsAutomable;
+					parameter.ranges.min = 0.0f;
+					parameter.ranges.max = 24.0f;
+					parameter.ranges.def = 24.0f;
+					fParameters[TRICERATOPS_PITCH_BEND_RANGE] = parameter.ranges.def;
+					break;
 
 			}
 
@@ -1222,21 +1235,284 @@ class triceratopsPlugin : public Plugin
 	
 						midi_keys[(int)ev[1]] = current_synth;
 						synths[current_synth].midi_key = (int)ev[1];
-						synths[current_synth].velocity =  (int)ev[2];					
+						synths[current_synth].velocity =  (int)ev[2];		
+						
+						float key_frequency = (44100 / fastishP2F (125-(int)ev[1]));
+						if (key_frequency > 18000) key_frequency = 18000;
+						
+						synths[current_synth].osc_frequency = key_frequency;	
+						
+						// IN LEGATO MODE ONLY USE INERTIA PORTAMENTO WHEN KEYS HELD DOWN	
+						
+						if (fParameters[TRICERATOPS_LEGATO] == 1)
+						{
+							if (synths[current_synth].env_amp_state == synths[current_synth].env_state_release
+								|| synths[current_synth].env_amp_state == synths[current_synth].env_state_dormant)
+							{
+								synths[current_synth].inertia_one.value = key_frequency
+									*fastishP2F (12 * fParameters[TRICERATOPS_OSC1_OCTAVE]) ;
+								synths[current_synth].inertia_two.value = key_frequency 
+									*fastishP2F (12 * fParameters[TRICERATOPS_OSC2_OCTAVE] );
+								synths[current_synth].inertia_three.value = key_frequency 
+									*fastishP2F (12 * fParameters[TRICERATOPS_OSC3_OCTAVE] );
+
+							}
+						}
+						
+						// IN LEGATO MODE DO NOT RESET ADSR STATES TO ATTACK MODE UNLESS PREVIOUSLY IN RELEASE/DORMANT
+
+						if (fParameters[TRICERATOPS_LEGATO] == 1
+							&& synths[current_synth].env_amp_state != synths[current_synth].env_state_release
+								&& synths[current_synth].env_amp_state != synths[current_synth].env_state_dormant)
+						{
+	
+							if (fParameters[TRICERATOPS_LFO1_RETRIG] == 1) { lfo1->phase = 0; lfo1_count = 0; }
+							if (fParameters[TRICERATOPS_LFO2_RETRIG] == 1) { lfo2->phase = 0; lfo2_count = 0; }
+							if (fParameters[TRICERATOPS_LFO3_RETRIG] == 1) { lfo3->phase = 0; lfo3_count = 0; }		
+						}
+						else
+						{
+							synths[current_synth].sinewave_osc[0]->phase = 0;
+							synths[current_synth].sinewave_osc[1]->phase = 0;
+							synths[current_synth].sinewave_osc[2]->phase = 0;
+							synths[current_synth].sinewave_osc[3]->phase = 0;
+							synths[current_synth].sinewave_osc[4]->phase = 0;
+							synths[current_synth].sinewave_osc[5]->phase = 0;
+							
+							synths[current_synth].bf0_left = 0;
+							synths[current_synth].bf1_left = 0;
+							synths[current_synth].bf2_left = 0;
+							synths[current_synth].bf3_left = 0;
+							synths[current_synth].bf4_left = 0;
+
+							synths[current_synth].bf0_right = 0;
+							synths[current_synth].bf1_right = 0;
+							synths[current_synth].bf2_right = 0;
+							synths[current_synth].bf3_right = 0;
+							synths[current_synth].bf4_right = 0;
+							
+							synths[current_synth].env_amp_level = 0;
+							synths[current_synth].env_filter_level = 0;
+							synths[current_synth].env_lfo_level = 0;
+
+							synths[current_synth].env_amp_state = synths[current_synth].env_state_attack;
+							synths[current_synth].env_filter_state = synths[current_synth].env_state_attack;
+							synths[current_synth].env_lfo_state = synths[current_synth].env_state_attack;
+							
+							synths[current_synth].inertia_one.value = synths[old_synth].inertia_one.value; // copies frequency for inertia
+							synths[current_synth].inertia_two.value = synths[old_synth].inertia_two.value;
+							synths[current_synth].inertia_three.value = synths[old_synth].inertia_three.value;
+
+							if (fParameters[TRICERATOPS_LFO1_RETRIG] == 1) { lfo1->phase = 0; lfo1_count = 0; }
+							if (fParameters[TRICERATOPS_LFO2_RETRIG] == 1) { lfo2->phase = 0; lfo2_count = 0; }
+							if (fParameters[TRICERATOPS_LFO3_RETRIG] == 1) { lfo3->phase = 0; lfo3_count = 0; }
+		
+							old_synth = current_synth;
+						}		
 					}
-					
-					cout << current_synth << endl;
-					
-				}
-				else if ((int)ev[0] == 0x80 + midi_channel || ((int)ev[0]  & 0xF0 == 0x90 && (int)ev[2] == 0))
-				{
-					cout << "NOTE OFF!" << endl; 
 				}
 				
-
-		        	
+				// midi note depressed
+				
+				else if ((int)ev[0] == 0x80 + midi_channel || ((int)ev[0]  & 0xF0 == 0x90 && (int)ev[2] == 0))
+				{
+					for (int x=0; x <max_notes; x++)
+					{
+						if (synths[x].midi_key == (int)ev[1])
+						{
+							synths[x].midi_key = -1;
+							synths[x].env_amp_state = synths[x].env_state_release;
+							synths[x].env_filter_state = synths[x].env_state_release;
+							synths[x].env_lfo_state = synths[x].env_state_release;
+						}
+					}
+				}
+					
 			}
-			/*
+			
+			lfo1->setRate( fParameters[TRICERATOPS_LFO1_SPEED]/60 );
+			lfo2->setRate( fParameters[TRICERATOPS_LFO2_SPEED]/60 );
+			lfo3->setRate( fParameters[TRICERATOPS_LFO3_SPEED]/60 );
+
+			int lfo1_wave = fParameters[TRICERATOPS_LFO1_WAVE];
+			int lfo2_wave = fParameters[TRICERATOPS_LFO2_WAVE];
+			int lfo3_wave = fParameters[TRICERATOPS_LFO3_WAVE];
+			
+			switch (lfo1_wave)
+			{
+				case 0:
+				lfo1->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 1:
+				lfo1->setWaveform( LFO::square);
+				break;
+				
+				case 2:
+				lfo1->setWaveform( LFO::sinus);
+				break;
+
+				case 5:
+				lfo1->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 6:
+				lfo1->setWaveform( LFO::square);
+				break;
+			}
+			
+			switch (lfo2_wave)
+			{
+				case 0:
+				lfo2->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 1:
+				lfo2->setWaveform( LFO::square);
+				break;
+				
+				case 2:
+				lfo2->setWaveform( LFO::sinus);
+				break;
+
+				case 5:
+				lfo2->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 6:
+				lfo2->setWaveform( LFO::square);
+				break;
+			}
+			
+			switch (lfo3_wave)
+			{
+				case 0:
+				lfo3->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 1:
+				lfo3->setWaveform( LFO::square);
+				break;
+				
+				case 2:
+				lfo3->setWaveform( LFO::sinus);
+				break;
+
+				case 5:
+				lfo3->setWaveform( LFO::sawtooth);
+				break;		
+
+				case 6:
+				lfo3->setWaveform( LFO::square);
+				break;
+			}
+			
+			int lfo1_speed = (srate*30) / fParameters[TRICERATOPS_LFO1_SPEED];
+			int lfo2_speed = (srate*30) / fParameters[TRICERATOPS_LFO2_SPEED];
+			int lfo3_speed = (srate*30) / fParameters[TRICERATOPS_LFO3_SPEED];
+			
+			for (int x=max_notes-1; x>-1; --x)	
+			{
+				if (synths[x].env_amp_state != synths[x].env_state_dormant)
+				{
+					synths[x].run(out_left,out_right,frames);
+				}
+			}
+			
+	
+			for (uint32_t x=0; x<frames; ++x)
+			{
+
+
+				// DO LFO1
+
+				if (lfo1_count == 0) {lfo1_rand = nixnoise->tick();  }
+
+				if (lfo1_wave < 3) lfo1_out[x] = lfo1->tick();
+				if (lfo1_wave == 5 || lfo1_wave == 6) lfo1_out[x] = 1 - lfo1->tick();
+
+				if (lfo1_wave == 3)
+				{
+					float dummy = lfo1->tick(); // keeps other LFO waveforms on tempo;
+					lfo1_out[x] = lfo1_rand;
+				}
+
+				if (lfo1_wave == 4)
+				{
+					float dummy = lfo1->tick(); // keeps other LFO waveforms on tempo;
+					lfo1_out[x] = nixnoise->tick();
+				}
+				
+				// DO LFO2
+
+				if (lfo2_count == 0) lfo2_rand = nixnoise->tick();
+				if (lfo2_wave == 5 || lfo2_wave == 6) lfo2_out[x] = 1 - lfo2->tick();
+
+				if (lfo2_wave < 3) lfo2_out[x] = lfo2->tick();
+
+				if (lfo2_wave == 3)
+				{
+					float dummy = lfo2->tick(); // keeps other LFO waveforms on tempo;
+					lfo2_out[x] = lfo2_rand;
+				}
+
+				if (lfo2_wave == 4)
+				{
+					float dummy = lfo2->tick(); // keeps other LFO waveforms on tempo;
+					lfo2_out[x] = nixnoise->tick();
+				}
+
+				// DO LFO3
+
+				if (lfo3_count == 0) lfo3_rand = nixnoise->tick();
+
+				if (lfo3_wave < 3) lfo3_out[x] = lfo3->tick();
+				if (lfo3_wave == 5 || lfo3_wave == 6) lfo3_out[x] = 1 - lfo3->tick();
+
+				if (lfo3_wave == 3)
+				{
+					float dummy = lfo3->tick(); // keeps other LFO waveforms on tempo;
+					lfo3_out[x] = lfo3_rand;
+				}
+
+				if (lfo3_wave == 4)
+				{
+					float dummy = lfo3->tick(); // keeps other LFO waveforms on tempo;
+					lfo3_out[x] = nixnoise->tick();
+				}
+
+				++lfo1_count;
+				if (lfo1_count > lfo1_speed) lfo1_count = 0;
+
+				++lfo2_count;
+				if (lfo2_count > lfo2_speed) lfo2_count= 0;
+
+				++lfo3_count;
+				if (lfo3_count > lfo3_speed) lfo3_count = 0;
+			
+				if (isnan( out_left[x] )) out_left[x] = 0;
+				if (isnan( out_right[x] )) out_right[x] = 0;
+
+				out_left[x] = do_3band(eq_left, out_left[x] ); // filter out sub 20hz frequencies to remove DC offsets
+				out_right[x] = do_3band(eq_right, out_right[x] );
+
+				if (fParameters[TRICERATOPS_FX_ECHO_ACTIVE] == 1)
+				{
+					out_left[x] = echo->do_left( out_left[x] );
+					out_right[x] = echo->do_right( out_right[x] );
+				}
+				
+				if (fParameters[TRICERATOPS_FX_REVERB_ACTIVE] == 1)
+				{
+					int reverb_decay = fParameters[TRICERATOPS_FX_REVERB_DECAY];
+					reverb[reverb_decay]->setEffectMix( fParameters[TRICERATOPS_FX_REVERB_MIX] );
+					reverb[reverb_decay]->tick(((out_left[x]+out_right[x]) * 0.2));
+					out_left[x] += reverb[reverb_decay]->lastOutputL();
+					out_right[x] += reverb[reverb_decay]->lastOutputR();
+				}
+			}
+			
+					/*
 
 			float* out_left = outputs[0];
 			float* out_right = outputs[1];
@@ -1300,7 +1576,7 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_PULSEWIDTH];
 		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_OCTAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_DETUNE];
-		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_WAVE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_WAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_DETUNE_CENTRE];
 		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_ONE = &triceratops->fParameters[TRICERATOPS_OSC1_INERTIA];
 		
@@ -1310,7 +1586,7 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_PULSEWIDTH];
 		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_OCTAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_DETUNE];
-		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_WAVE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_WAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_DETUNE_CENTRE];
 		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_TWO = &triceratops->fParameters[TRICERATOPS_OSC2_INERTIA];
 		
@@ -1320,7 +1596,7 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_PULSEWIDTH_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_PULSEWIDTH];
 		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_OCTAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_DETUNE];
-		triceratops->synths[x].synth_params->TRICERATOPS_OCTAVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_OCTAVE];
+		triceratops->synths[x].synth_params->TRICERATOPS_WAVE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_WAVE];
 		triceratops->synths[x].synth_params->TRICERATOPS_DETUNE_CENTRE_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_DETUNE_CENTRE];
 		triceratops->synths[x].synth_params->TRICERATOPS_INERTIA_THREE = &triceratops->fParameters[TRICERATOPS_OSC3_INERTIA];
 		
@@ -1413,6 +1689,7 @@ Plugin* createPlugin()
 		triceratops->synths[x].synth_params->TRICERATOPS_CATEGORY = &triceratops->fParameters[TRICERATOPS_PRESET_CATEGORY];
 		triceratops->synths[x].synth_params->TRICERATOPS_PITCH_BEND_RANGE = &triceratops->fParameters[TRICERATOPS_PITCH_BEND_RANGE];
 		triceratops->synths[x].synth_params->TRICERATOPS_MIDI_CHANNEL = &triceratops->fParameters[TRICERATOPS_MIDI_CHANNEL];
+		triceratops->synths[x].synth_params->TRICERATOPS_MASTER_TUNE = &triceratops->fParameters[TRICERATOPS_MASTER_TUNE];
 	}
 	return triceratops;
 }      

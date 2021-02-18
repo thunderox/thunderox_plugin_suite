@@ -69,7 +69,7 @@ synth::synth()
 
 	nixnoise = new noise();
 
-	OSC_frequency = 440;
+	osc_frequency = 440;
 	dc1 = 0;
 	dc2 = 0;
 	dc3 = 0;
@@ -132,7 +132,6 @@ synth::~synth()
 void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 {
 
-
 	if (synth_params->TRICERATOPS_ACTIVE_ONE[0]!=1 &&
 		synth_params->TRICERATOPS_ACTIVE_TWO[0]!=1 &&
 		synth_params->TRICERATOPS_ACTIVE_THREE[0]!=1) return;
@@ -143,7 +142,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 	float amp_decay = fast_pow(1-synth_params->TRICERATOPS_DECAY_ONE[0],15);
 	float amp_sustain =synth_params->TRICERATOPS_SUSTAIN_ONE[0];
 	float amp_release = fast_pow(1-synth_params->TRICERATOPS_RELEASE_ONE[0],14);
-
+	
 	if (amp_release < 7.02758e-07) amp_release = 7.02758e-07;
 	if (amp_release > 0.00075) amp_release = 0.00075;
 
@@ -158,7 +157,9 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 	float lfo_sustain = synth_params->TRICERATOPS_SUSTAIN_THREE[0];
 	float lfo_release = fast_pow(1-synth_params->TRICERATOPS_RELEASE_THREE[0],14);
 
+
 	lpO[0]->type = synth_params->TRICERATOPS_WAVE_ONE[0];
+
 	lpO[3]->type = synth_params->TRICERATOPS_WAVE_ONE[0];
 	
 	lpO[1]->type = synth_params->TRICERATOPS_WAVE_TWO[0];
@@ -166,6 +167,8 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 	lpO[2]->type = synth_params->TRICERATOPS_WAVE_THREE[0];
 	lpO[5]->type = synth_params->TRICERATOPS_WAVE_THREE[0];
+
+
 
 	float route_matrix[16];
 
@@ -268,6 +271,8 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 		env_amp_level_db = env_amp_level * env_amp_level * env_amp_level; 
 
+		
+		cout << env_amp_level_db << endl;
 
 			//--------- ADSR FILTER
 			// ATTACK
@@ -382,8 +387,6 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 					}
 				}
 			}	
-	
-
 		//------------------------------ MATRIX MODULATION STUFF
 
 		float lfo1 = lfo1_out[0][pos];
@@ -410,6 +413,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 		route_matrix[13] = 0;
 		route_matrix[14] = 0;
 		route_matrix[15] = 0;
+
 
 		route_matrix[TRICERATOPS_ADSR1_ROUTE_ONE_DEST] += 
 			synth_params->TRICERATOPS_ADSR1_ROUTE_ONE[0] * env_amp_level;
@@ -440,6 +444,8 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 		route_matrix[TRICERATOPS_LFO3_ROUTE_TWO_DEST] +=
 			synth_params->TRICERATOPS_LFO3_ROUTE_TWO[0] * lfo3;
+			
+		
 	
 		if (update_counter == 0 || synth_params->TRICERATOPS_FM[0] == 1)
 		{
@@ -467,9 +473,12 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 			routes += synth_params->TRICERATOPS_MASTER_TUNE[0] + 0.22;
 			routes += synth_params->TRICERATOPS_DETUNE_ONE[0];
 			routes += (12 * synth_params->TRICERATOPS_OCTAVE_ONE[0]);
+			
 
-			float new_frequency = OSC_frequency * fastishP2F(routes + (pitch_bend[0] * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
 
+			float new_frequency = osc_frequency * fastishP2F(routes + (pitch_bend[0] * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
+
+	
 			if (new_frequency > 18000) new_frequency = 18000;
 
 			// check if inertia's enabled - slide frequency
@@ -488,6 +497,9 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 					sinewave_osc[0]->setRate(inertia_one.slide(new_frequency));
 				}
 			}
+
+	
+
 
 		// no inertia just set frequency straight away
 
@@ -562,7 +574,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 		routes += synth_params->TRICERATOPS_DETUNE_TWO[0];
 		routes += (12 * synth_params->TRICERATOPS_OCTAVE_TWO[0]);
 
-		new_frequency = OSC_frequency * fastishP2F(routes + (pitch_bend[0]  * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
+		new_frequency = osc_frequency * fastishP2F(routes + (pitch_bend[0]  * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
 
 		if (new_frequency > 18000) new_frequency = 18000;
 
@@ -653,7 +665,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 		routes += synth_params->TRICERATOPS_DETUNE_THREE[0];
 		routes += (12 * synth_params->TRICERATOPS_OCTAVE_THREE[0]);
 
-		new_frequency = OSC_frequency * fastishP2F(routes + (pitch_bend[0]  * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
+		new_frequency = osc_frequency * fastishP2F(routes + (pitch_bend[0]  * synth_params->TRICERATOPS_PITCH_BEND_RANGE[0]) );
 		if (new_frequency > 18000) new_frequency = 18000;
 
 
@@ -1341,7 +1353,7 @@ void synth::run(float* out_left, float* out_right, uint32_t n_samples)
 
 			routes *= 0.25;
 
-			routes += (synth_params->TRICERATOPS_FILTER_KEY_FOLLOW[0] * (OSC_frequency * 0.001));
+			routes += (synth_params->TRICERATOPS_FILTER_KEY_FOLLOW[0] * (osc_frequency * 0.001));
 
 			if (synth_params->TRICERATOPS_ADSR1_ROUTE_ONE_DEST[0]==1)
 				routes += synth_params->TRICERATOPS_ADSR1_ROUTE_ONE[0] * env_amp_level * (velocity * 0.01);
